@@ -223,14 +223,6 @@ class PostService {
 
 }
 
-async function getUsers(idsUsers, users) {
-    await idsUsers.forEach(async (id) => {
-        var user = await User.find({ _id: id });
-        users.push(user[0]);
-    });
-    return users;
-}
-
 async function countTema(tema) {
 
     var posts = await Post.find({ tema: tema });
