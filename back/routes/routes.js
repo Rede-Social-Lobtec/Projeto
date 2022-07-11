@@ -39,7 +39,6 @@ router.put('/post/addLike/:id', auth, postService.manageLike);
 router.put('/post/addComment/:id', auth, postService.addComment);
 router.put('/post/:id_post/comment/:id_comment', auth, postService.deleteComment);
 router.get('/posts/', auth, postService.getPostsByUserId);
-router.put('/tema', postService.countTema);
 router.get('/tema', postService.getMaxTema);
 
 module.exports = router;
