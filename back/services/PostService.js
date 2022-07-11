@@ -9,16 +9,16 @@ const User = mongoose.model("User", user);
 class PostService {
 
     async create(req, res) {
-        var { tema, descricao, fotoPublicacao } = req.body;
+        var { tema, descricao, fotoPublicacao, curtidaDetalhe, comentarios, data } = req.body;
 
         var newPost = new Post({
             id_user: req.loggedUser.id,
             tema,
             descricao,
             fotoPublicacao,
-            curtidaDetalhe: [],
-            comentarios: [],
-            data: new Date().toLocaleString(),
+            curtidaDetalhe,
+            comentarios,
+            data,
             interacoesDoTema: "0"
         });
         try {
@@ -47,10 +47,10 @@ class PostService {
 
             if (post[0] != undefined) {
                 if (loggedUser[0]._id != post[0].id_user) {
-                    var user = await User.find({ _id: post[0].id_user });
-                    res.status(401).json({ msg: "Só o usuário que criou a publicação pode deletá-la.", criador: { nome: user[0].nome, email: user[0].email } });
+                    var admin = await User.find({ _id: post[0].id_user });
+                    res.status(401).json({ msg: "Só o usuário administrador que tenha criado o grupo pode deletá-lo.", admin: { nome: admin[0].nome, email: admin[0].email } });
                 } else {
-                    await Post.deleteOne({ _id: id });
+                    await Group.deleteOne({ _id: id });
                     res.status(200).json({ msg: `Post removido com sucesso!` });
                 }
             } else {
@@ -63,22 +63,12 @@ class PostService {
 
     async update(req, res) {
         try {
-            var { tema, descricao, fotoPublicacao } = req.body
+            var { id_user, tema, descricao, fotoPublicacao, data } = req.body
             var id = req.params.id;
-            var user = req.loggedUser.id;
-            var post = await Post.find({ _id: id });
 
-            if (post[0] != undefined) {
-                if(post[0].id_user == user) {
-                    var result = await Post.updateOne({ '_id': id }, { tema, descricao, fotoPublicacao });
-                    if (result.matchedCount == 1) {
-                        res.status(200).json({ msg: "Post atualizado com sucesso!" });
-                    } else {
-                        res.status(400).json({ msg: "Não encontramos o post indicado..." })
-                    }
-                } else {
-                    res.status(401).json({ msg: "Apenas o usuário que criou o post pode editá-lo!" });
-                }
+            var result = await Post.updateOne({ '_id': id }, { id_user, tema, descricao, fotoPublicacao, data });
+            if (result.matchedCount == 1) {
+                res.status(200).json({ msg: "Post atualizado com sucesso!" });
             } else {
                 res.status(400).json({ msg: "Não encontramos o post indicado..." })
             }
@@ -92,26 +82,27 @@ class PostService {
             var { id } = req.params;
             var id_user = req.loggedUser.id;
             var post = await Post.find({ _id: id });
-            var curtidas = post[0].curtidaDetalhe;
-            var remover = false;
+            console.log(post);
+            // var curtidas = post[0].curtidaDetalhe;
+            // var remover = false;
             var msg = "Você curtiu a publicação!";
 
-            if (curtidas.length > 0) {
-                curtidas.forEach(c => {
-                    if (c._id == id_user) {
-                        remover = true;
-                        msg = 'Sua curtida foi retirada da publicação!';
-                    }
-                })
-                if (remover == true) {
-                    curtidas.splice(curtidas.findIndex(c => c._id == id_user), 1);
-                } else {
-                    curtidas.push({ "_id": id_user })
-                }
-            } else {
-                curtidas.push({ "_id": id_user })
-            }
-            await Post.updateOne({ "_id": id }, { curtidaDetalhe: curtidas })
+            // if (curtidas.length > 0) {
+            //     curtidas.forEach(c => {
+            //         if (c._id == id_user) {
+            //             remover = true;
+            //             msg = 'Sua curtida foi retirada da publicação!';
+            //         }
+            //     })
+            //     if (remover == true) {
+            //         curtidas.splice(curtidas.findIndex(c => c._id == id_user), 1);
+            //     } else {
+            //         curtidas.push({ "_id": id_user })
+            //     }
+            // } else {
+            //     curtidas.push({ "_id": id_user })
+            // }
+            // await Post.updateOne({ "_id": id }, { curtidaDetalhe: curtidas })
             res.status(200).json(msg)
         } catch (error) {
             res.status(500).json({ msg: "Algo deu errado ao tentar adicionar a sua curtida :(", erro: err });
@@ -124,6 +115,7 @@ class PostService {
             var { texto } = req.body;
             var id_user = req.loggedUser.id;
             var post = await Post.find({ "_id": id });
+            var comentarios = post[0].comentarios;
 
             if (post[0] != undefined) {
                 var comentarios = post[0].comentarios;
@@ -240,17 +232,28 @@ class PostService {
     }
 
     async getMaxTema(req, res) {
-        var posts = await Post.find().sort({ interacoesDoTema: -1 }).limit(1);
-
+        var posts = await Post.find();
         var lista = [];
         for (let i = 0; i < posts.length; i++) {
             if (parseInt(posts[i].interacoesDoTema) > 0) {
-                lista.push(posts[i]);
+                lista.push(parseInt(posts[i].interacoesDoTema));
             }
         }
-        res.json(lista);
+        var max = Math.max(...lista);
+        var temaMax = await Post.find({interacoesDoTema: max.toString()}, {tema: 1}).limit(1);
+        var tema = temaMax[0].tema;
+
+        res.send(`Maior numero de interações: ${max} no tema: ${tema}`);
     }
 
+}
+
+async function getUsers(idsUsers, users) {
+    await idsUsers.forEach(async (id) => {
+        var user = await User.find({ _id: id });
+        users.push(user[0]);
+    });
+    return users;
 }
 
 module.exports = new PostService();
