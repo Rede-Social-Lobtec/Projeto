@@ -82,27 +82,28 @@ class PostService {
             var { id } = req.params;
             var id_user = req.loggedUser.id;
             var post = await Post.find({ _id: id });
-            console.log(post);
-            // var curtidas = post[0].curtidaDetalhe;
-            // var remover = false;
+            var tema = post[0].tema;
+            var curtidas = post[0].curtidaDetalhe;
+            var remover = false;
             var msg = "Você curtiu a publicação!";
 
-            // if (curtidas.length > 0) {
-            //     curtidas.forEach(c => {
-            //         if (c._id == id_user) {
-            //             remover = true;
-            //             msg = 'Sua curtida foi retirada da publicação!';
-            //         }
-            //     })
-            //     if (remover == true) {
-            //         curtidas.splice(curtidas.findIndex(c => c._id == id_user), 1);
-            //     } else {
-            //         curtidas.push({ "_id": id_user })
-            //     }
-            // } else {
-            //     curtidas.push({ "_id": id_user })
-            // }
-            // await Post.updateOne({ "_id": id }, { curtidaDetalhe: curtidas })
+            if (curtidas.length > 0) {
+                curtidas.forEach(c => {
+                    if (c._id == id_user) {
+                        remover = true;
+                        msg = 'Sua curtida foi retirada da publicação!';
+                    }
+                })
+                if (remover == true) {
+                    curtidas.splice(curtidas.findIndex(c => c._id == id_user), 1);
+                } else {
+                    curtidas.push({ "_id": id_user })
+                }
+            } else {
+                curtidas.push({ "_id": id_user })
+            }
+            await Post.updateOne({ "_id": id }, { curtidaDetalhe: curtidas })
+            countTema(tema);
             res.status(200).json(msg)
         } catch (error) {
             res.status(500).json({ msg: "Algo deu errado ao tentar adicionar a sua curtida :(", erro: err });
@@ -116,6 +117,7 @@ class PostService {
             var id_user = req.loggedUser.id;
             var post = await Post.find({ "_id": id });
             var comentarios = post[0].comentarios;
+            var tema = post[0].tema;
 
             if (post[0] != undefined) {
                 var comentarios = post[0].comentarios;
@@ -130,6 +132,7 @@ class PostService {
             } else {
                 res.status(400).json({ msg: "Não encontramos o post indicado..." });
             }
+            countTema(tema);
         } catch (error) {
             res.status(500).json({ msg: "Algo deu errado ao tentar adicionar o seu comentário :(", erro: err });
         }
@@ -203,34 +206,6 @@ class PostService {
         }
     }
 
-    async countTema(req, res) {
-
-        var { tema } = req.body;
-        var posts = await Post.find({ tema: tema });
-        var numCurtidas = 0;
-        var numComentarios = 0;
-        var lista = [
-            {
-                interacoes
-            }
-        ]
-        for (let i = 0; i < posts.length; i++) {
-
-            if (posts[i].tema == tema) {
-                var resultCurtidas = await Post.find({ "tema": tema }).sort({ curtidaDetalhe: 1 });
-                numCurtidas += (resultCurtidas[i].curtidaDetalhe).length;
-                var resultComentarios = await Post.find({ "tema": tema }).sort({ comentarios: 1 });
-                numComentarios += (resultComentarios[i].comentarios).length;
-            }
-        }
-        var interacoes = numCurtidas + numComentarios;
-        var lista = await Post.find({ "interacoesDoTema": interacoes }).sort();
-        lista.push(interacoes);
-        await Post.updateMany({ "tema": tema }, { interacoesDoTema: interacoes.toString() });
-        res.send("Tema atualizado");
-
-    }
-
     async getMaxTema(req, res) {
         var posts = await Post.find();
         var lista = [];
@@ -255,5 +230,33 @@ async function getUsers(idsUsers, users) {
     });
     return users;
 }
+
+async function countTema(tema) {
+
+    var posts = await Post.find({ tema: tema });
+    var numCurtidas = 0;
+    var numComentarios = 0;
+    var lista = [
+        {
+            interacoes
+        }
+    ]
+    for (let i = 0; i < posts.length; i++) {
+
+        if (posts[i].tema == tema) {
+            var resultCurtidas = await Post.find({ "tema": tema }).sort({ curtidaDetalhe: 1 });
+            numCurtidas += (resultCurtidas[i].curtidaDetalhe).length;
+            var resultComentarios = await Post.find({ "tema": tema }).sort({ comentarios: 1 });
+            numComentarios += (resultComentarios[i].comentarios).length;
+        }
+    }
+    var interacoes = numCurtidas + numComentarios;
+    var lista = await Post.find({ "interacoesDoTema": interacoes }).sort();
+    lista.push(interacoes);
+    await Post.updateMany({ "tema": tema }, { interacoesDoTema: interacoes.toString() });
+
+}
+
+
 
 module.exports = new PostService();
