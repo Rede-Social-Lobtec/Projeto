@@ -12,7 +12,7 @@ function RoutesApp(){
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/cadastro" element={<Cadastro/>}/>
                 <Route path="/feed" element={<Feed/>}/>
-                <Route path="/perfil" element={<Perfil/>}/>
+                <Route path="/perfil/:id" element={<Perfil/>}/>
                 <Route path="/grupo" element={<Grupo/>}/>
             </Routes>
         </BrowserRouter>
