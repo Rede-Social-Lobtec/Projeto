@@ -35,6 +35,7 @@ router.get('/post/:id', postService.findById);
 router.get('/posts/getLikes/:id', auth, postService.getAllLikes)
 router.delete('/post/:id', auth, postService.delete);
 router.put('/post/:id', auth, postService.update);
+router.get('/feed', auth, postService.returnFeed);
 router.put('/post/addLike/:id', auth, postService.manageLike);
 router.put('/post/addComment/:id', auth, postService.addComment);
 router.put('/post/:id_post/comment/:id_comment', auth, postService.deleteComment);
