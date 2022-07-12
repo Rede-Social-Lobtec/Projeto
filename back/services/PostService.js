@@ -50,7 +50,9 @@ class PostService {
                     var user = await User.find({ _id: post[0].id_user });
                     res.status(401).json({ msg: "Só o usuário que criou a publicação pode deletá-la.", criador: { nome: user[0].nome, email: user[0].email } });
                 } else {
+                    var tema = post[0].tema;
                     await Post.deleteOne({ _id: id });
+                    countTema(tema);
                     res.status(200).json({ msg: `Post removido com sucesso!` });
                 }
             } else {
@@ -63,15 +65,16 @@ class PostService {
 
     async update(req, res) {
         try {
-            var { id_user, tema, descricao, fotoPublicacao } = req.body
+            var { tema, descricao, fotoPublicacao } = req.body
             var { id } = req.params;
             var user = req.loggedUser.id;
             var post = await Post.find({ _id: id });
 
             if (post[0] != undefined) {
-                if(post[0].id_user == user) {
+                if (post[0].id_user == user) {
                     var result = await Post.updateOne({ '_id': id }, { tema, descricao, fotoPublicacao });
                     if (result.matchedCount == 1) {
+                        countTema(tema);
                         res.status(200).json({ msg: "Post atualizado com sucesso!" });
                     } else {
                         res.status(400).json({ msg: "Não encontramos o post indicado..." })
@@ -87,12 +90,60 @@ class PostService {
         }
     }
 
+
+    async returnFeed(req, res) {
+        try {
+            var user = await User.find({ _id: req.loggedUser.id });
+            var users = await User.find();
+            var usersAdm = await User.find({ admin: true });
+
+            var postsSeguindo = [];
+            var postsAdms = [];
+
+            for (let i = 0; i < usersAdm.length; i++) {
+                var adm = usersAdm[i];
+                if (adm._id != user[0].id) {
+                    var post = await Post.find({ id_user: adm._id });
+                    if (post[0] != undefined) {
+                        if (post.length == 1) { postsAdms.push(post[0]); }
+                        else { post.forEach(p => postsAdms.push(p)); }
+                    }
+                }
+            }
+
+            for (let i = 0; i < user[0].seguindo.length; i++) {
+                var u = user[0].seguindo[i];
+                var post = await Post.find({ id_user: u._id });
+                var criador = await User.find({ _id: post[0].id_user })
+                if (post[0] != undefined) {
+                    if (!criador[0].admin) {
+                        if (post.length == 1) { postsSeguindo.push(post[0]); }
+                        else { post.forEach(p => postsSeguindo.push(p)); }
+                    }
+                }
+            }
+
+            var feed = postsAdms.concat(postsSeguindo)
+
+            // res.status(200).json({ feed: { admin: postsAdms, seguindo: postsSeguindo } });
+            // res.status(200).json({ feed: feed.sort((a,b) =>  {
+            //         new Date(b.data) - new Date(a.data) 
+            //         console.log(`A: ${a.data} ---- B: ${b.data}`);
+            //         console.log(`A < B : ${a.data < b.data}`);
+            //     }) 
+            // });
+            res.status(200).json({ feed });
+        } catch (erro) {
+            res.status(500).json({ msg: "Algo deu errado ao tentar retornar o feed :(", erro: erro });
+        }
+    }
+
     async manageLike(req, res) {
         try {
             var { id } = req.params;
             var id_user = req.loggedUser.id;
             var post = await Post.find({ _id: id });
-            
+
             if (post[0] != undefined) {
                 var tema = post[0].tema;
                 var curtidas = post[0].curtidaDetalhe;
@@ -131,12 +182,12 @@ class PostService {
             var { texto } = req.body;
             var id_user = req.loggedUser.id;
             var post = await Post.find({ "_id": id });
-            
+
             if (post[0] != undefined) {
                 var comentarios = post[0].comentarios;
                 var comentarios = post[0].comentarios;
                 var tema = post[0].tema;
-                
+
                 comentarios.push({ idUser: id_user, texto: texto, data: new Date().toLocaleString() });
                 var result = await Post.updateOne({ _id: id }, { comentarios: comentarios });
                 if (result.matchedCount == 1) {
@@ -185,22 +236,23 @@ class PostService {
         }
     }
 
+    // endpoint que retorna as informações dos usuários que curtiram o post
     async getAllLikes(req, res) {
         try {
             var { id } = req.params;
             var post = await Post.find({ _id: id });
-            if(post[0] != undefined) {
+            if (post[0] != undefined) {
                 var idsUsers = post[0].curtidaDetalhe;
                 var users = [];
                 if (idsUsers.length > 0) {
-                    idsUsers.forEach(async id => {
-                        var user = await User.find({ _id: id });
-                        console.log();
+                    for (let i = 0; i < idsUsers.length; i++) {
+                        var iduser = idsUsers[i];
+                        var user = await User.find({ _id: iduser });
                         users.push(user[0]);
-                    });
-                    setTimeout(() => { res.json(users) }, 200);
+                    }
+                    res.status(200).json(users);
                 } else {
-                    res.send("O post ainda não possui nenhuma curtida!");
+                    res.status(200).json({ msg: "O post ainda não possui nenhuma curtida!" });
                 }
             } else {
                 res.status(400).json({ msg: "Não encontramos o post indicado..." });
@@ -230,7 +282,7 @@ class PostService {
         try {
             var posts = await Post.find();
 
-            if(posts[0] != undefined) {
+            if (posts[0] != undefined) {
                 var lista = [];
                 for (let i = 0; i < posts.length; i++) {
                     if (parseInt(posts[i].interacoesDoTema) > 0) {
@@ -246,9 +298,9 @@ class PostService {
                 } else {
                     res.status(200).json({ msg: "Ainda não temos nenhum post com interações!" });
                 }
-    
+
             } else {
-                res.status(200).json({msg: "Ainda não há nenhum post na rede social para que haja interações."})
+                res.status(200).json({ msg: "Ainda não há nenhum post na rede social para que haja interações." })
             }
         } catch (error) {
             res.status(500).json({ msg: "Algo deu errado ao tentar buscar o tema com mais interações...", erro: error });
@@ -259,9 +311,9 @@ class PostService {
 
 async function countTema(tema) {
 
-    try {        
+    try {
         var posts = await Post.find({ tema: tema });
-    
+
         var numCurtidas = 0;
         var numComentarios = 0;
         var lista = [
@@ -270,7 +322,7 @@ async function countTema(tema) {
             }
         ]
         for (let i = 0; i < posts.length; i++) {
-    
+
             if (posts[i].tema == tema) {
                 var resultCurtidas = await Post.find({ "tema": tema }).sort({ curtidaDetalhe: 1 });
                 numCurtidas += (resultCurtidas[i].curtidaDetalhe).length;

@@ -43,7 +43,11 @@ class UserService {
                 })
             }
             if (status == 200) await newUser.save();
-            res.status(status).json({ msg, id: newUser._id });
+            var token = jwt.sign({ id: newUser.id, email: newUser.email },
+                JWTSecret, { expiresIn: '5h' });
+            createLog(newUser.id);
+            
+            res.status(status).json({ msg, id: newUser._id, token });
         } catch (err) {
             res.status(500).json({ msg: "Algo deu errado ao cadastrar o usuário :(", erro: err })
         }
@@ -78,6 +82,19 @@ class UserService {
                             g.seguidores.splice(g.seguidores.findIndex(u => u._id == id), 1);
                         }
                         await Group.updateOne({ _id: g._id }, { seguidores: g.seguidores });
+                    });
+                    var users = await User.find();
+                    users.forEach(async user => {
+                        if (user.seguindo.findIndex(u => u._id == id) > -1) {
+                            user.seguindo.splice(user.seguindo.findIndex(u => u._id == id), 1);
+                        }
+                        await User.updateOne({ _id: user._id }, { seguindo: user.seguindo });
+                    });
+                    users.forEach(async user => {
+                        if (user.seguidores.findIndex(u => u._id == id) > -1) {
+                            user.seguidores.splice(user.seguidores.findIndex(u => u._id == id), 1);
+                        }
+                        await User.updateOne({ _id: user._id }, { seguidores: user.seguidores });
                     });
                     var result = await User.deleteOne({ _id: id });
                     if (result.deletedCount == 1) {
@@ -243,22 +260,23 @@ class UserService {
                 var seguidores = [];
                 var seguindo = [];
                 var grupos = [];
-
-                user[0].seguidores.forEach(async s => {
-                    var user = await User.find({ _id: s })
-                    seguidores.push(user[0]);
-                });
-                user[0].seguindo.forEach(async s => {
-                    var user = await User.find({ _id: s })
-                    seguindo.push(user[0]);
-                });
-                user[0].grupos.forEach(async g => {
+            
+                for (let i = 0; i < user[0].seguidores.length; i++) {
+                    var s = user[0].seguidores[i];
+                    var seguidor = await User.find({ _id: s })
+                    seguidores.push(seguidor[0]);
+                }
+                for (let i = 0; i < user[0].seguindo.length; i++) {
+                    var s = user[0].seguindo[i];
+                    var segue = await User.find({ _id: s })
+                    seguindo.push(segue[0]);
+                }
+                for (let i = 0; i < user[0].grupos.length; i++) {
+                    var g = user[0].grupos[i];
                     var grupo = await Group.find({ _id: g });
                     grupos.push(grupo[0]);
-                });
-                setTimeout(() => {
-                    res.json({ grupos: grupos, seguidores: seguidores, seguindo: seguindo });
-                }, 500);
+                }
+                res.json({ grupos: grupos, seguidores: seguidores, seguindo: seguindo });
             } else {
                 res.status(400).json({ msg: "Não encontramos o usuário indicado :(" });
             }
