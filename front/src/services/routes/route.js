@@ -5,8 +5,9 @@ import { TokenContext } from '../../components/contexts/token';
 
 export default function PrivateRoute (){
     const {signed} = useContext(TokenContext);
+    console.log('passou pela rota privada')
 
-    if(!signed){
+    if(signed == null){
         return signed ? <Outlet /> : <Navigate to="/" />; 
     }else{
         <Navigate to='feed'/>

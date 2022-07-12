@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import TokenProvider from '../../components/contexts/token';
 import api from '../../services/api';
 import './styleLog.css';
-import logo from '../../image/yoda.jpg';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ function Login() {
         await api.post('/auth', body)
         .then((res)=>{
           localStorage.setItem("token", res.data.token);
-        })
+        });
     }
 
     useEffect(() => {
@@ -44,15 +44,11 @@ function Login() {
     return (
         <div className="container-center">
             <div className="login">
-                <div className="login-img">
-                    <img src={logo} alt="Sistema Logo" />
-                </div>
-
                 <form onSubmit={handleSubmit} className="form-login">
                     <h1>O login fazer você deve</h1>
                     <input type="text" placeholder="email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <input type="password" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <Link to="/feed"> Entrar </Link>
+                    <button type="submit"><Link to='/feed'>Acessar</Link></button>
                 </form>
 
                 <hr className='divisor' />
