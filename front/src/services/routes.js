@@ -1,4 +1,6 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
+import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Cadastro from '../pages/Cadastro';
 import Feed from '../pages/Feed';
@@ -9,10 +11,11 @@ function RoutesApp(){
     return(
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/cadastro" element={<Cadastro/>}/>
                 <Route path="/feed" element={<Feed/>}/>
-                <Route path="/perfil" element={<Perfil/>}/>
+                <Route path="/perfil/:id" element={<Perfil/>}/>
                 <Route path="/grupo" element={<Grupo/>}/>
             </Routes>
         </BrowserRouter>

@@ -1,0 +1,22 @@
+.container{
+    background-color: aqua;
+}
+
+.left-area{
+    display: -ms-inline-grid;
+}
+
+.user-logo{
+    margin-left: 30px;
+    width: 230px;
+}
+
+.user-info{
+    font-size: 20px;
+    margin-left: 75px;
+}
+
+.card{
+    width: 100px;
+    background-color: blue;
+}
