@@ -1,14 +1,14 @@
 
-.container-center{
+.Cadcontainer-center{
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #BDB76B	;
+    background-color: #121212;
   }
   
-  .login{
-    background: #9ACD32s;
+  .Cadlogin{
+    background: #EAEAEC;
     width: 600px;
     display: flex;
     align-items: center;
@@ -16,33 +16,33 @@
     flex-direction: column;
   }
   
-  .login-area{
+  .Cadlogin-area{
     display: flex;
     justify-content: center;
-    background-color: #9ACD32;
+    background-color: #181c2e;
     width: 100%;
   }
   
-  .login-area img{
+  .Cadlogin-area img{
     padding: 20px;
-    width: 250px;
-    height: 320px;
+    width: 10000px;
+    height: 500px;
   }
   
-  form{
+  Cadform{
     margin-top: 1.5em;
     width: 90%;
     display: flex;
     flex-direction: column;
   }
   
-  form h1{
+  Cadform h1{
     text-align: center;
     margin-bottom: 0.5em;
-    color: #000000;
+    color: #181c2e;
   }
   
-  .login input{
+  Cad.login input{
     margin-bottom: 15px;
     height: 35px;
     border:0;
@@ -52,21 +52,19 @@
     background-color: #FFF;
   }
   
-  form button{
+  Cadform button{
     height: 35px;
     border:0;
     border-radius: 7px;
-    background-color: #000000;
+    background-color: #181c2e;
     color: #FFF;
     font-size: 1.3em;
   }
   
   .login a{
     margin: 1.5em 0;
-    color: #000000;
+    color: #000;
     cursor: pointer;
-    justify-content: center;
-    align-items: center;
   }
   
   
