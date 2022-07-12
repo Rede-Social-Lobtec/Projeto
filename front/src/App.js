@@ -1,10 +1,14 @@
+import { BrowserRouter } from 'react-router-dom';
 import RoutesApp from './services/routes';
+import TokenProvider from './components/contexts/token';
 
 function App() {
   return (
-    <div className='App'>
-      <RoutesApp/>
-    </div>
+    <TokenProvider>
+      <BrowserRouter>
+        <RoutesApp />
+      </BrowserRouter>
+    </TokenProvider>
   );
 }
 
