@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
 import Home from '../pages/Home';
@@ -7,6 +7,7 @@ import Cadastro from '../pages/Cadastro';
 import Feed from '../pages/Feed';
 import Perfil from '../pages/Perfil';
 import Grupo from '../pages/Grupo';
+import Erro from '../pages/Erro';
 
 
 function RoutesApp() {
@@ -17,11 +18,12 @@ function RoutesApp() {
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route element={<PrivateRoute />}>
-                <Route path="/feed" element={<Feed />} />
+                <Route path="/feed" element={<Feed/>} />
+                <Route path='/perfil' element={<Erro/>}/>
                 <Route path="/perfil/:id" element={<Perfil />} />
                 <Route path="/grupo" element={<Grupo />} />
             </Route>
-            <Route path="*" element={<Home />} />
+            <Route path="*" element={<Erro />} />
         </Routes>
     )
 }
