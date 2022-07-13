@@ -1,13 +1,25 @@
 .sidebar{
     margin: 0;
     padding: 0;
-    width: 140px;
-    background-color: #181C2e;
+    width: 20%;
+    background-color: #ff6900;
     position: fixed;
-    height: 42%;
-    overflow: auto;
+    height: 100%;
+    /*overflow: auto;*/
     border-bottom-right-radius: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0  rgba(0, 0, 0, 0.19);
+    position: absolute;
+    right: 0px;
+    
+}
+
+.container {
+    display: flex;
+}
+
+.main {
+    width: 80%;
+    display: flex;
 }
 
 .sidebar h3{
@@ -35,3 +47,22 @@
     background-color: #121212;
     color: #FFF;
 }
+
+/*.Avatar-img{
+
+    background: #ff6900;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }*/
+
+
+
+.Avatar-img img{
+    padding: 10%;
+    width: 80%;
+    height: 80%;
+
+  }
