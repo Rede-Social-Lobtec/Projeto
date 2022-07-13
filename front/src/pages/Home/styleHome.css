@@ -1,20 +1,20 @@
 
 /*o todo*/
-.Hcontainer-center{
+/* .Hcontainer-center{
     height: 20%;
     display: flex;
     justify-content: right;
     align-items: right;
     background-color: #ff6900	;
-  }
+  } */
   
   .Hlogin{
     background: #ffffff;
-    width: 20%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    /* justify-content: center; */
+    /* flex-direction: column; */
   }
 
 
@@ -22,7 +22,7 @@
   .Hlogin-img{
 
     background: #ffffff;
-    width: 20%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,7 +53,7 @@
   /*botões*/
   .Hform-login {
     margin-top: 1.5em;
-    width: 100%;
+    width: 50%;
     display: flex;
     flex-direction: row; /*que faz ser um em cima do outro*/
     align-items: center;

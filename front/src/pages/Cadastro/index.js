@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './styleCad.css';
-import logo from '../../image/luke.jpg';
+import logo from '../../assets/logo.png';
 
 function Cadastro() {
   const [nome, setNome] = useState('');
@@ -19,10 +19,10 @@ function Cadastro() {
   }
 
   return (
-    <div className="Cadcontainer-center">
+    // <div className="Cadcontainer-center">
       <div className="Cadlogin">
         <div className="Cadlogin-area">
-          <img src={logo} alt="CadSistema Logo" />
+          <img src={logo} alt="Lobtec" />
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -40,7 +40,7 @@ function Cadastro() {
         </form>  
 
         <Link to="/login">Já tem uma conta? Entre</Link>
-      </div>
+      {/* </div> */}
     </div>
   );
 }
