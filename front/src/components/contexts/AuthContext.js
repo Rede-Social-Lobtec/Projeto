@@ -3,11 +3,10 @@ import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
+
 const Context = createContext();
 
 function AuthProvider({children}){
-
-    
 
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -34,6 +33,8 @@ function AuthProvider({children}){
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         navigate('/feed', {replace:true});
         setAuthenticated(true);
+        console.log(token);
+        
     }
 
     async function loginToken(token){
@@ -43,6 +44,7 @@ function AuthProvider({children}){
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         navigate('/feed', {replace:true});
         setAuthenticated(true);
+        
     }
 
     async function handleLogout(){
@@ -58,7 +60,7 @@ function AuthProvider({children}){
 
 
     return(
-        <Context.Provider value={{authenticated, handleLogin, loginToken, handleLogout, loading }}>
+        <Context.Provider value={{authenticated, handleLogin, loginToken, handleLogout, loading}}>
             {children}
         </Context.Provider>
     );

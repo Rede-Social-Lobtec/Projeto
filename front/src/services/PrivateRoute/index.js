@@ -6,7 +6,7 @@ function PrivateRoute(){
 
     const { authenticated } = useContext(Context);
 
-    return authenticated==true ? <Outlet/> : <Navigate to='/'/>;
+    return authenticated===true ? <Outlet/> : <Navigate to='/'/>;
 }
 
 export default PrivateRoute;
