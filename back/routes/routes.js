@@ -26,6 +26,7 @@ router.get('/groups', groupService.getAll);
 router.get('/group/:id', groupService.findById);
 router.get('/groups/:nome', groupService.findByName);
 router.get('/group/:id/posts', auth, groupService.findAllPosts);
+router.get('/group/:id/members', auth, groupService.getMembersInfo);
 router.delete('/group/:id', auth, groupService.delete);
 router.put('/group/:id', auth, groupService.update);
 router.put('/group/:id_group/member/:id_user', auth, groupService.manageMember);
