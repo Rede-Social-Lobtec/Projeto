@@ -42,7 +42,7 @@ router.get('/feed', auth, postService.returnFeed);
 router.put('/post/addLike/:id', auth, postService.manageLike);
 router.put('/post/addComment/:id', auth, postService.addComment);
 router.put('/post/:id_post/comment/:id_comment', auth, postService.deleteComment);
-router.get('/postsUser', auth, postService.getPostsByUserId);
+router.get('/postsUser/:id', auth, postService.getPostsByUserId);
 router.get('/tema', postService.getMaxTema);
 
 module.exports = router;

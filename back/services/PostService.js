@@ -279,7 +279,7 @@ class PostService {
 
     async getPostsByUserId(req, res) {
         try {
-            var { id } = req.loggedUser;
+            var { id } = req.params;
             var posts = await Post.find({ id_user: id });
             if (posts[0] != undefined) {
                 if (posts.length > 0) {
