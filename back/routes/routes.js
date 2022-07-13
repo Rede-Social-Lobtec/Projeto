@@ -32,6 +32,7 @@ router.put('/group/:id_group/member/:id_user', auth, groupService.manageMember);
 router.post('/post', auth, postService.create);
 router.get('/posts', postService.getAll);
 router.get('/post/:id', postService.findById);
+router.get('/posts/:tema', postService.findByTheme);
 router.get('/posts/getLikes/:id', auth, postService.getAllLikes)
 router.delete('/post/:id', auth, postService.delete);
 router.put('/post/:id', auth, postService.update);

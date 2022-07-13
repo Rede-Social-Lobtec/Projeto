@@ -39,6 +39,20 @@ class PostService {
         Services.findById(req, res, Post, 'post');
     }
 
+    async findByTheme(req, res) {
+        try {
+            var { tema } = req.params;
+            var posts = await Post.find({ tema: { $regex: tema, $options: 'i' } });
+            if (posts[0] == undefined) {
+                res.status(400).json({ msg: `Não encontramos nenhum post com o nome informado!` })
+            } else {
+                res.status(200).json(posts);
+            }
+        } catch (err) {
+            res.status(500).json({ msg: `Algo deu errado ao buscar pelos posts :(`, erro: err });
+        }
+    }
+
     async delete(req, res) {
         try {
             var id = req.params.id;
