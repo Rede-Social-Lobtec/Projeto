@@ -25,7 +25,12 @@ function Perfil() {
     return (
         <div className='container'>
             <div className='content1'>
-                <img src={require('../../assets/user-logo.png')} />
+                {
+                user.foto != '' ? 
+                <img src={require(user.foto)} />
+                : 
+                <img src={require('../../assets/no-photo.png')} />
+                }
                 <h2>{user}</h2>
             </div>
             <div className='content2'>
@@ -39,7 +44,12 @@ function Perfil() {
                             <li key={item._id}>
                                 <div className='card'>
                                     <div className='card-body'>
-                                        <img src={require('../../assets/user-logo.png')} />
+                                        {
+                                        user.foto != '' ? 
+                                        <img src={require(user.foto)} />
+                                        : 
+                                        <img src={require('../../assets/no-photo.png')} />
+                                        }
                                         <h2>seguindo1</h2>
                                     </div>
                                 </div>
