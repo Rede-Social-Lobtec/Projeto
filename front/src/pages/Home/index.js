@@ -5,27 +5,27 @@ import './styleHome.css';
 import nome from '../../assets/escrita_lobtec.png';
 
 
-function Login() {
-    /*const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');*/
+function Home() {
+    // /*const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');*/
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        Auth();
-    }
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     Auth();
+    // }
 
-    function handleCallbackResponse(response) {
-        console.log("Encoded JWT ID token " + response.credential);
-    }
+    // function handleCallbackResponse(response) {
+    //     console.log("Encoded JWT ID token " + response.credential);
+    // }
 
-    async function Auth() {
+    // async function Auth() {
 
-        var body = {email: '', senha: ''};
-        await api.post('/auth', body)
-        .then((res)=>{
-          localStorage.setItem("token", res.data.token);
-        })
-    }
+    //     var body = {email: '', senha: ''};
+    //     await api.post('/auth', body)
+    //     .then((res)=>{
+    //       localStorage.setItem("token", res.data.token);
+    //     })
+    // }
 
 
     return (
