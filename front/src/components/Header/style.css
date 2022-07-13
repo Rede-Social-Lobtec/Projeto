@@ -1,24 +1,16 @@
 .sidebar{
     margin: 0;
     padding: 0;
-    width: 20%;
+    width: 15%;
     background-color: #ff6900;
-    position: fixed;
     height: 100%;
     /*overflow: auto;*/
     border-bottom-right-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0  rgba(0, 0, 0, 0.19);
-    position: absolute;
-    right: 0px;
     
 }
 
 .container {
-    display: flex;
-}
-
-.main {
-    width: 80%;
     display: flex;
 }
 
@@ -28,7 +20,7 @@
 
 }
 
-.sidebar a{
+.sidebar a, .sidebar button{
     display: block;
     color: rgba(255, 255, 255, 0.7);
     padding: 16px;
@@ -36,15 +28,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    transition: ease-in-out .4s;
+    transition: ease-in-out .3s;
 }
 
-.sidebar a svg{
+.sidebar a svg, .sidebar button svg{
     margin-right: .5em;
 }
 
-.sidebar a:hover{
-    background-color: #121212;
+.sidebar a:hover, .sidebar button:hover {
+    background-color: #d85600;
     color: #FFF;
 }
 
@@ -62,7 +54,5 @@
 
 .Avatar-img img{
     padding: 10%;
-    width: 80%;
-    height: 80%;
-
-  }
+    width: 60%;
+}

@@ -17,7 +17,6 @@ function Perfil() {
     useEffect(() => {
         
         var token = JSON.parse(localStorage.getItem('token'));
-        console.log(token.token);
         async function loadUser() {
             await api.get(`user/${id}`)
                 .then((res) => {

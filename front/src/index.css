@@ -7,3 +7,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main {
+  width: 80%;
+  height: 90%;
+  margin: auto;
+  background-color: #d8d8d8;
+}
