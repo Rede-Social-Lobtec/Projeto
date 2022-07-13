@@ -36,7 +36,7 @@ function Perfil() {
                     Authorization: `Bearer ${token.token}` }
             };
             console.log(config);
-            await api.get('postsUser', config)
+            await api.get(`postsUser/${id}`, config)
             .then((res)=>{
                 setPost(res.data);
                 console.log(res.data);

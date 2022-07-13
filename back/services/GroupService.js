@@ -108,6 +108,24 @@ class GroupService {
         }
     }
 
+    async getMembersInfo(req, res) {
+        try {
+            var id = req.params.id;
+            var group = await Group.find({ _id: id });
+            if(group[0] != undefined) {
+                var membros = []
+                for (let i = 0; i < group[0].seguidores.length; i++) {
+                    var s = group[0].seguidores[i];
+                    var user = await User.find({ _id: s._id });
+                    membros.push(user[0]);
+                }
+                res.status(200).json({ membros });
+            }
+        } catch (error) {
+            res.status(500).json({ msg: `Algo deu errado ao buscar pelos membros do grupo :(`, erro: error });
+        }
+    }
+
     async update(req, res) {
         try {
             var { id_adm, nome, descricao } = req.body;
