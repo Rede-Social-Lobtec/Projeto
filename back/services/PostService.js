@@ -16,6 +16,7 @@ class PostService {
             tema,
             descricao,
             fotoPublicacao,
+            grupo: req.body.grupo,
             curtidaDetalhe: [],
             comentarios: [],
             data: new Date().toLocaleString(),
@@ -44,7 +45,7 @@ class PostService {
             var { tema } = req.params;
             var posts = await Post.find({ tema: { $regex: tema, $options: 'i' } });
             if (posts[0] == undefined) {
-                res.status(400).json({ msg: `Não encontramos nenhum post com o nome informado!` })
+                res.status(400).json({ msg: `Não encontramos nenhum post com o tema informado!` })
             } else {
                 res.status(200).json(posts);
             }

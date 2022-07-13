@@ -1,4 +1,5 @@
 var group = require("../models/Group");
+var post = require("../models/Post");
 var mongoose = require("mongoose");
 const { auth } = require("./UserService");
 var user = require("../models/User");
@@ -6,6 +7,7 @@ const Services = require("./Services");
 
 const Group = mongoose.model("Group", group);
 const User = mongoose.model("User", user);
+const Post = mongoose.model("Post", post);
 
 class GroupService {
 
@@ -46,6 +48,30 @@ class GroupService {
 
     async findByName(req, res) {
         Services.findByName(req, res, Group, 'grupo');
+    }
+
+    async findAllPosts(req,res) {
+        try {
+            var { id } = req.params;
+            var user = await User.find({ _id: req.loggedUser.id })
+            var posts = await Post.find({ grupo: id });
+            var retornar = false;
+
+            var teste = '_id (ObjectID("23897423sdf87462378")'.replace(/([^"]+)/)
+            console.log(teste);
+            
+            for (let i = 0; i < user[0].grupos.length; i++) {
+                var g = user[0].grupos[i];
+                if (g._id != undefined && g._id == id) retornar = true;
+            }
+            if (retornar) {
+                res.status(200).json({posts});
+            } else {
+                res.status(401).json({ msg: "Apenas usuários membros do grupo podem ver as publicações." })
+            }
+        } catch (error) {
+            res.status(500).json({ msg: `Algo deu errado ao buscar pelos posts :(`, erro: error });
+        }
     }
 
     async delete(req, res) {

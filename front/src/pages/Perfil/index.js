@@ -51,6 +51,7 @@ function Perfil() {
         {JSON.stringify(user)}
         <h2>Posts</h2>
         {JSON.stringify(post)}
+
         </div>
         // <div className='container'>
         //     <div className='content1'>

@@ -1,15 +1,15 @@
 
-.Cadcontainer-center{
+/* .Cadcontainer-center{
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #121212;
   }
-  
+   */
   .Cadlogin{
-    background: #EAEAEC;
-    width: 600px;
+    background: #ff6900;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,8 +19,8 @@
   .Cadlogin-area{
     display: flex;
     justify-content: center;
-    background-color: #181c2e;
-    width: 100%;
+    background-color: #ff6900;
+    width: 50%;
   }
   
   .Cadlogin-area img{
@@ -39,7 +39,7 @@
   Cadform h1{
     text-align: center;
     margin-bottom: 0.5em;
-    color: #181c2e;
+    color: #ff6900;
   }
   
   Cad.login input{

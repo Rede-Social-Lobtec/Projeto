@@ -4,6 +4,7 @@ const postModel = new mongoose.Schema({
 
     id_user: String,
     tema: String,
+    grupo: String,
     descricao: String,
     fotoPublicacao: String,
     curtidaDetalhe:[

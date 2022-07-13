@@ -1,0 +1,111 @@
+
+/*o todo*/
+/* .Hcontainer-center{
+    height: 20%;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    background-color: #ff6900	;
+  } */
+  
+  .Hlogin{
+    background: #ffffff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    /* flex-direction: column; */
+  }
+
+
+  
+  .Hlogin-img{
+
+    background: #ffffff;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  } 
+
+
+
+/* aquela tela que cerca a logo
+  .Hlogin-img{
+    display: flex;
+    justify-content: center; deixa ele a direita no quadro que ele está
+    background-color: #ff6900;
+    width: 100%; 
+  }*/
+
+
+
+  /*logo*/
+  .Hlogin-img img{
+    padding: 25%;
+    width: 50%;
+    height: 30%;
+
+  }
+
+
+  /*botões*/
+  .Hform-login {
+    margin-top: 1.5em;
+    width: 50%;
+    display: flex;
+    flex-direction: row; /*que faz ser um em cima do outro*/
+    align-items: center;
+  }
+  
+  /*?*/
+  .Hform-login h1 {
+    text-align: center;
+    margin-bottom: 10em;
+    color: #670067;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+
+
+  }
+  
+ 
+  
+
+  /*botões*/
+  .Hform-login a {
+    margin: 0.5 em 20;
+    padding: 1.5% 3%;
+    background-color: #670067;
+    border-radius: 25rem;
+    border: 2px solid #670067;
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    transition: all .25s;
+  }
+/*não sei*/
+  .Hform-login a:hover {
+    background-color: #ffffff;
+    color: #ffffff;
+    transition: all .25s;
+  }
+  
+  .Hdivisor {
+    width: 80%;
+    border: groove 1px #ffffff;
+  }
+
+  /*distani do botão do google para o se preferir*/
+  #signInDiv {
+    margin: 2% auto 6%;
+  }
+  
+  
