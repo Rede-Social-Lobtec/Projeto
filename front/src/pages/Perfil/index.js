@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { useParams } from 'react-router-dom';
 
-import Header from '../../components/Header';
+// import Header from '../../components/Header';
 
 
 function Perfil() {
@@ -20,21 +20,20 @@ function Perfil() {
                 })
         }
         loadUser();
-        console.log(user.seguindo);
     }, []);
 
     return (
         <div className='container'>
             <div className='content1'>
                 <img src={require('../../assets/user-logo.png')} />
-                <h2>{user.nome}</h2>
+                <h2>{user}</h2>
             </div>
             <div className='content2'>
                 <span>Departamento: {user.departamento}</span>
                 {/* <span>Cargo: {user.cargo}</span> */}
             </div>
             <div className='content3'>
-                <ul>
+                {/* <ul>
                     {user.seguindo.map((item) => {
                         return (
                             <li key={item._id}>
@@ -47,7 +46,7 @@ function Perfil() {
                             </li>
                         )
                     })}
-                </ul>
+                </ul> */}
             </div>
             <div className='content4'>content4</div>
             <div className='content5'>content5</div>

@@ -1,31 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import TokenProvider from '../../components/contexts/token';
-import api from '../../services/api';
+import { useState, useEffect, useContext } from 'react';
+import {Context} from '../../components/contexts/AuthContext';
 import './styleLog.css';
 
 function Login() {
+    const {authenticated, handleLogin, loginToken} = useContext(Context);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSubmit(e) {
         e.preventDefault();
-        Auth();
+        handleLogin(email, password);
     }
 
     function handleCallbackResponse(response) {
-        console.log("Encoded JWT ID token " + response.credential);
-    }
-
-    async function Auth() {
-
-        var body = {email: '', senha: ''};
-        body.email = email;
-        body.senha = password;
-        await api.post('/auth', body)
-        .then((res)=>{
-          localStorage.setItem("token", res.data.token);
-        });
+        loginToken(response.credential);
     }
 
     useEffect(() => {
@@ -48,7 +37,7 @@ function Login() {
                     <h1>O login fazer você deve</h1>
                     <input type="text" placeholder="email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <input type="password" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button type="submit"><Link to='/feed'>Acessar</Link></button>
+                    <button type="submit">Acessar</button>
                 </form>
 
                 <hr className='divisor' />
