@@ -16,6 +16,7 @@ router.get('/users/:nome', userService.findByName);
 router.delete('/user/:id', auth, userService.delete);
 router.put('/user/:id', auth, userService.update);
 router.post('/auth', userService.token);
+router.post('/authGoogle', userService.google);
 router.put('/user', auth, userService.manageFollowing);
 router.get('/user', auth, userService.getSocialInfo)
 

@@ -185,6 +185,24 @@ class UserService {
 
     }
 
+    async google(req, res) {
+        var { email } = req.body;
+        var user = await User.find({ email: email });
+        if (user[0] != undefined) {
+            var id = user[0].id;
+            try {
+                var token = jwt.sign({ id: id, email: user[0].email },
+                    JWTSecret, { expiresIn: '5h' });
+                createLog(id);
+                res.status(200).json({ token: token, id: id });
+            } catch (err) {
+                res.status(400).json({ erro: "Houve uma falha interna..." });
+            }
+        } else {
+            res.status(401).json({ erro: "Não encontramos nenhum usuário com o e-mail informado." });
+        }
+    }
+
     async auth(req, res, next) {
         const authToken = req.headers['authorization'];
 

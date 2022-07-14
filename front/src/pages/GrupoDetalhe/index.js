@@ -16,8 +16,6 @@ function GrupoDetalhe() {
 
 
     useEffect(() => {
-
-        var token = JSON.parse(localStorage.getItem('token'));
         async function loadGrupo() {
             await api.get(`group/${id}`)
                 .then((res) => {
@@ -33,7 +31,7 @@ function GrupoDetalhe() {
 
             const config = {
                 headers: {
-                    Authorization: `Bearer ${token.token}`
+                    Authorization: `Bearer ${token}`
                 }
             };
             await api.get(`group/${id}/posts`, config)

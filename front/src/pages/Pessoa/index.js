@@ -7,13 +7,13 @@ function Pessoa() {
 
     const [pessoas, setPessoas] = useState([{}]);
     const [nomePessoa, setNomePessoa] = useState('');
+    var token = JSON.parse(localStorage.getItem('token'));
 
     useEffect(() => {
 
-        var token = JSON.parse(localStorage.getItem('token'));
         const config = {
                 headers: {
-                    Authorization: `Bearer ${token.token}`
+                    Authorization: `Bearer ${token}`
                 }
             };
 
@@ -39,12 +39,10 @@ function Pessoa() {
     }
 
     async function seguirUser(id_user){
-       
-        var token = JSON.parse(localStorage.getItem('token'));
         var body = {"id_user": id_user}
         const config = {
                 headers: {
-                    Authorization: `Bearer ${token.token}`
+                    Authorization: `Bearer ${token}`
                 }
             };
 

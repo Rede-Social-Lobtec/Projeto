@@ -13,7 +13,6 @@ function Perfil() {
     const [post, setPost] = useState([{}]);
     const { id } = useParams();
 
-
     useEffect(() => {
         
         var token = JSON.parse(localStorage.getItem('token'));
@@ -32,9 +31,10 @@ function Perfil() {
 
             const config = {
                 headers: { 
-                    Authorization: `Bearer ${token.token}` }
+                    Authorization: `Bearer ${token}` }
             };
             console.log(config);
+            console.log(id);
             await api.get(`postsUser/${id}`, config)
             .then((res)=>{
                 setPost(res.data);

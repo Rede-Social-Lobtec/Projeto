@@ -39,9 +39,11 @@ function AuthProvider({children}){
 
     async function loginToken(token){
         var {email} = jwt_decode(token);
-        console.log(email);
-        localStorage.setItem('token', JSON.stringify(token));
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        var body = { email: email }
+        const {data: retorno} = await api.post('/authGoogle', body);
+        localStorage.setItem('token', JSON.stringify(retorno.token));
+        localStorage.setItem('id', JSON.stringify(retorno.id));
+        api.defaults.headers.common["Authorization"] = `Bearer ${retorno.token}`;
         navigate('/feed', {replace:true});
         setAuthenticated(true);
         
@@ -50,6 +52,7 @@ function AuthProvider({children}){
     async function handleLogout(){
         setAuthenticated(false);
         localStorage.removeItem('token');
+        localStorage.removeItem('id');
         api.defaults.headers.common["Authorization"] = undefined;
         navigate('/', {replace: true});
     }
