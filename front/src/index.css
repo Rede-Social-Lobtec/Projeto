@@ -14,3 +14,9 @@ code {
   margin: auto;
   background-color: #d8d8d8;
 }
+
+button {
+  outline: 0;
+  background: none;
+  border: none;
+}
