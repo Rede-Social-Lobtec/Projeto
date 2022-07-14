@@ -109,11 +109,11 @@ class PostService {
     async returnFeed(req, res) {
         try {
             var user = await User.find({ _id: req.loggedUser.id });
-            var users = await User.find();
             var usersAdm = await User.find({ admin: true });
 
             var postsSeguindo = [];
             var postsAdms = [];
+            var criadores = [];
 
             for (let i = 0; i < usersAdm.length; i++) {
                 var adm = usersAdm[i];
@@ -129,16 +129,23 @@ class PostService {
             for (let i = 0; i < user[0].seguindo.length; i++) {
                 var u = user[0].seguindo[i];
                 var post = await Post.find({ id_user: u._id });
-                var criador = await User.find({ _id: post[0].id_user })
+                var criador = await User.find({ _id: post[0].id_user });
                 if (post[0] != undefined) {
                     if (!criador[0].admin) {
-                        if (post.length == 1) { postsSeguindo.push(post[0]); }
-                        else { post.forEach(p => postsSeguindo.push(p)); }
+                        if (post.length == 1) { 
+                            post[0][criador] = criador[0];
+                            postsSeguindo.push(post[0]); 
+                        }
+                        else { post.forEach(p => { 
+                            p[criador] = criador[0];
+                            postsSeguindo.push(p)
+                        })}
+                        criadores.push(criador[0]);
                     }
                 }
             }
 
-            var feed = postsAdms.concat(postsSeguindo)
+            var feed = postsAdms.concat(postsSeguindo);
 
             // res.status(200).json({ feed: { admin: postsAdms, seguindo: postsSeguindo } });
             // res.status(200).json({ feed: feed.sort((a,b) =>  {
