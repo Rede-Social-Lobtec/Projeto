@@ -34,7 +34,7 @@ export default function Header(){
                 <h4>{user.nome}</h4>
             </div>
             <div className="Avatar-img">
-                <Link to={"/perfil/"+ id}>
+                <Link to={`../perfil-user/${id}`}>
                     {user.foto != '' ? 
                         <img src={user.foto} alt="Avatar" />   
                     :
