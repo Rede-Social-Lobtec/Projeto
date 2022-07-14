@@ -1,111 +1,77 @@
+.Hcontainer-center{
+  height: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  background-color: #ff6900	;
+}
 
-/*o todo*/
-/* .Hcontainer-center{
-    height: 20%;
-    display: flex;
-    justify-content: right;
-    align-items: right;
-    background-color: #ff6900	;
-  } */
-  
-  .Hlogin{
-    background: #ffffff;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-    /* flex-direction: column; */
-  }
+.Hlogin{
+  background: #ff6900;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
+.Hlogin-img{
+  display: flex;
+  justify-content: center;
+  background-color: #FFF;
+  width: 100%;
+}
 
-  
-  .Hlogin-img{
+.Hlogin-img img{
+  padding: 20px;
+  width: 850px;
+  height: 520px;
+}
 
-    background: #ffffff;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  } 
+.Hform-login {
+  margin-top: 1.5em;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.Hform-login h1 {
+  text-align: center;
+  margin-bottom: 0.5em;
+  color: #670067;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
 
-
-/* aquela tela que cerca a logo
-  .Hlogin-img{
-    display: flex;
-    justify-content: center; deixa ele a direita no quadro que ele está
-    background-color: #ff6900;
-    width: 100%; 
-  }*/
-
-
-
-  /*logo*/
-  .Hlogin-img img{
-    padding: 25%;
-    width: 50%;
-    height: 30%;
-
-  }
-
-
-  /*botões*/
-  .Hform-login {
-    margin-top: 1.5em;
-    width: 50%;
-    display: flex;
-    flex-direction: row; /*que faz ser um em cima do outro*/
-    align-items: center;
-  }
-  
-  /*?*/
-  .Hform-login h1 {
-    text-align: center;
-    margin-bottom: 10em;
-    color: #670067;
-        display: flex;
-    align-items: center;
-    justify-content: center;
-
-
-
-
-
-  }
-  
- 
-  
-
-  /*botões*/
-  .Hform-login a {
-    margin: 0.5 em 20;
-    padding: 1.5% 3%;
-    background-color: #670067;
-    border-radius: 25rem;
-    border: 2px solid #670067;
-    text-decoration: none;
-    color: #ffffff;
-    cursor: pointer;
-    justify-content: center;
-    align-items: center;
-    transition: all .25s;
-  }
+/*botões*/
+.Hform-login a {
+  margin: 0.5 em 20;
+  padding: 1.5% 3%;
+  background-color: #670067;
+  border-radius: 25rem;
+  border: 2px solid #670067;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  transition: all .25s;
+}
 /*não sei*/
-  .Hform-login a:hover {
-    background-color: #ffffff;
-    color: #ffffff;
-    transition: all .25s;
-  }
-  
-  .Hdivisor {
-    width: 80%;
-    border: groove 1px #ffffff;
-  }
+.Hform-login a:hover {
+  background-color: #811b81;
+  color: #ffffff;
+  transition: all .25s;
+}
 
-  /*distani do botão do google para o se preferir*/
-  #signInDiv {
-    margin: 2% auto 6%;
-  }
-  
-  
+
+.Hdivisor {
+  width: 80%;
+  border: groove 1px #458f70;
+
+}
+
+#signInDiv {
+  margin: 2% auto 6%;
+}

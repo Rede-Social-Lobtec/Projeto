@@ -1,6 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import {Context} from '../../components/contexts/AuthContext';
 import './styleLog.css';
+import logo from '../../assets/Animação_logo.gif';
+
+
 
 function Login() {
     const {authenticated, handleLogin, loginToken} = useContext(Context);
@@ -32,9 +35,14 @@ function Login() {
 
     return (
         <div className="container-center">
+                        <div className="login-img"> 
+                    <img src={logo} alt="Sistema Logo" />
+                    </div>
             <div className="login">
-                <form onSubmit={handleSubmit} className="form-login">
-                    <h1>O login fazer você deve</h1>
+
+
+                <form  onSubmit={handleSubmit} className="form-login">
+                    <h1>Faça o login</h1>
                     <input type="text" placeholder="email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <input type="password" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} />
                     <button type="submit">Acessar</button>
@@ -45,7 +53,6 @@ function Login() {
                 <h4>Ou, se preferir </h4>
                 
                 <div id="signInDiv"></div>
-
             </div>
         </div>
     );

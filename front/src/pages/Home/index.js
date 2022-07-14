@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import './styleHome.css';
-import nome from '../../assets/logo.png';
+import nome from '../../assets/Animação_logo.gif';
+import Header from '../../components/Header';
 
 
 function Home() {
@@ -31,16 +32,17 @@ function Home() {
 
 
     return (
-        // <div className="Hcontainer-center">
+        <div className="Hcontainer-center">
             <div className="Hlogin">
 
                 <div className="Hlogin-img">
                     <img src={nome} alt="HSistema nome" />
                     </div>
+                    </div>
 
                 <form onSubmit={handleSubmit} className="Hform-login">
                     <h1>Bem-Vindo(a) a nossa rede social corporativa</h1>
-                    <Link to="/login"> Login </Link> 
+                    <Link to="/login"> Fazer Login </Link> 
                 </form>
 
             
