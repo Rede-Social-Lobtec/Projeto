@@ -9,6 +9,7 @@ import Perfil from '../pages/Perfil';
 import Pessoa from '../pages/Pessoa';
 import Grupo from '../pages/Grupo';
 import Erro from '../pages/Erro';
+import GrupoDetalhe from '../pages/GrupoDetalhe';
 
 function RoutesApp() {
 
@@ -24,6 +25,7 @@ function RoutesApp() {
                 <Route path="/perfil/:id" element={<Perfil />} />
                 <Route path="/pessoa" element={<Pessoa />} />
                 <Route path="/grupo" element={<Grupo />} />
+                <Route path="/grupo/:id" element={<GrupoDetalhe />} />
             </Route>
             <Route path="*" element={<Erro />} />
         </Routes>

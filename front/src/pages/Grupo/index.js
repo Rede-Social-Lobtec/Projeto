@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import './style.css';
 
@@ -35,12 +36,21 @@ function Grupo() {
     return (
         <div>
             <h1>pagina grupos</h1>
-            {JSON.stringify(grupos)}
             <div>
-                <input type="text" placeholder="grupos" value={nomeGrupo} onChange={(e) => setNomeGrupo(e.target.value)} />
+                <input type="text" placeholder="nome do grupo" value={nomeGrupo} onChange={(e) => setNomeGrupo(e.target.value)} />
                 <button onClick={groupByName}>Pesquisar</button>
-                {JSON.stringify(nomeGrupo)}
             </div>
+            <ul>
+                {grupos.map((g) => {
+                    return (
+                        <li key={g.id}>
+                            <strong>{g.nome}</strong>
+                            <p>{g.descricao}</p>
+                            <Link to={`/grupo/${g._id}`}>Ver grupo</Link>
+                        </li>
+                    )
+                })}
+            </ul>
         </div>
 
     )
