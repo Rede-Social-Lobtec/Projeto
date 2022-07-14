@@ -31,22 +31,24 @@ export default function Header(){
     return(
         <div className='sidebar'>
             <div>
-                <h4>{JSON.stringify(user.nome)}</h4>
+                <h4>{user.nome}</h4>
             </div>
             <div className="Avatar-img">
-                {user.foto != '' ? 
-                    <img src={user.foto} alt="Avatar" />   
-                :
-                    <img src={avatar} alt="Avatar" />
-                }
+                <Link to={"/perfil/"+ id}>
+                    {user.foto != '' ? 
+                        <img src={user.foto} alt="Avatar" />   
+                    :
+                        <img src={avatar} alt="Avatar" />
+                    }
+                </Link>
             </div>
-            <Link to={"/perfil/"+ id}>
-                <FiUser color='#FFF' size={24}/>
-                Perfil
-            </Link>
             <Link to="/feed">
                 <FiHome color='#FFF' size={24}/>
                 Feed
+            </Link>
+            <Link to="/pessoa">
+                <FiUser color='#FFF' size={24}/>
+                Pessoas
             </Link>
             <Link to="/grupo">
                 <FiUsers color='#FFF' size={24}/>

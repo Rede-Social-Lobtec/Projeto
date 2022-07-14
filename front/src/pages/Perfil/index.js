@@ -12,10 +12,10 @@ function Perfil() {
     const [user, setUser] = useState([{}]);
     const [post, setPost] = useState([{}]);
     const { id } = useParams();
+    var token = JSON.parse(localStorage.getItem('token'));
 
     useEffect(() => {
         
-        var token = JSON.parse(localStorage.getItem('token'));
         async function loadUser() {
             await api.get(`user/${id}`)
                 .then((res) => {
