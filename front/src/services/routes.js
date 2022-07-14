@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import Cadastro from '../pages/Cadastro';
 import Feed from '../pages/Feed';
 import Perfil from '../pages/Perfil';
+import Pessoa from '../pages/Pessoa';
 import Grupo from '../pages/Grupo';
 import Erro from '../pages/Erro';
 
@@ -21,6 +22,7 @@ function RoutesApp() {
             <Route element={<PrivateRoute />}>
                 <Route path="/feed" element={<Feed/>} />
                 <Route path="/perfil/:id" element={<Perfil />} />
+                <Route path="/pessoa" element={<Pessoa />} />
                 <Route path="/grupo" element={<Grupo />} />
             </Route>
             <Route path="*" element={<Erro />} />
