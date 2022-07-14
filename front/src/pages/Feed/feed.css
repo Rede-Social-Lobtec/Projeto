@@ -1,0 +1,147 @@
+.container{
+  display: flex !important;
+}
+
+.div-flex {
+  display: flex;
+  justify-content: space-evenly;
+  width: 95%;
+  height: 90%;
+  margin: auto;
+}
+
+.div-social {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 25%;
+  height: 90%;
+}
+
+.div-column {
+  height: 50%;
+}
+
+.people-followed, .groups-user {
+  background-color: #fff;
+  height: 70%;
+  width: 90%;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.div-feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 70%;
+  height: 95%;
+}
+
+.div-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.div-posts {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  margin: 5% auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.div-posts ul {
+  list-style: none;
+  margin: 5% 0;
+  padding: 0;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.div-posts ul li {
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 90%;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  margin: 3%;
+}
+
+.post-header {
+  display: flex;
+}
+
+.post-header div {
+  margin-left: 2%;
+  display: flex;
+  line-height: 70%;
+  flex-direction: column;
+}
+
+.post-header div p {
+  font-size: .7rem;
+}
+
+.post-img-user{
+  width: 40px;
+  height: 40px;
+}
+
+.post-content {
+  font-size: .8rem;
+  max-width: 95%;
+  margin: auto;
+  text-justify: auto;
+}
+
+
+.post-footer {
+  width: 100%;
+}
+
+.div-total-likes {
+  display: flex;
+  margin: 0 3%;
+  font-size: .8em;
+  align-items: center;
+}
+
+.div-interacoes-post {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.div-user-like, .div-post-comments {
+  display: flex;
+  margin: 0 2%;
+  font-size: .7em;
+  align-items: center;
+  width: 50%;
+}
+
+.div-post-comments {
+  justify-content: flex-end;
+}
+
+.user-like-icon, .total-likes-icon {
+  margin-right: 1%;
+  font-size: 16px;
+}
+
+.post-comments-icon {
+  margin-left: 1%;
+  font-size: 18px;
+}
+
