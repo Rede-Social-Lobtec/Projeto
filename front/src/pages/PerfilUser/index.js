@@ -1,7 +1,8 @@
 import './style.css';
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { useParams, useNavigate } from 'react-router-dom';
+import Modal from '../../components/Modal';
 
 // import Header from '../../components/Header';
 
@@ -10,14 +11,16 @@ function PerfilUser() {
 
     const [user, setUser] = useState([{}]);
     const [post, setPost] = useState([{}]);
+    const [userUp, setUserUp] = useState([{}]);
+    const [modalOpen, setModalOpen] = useState(false);
     const { id } = useParams();
     var idUser = JSON.parse(localStorage.getItem('id'));
     var token = JSON.parse(localStorage.getItem('token'));
     const navigate = useNavigate();
 
     useEffect(() => {
-        
-        if(id != idUser){
+
+        if (id != idUser) {
             navigate(`../perfil/${id}`);
         }
         async function loadUser() {
@@ -25,36 +28,58 @@ function PerfilUser() {
                 .then((res) => {
                     setUser(res.data);
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     console.log(err);
                 })
         }
         loadUser();
 
-        async function loadPost(){
+        async function loadPost() {
 
             const config = {
-                headers: { 
-                    Authorization: `Bearer ${token}` }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             };
-            console.log(config);
-            console.log(id);
             await api.get(`postsUser/${id}`, config)
-            .then((res)=>{
-                setPost(res.data);
-                console.log(res.data);
-            })
+                .then((res) => {
+                    setPost(res.data);
+                    console.log(res.data);
+                })
         }
         loadPost();
     }, []);
 
+    async function editUser(){
+        var body = userUp
+        const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+
+        await api.put(`user/${id}`, body, config)
+        .then((res)=>{
+            alert('Dados alterados');
+        })
+    }
+
     return (
         <div>
-        <h1>pagina usuario private</h1>
-        {JSON.stringify(user)}
-        <h2>Posts</h2>
-        {JSON.stringify(post)}
-
+            {modalOpen && <Modal setOpenModal={setModalOpen} setUpUser={setUserUp}/>}
+            <button onClick={editUser}>Salvar alteracoes</button>
+            <h1>pagina usuario private</h1>
+            {JSON.stringify(user)}
+            <button
+                className="openModalBtn"
+                onClick={() => {
+                    setModalOpen(true);
+                }}
+            >
+                Editar
+            </button>
+            <h2>Posts</h2>
+            {JSON.stringify(post)}
         </div>
         // <div className='container'>
         //     <div className='content1'>

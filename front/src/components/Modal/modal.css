@@ -1,0 +1,63 @@
+.modalBackground {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(200, 200, 200);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.modalContainer {
+    width: 500px;
+    height: 330px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.header{
+    display: flex;
+}
+
+.header button{
+    background-color: rgb(238, 50, 50);
+    padding: 8px;
+    border-radius: 6px;
+    color: white;
+    position: fixed;
+    margin-left: 478px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form input{
+    width: 40%;
+    padding: 8px 15px;
+    margin-top: 8px;
+    margin-right: 50px;
+    box-sizing: border-box;
+    border: 1.5px solid grey;
+    border-radius: 6px;
+}
+
+.salvar{
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 26px;
+    background-color: rgb(4, 126, 240);
+    padding: 20px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.salvar:hover{
+    background-color: rgb(11, 53, 192);
+}
+  
+  
