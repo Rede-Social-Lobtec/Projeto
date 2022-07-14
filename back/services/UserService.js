@@ -164,6 +164,8 @@ class UserService {
         */
 
         var { email, senha } = req.body;
+        console.log(email);
+        console.log(senha);
         var user = await User.find({ email: email });
         if (user[0] != undefined) {
             var id = user[0].id;
@@ -172,7 +174,7 @@ class UserService {
                     var token = jwt.sign({ id: id, email: user[0].email },
                         JWTSecret, { expiresIn: '5h' });
                     createLog(id);
-                    res.status(200).json({ token: token });
+                    res.status(200).json({ token: token, id: id });
                 } catch (err) {
                     res.status(400).json({ erro: "Houve uma falha interna..." });
                 }

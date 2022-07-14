@@ -28,22 +28,22 @@ function AuthProvider({children}){
         var body = {email:'', senha:''};
         body.email = email;
         body.senha = password;
-        const {data: token} = await api.post('/auth', body);
-        localStorage.setItem('token', JSON.stringify(token));
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        const {data: data} = await api.post('/auth', body);
+        localStorage.setItem('token', JSON.stringify(data.token));
+        localStorage.setItem('id', JSON.stringify(data.id));
+        api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
         navigate('/feed', {replace:true});
         setAuthenticated(true);
-        console.log(token);
         
     }
 
     async function loginToken(token){
         var {email} = jwt_decode(token);
         var body = { email: email }
-        const {data: retorno} = await api.post('/authGoogle', body);
-        localStorage.setItem('token', JSON.stringify(retorno.token));
-        localStorage.setItem('id', JSON.stringify(retorno.id));
-        api.defaults.headers.common["Authorization"] = `Bearer ${retorno.token}`;
+        const {data: data} = await api.post('/authGoogle', body);
+        localStorage.setItem('token', JSON.stringify(data.token));
+        localStorage.setItem('id', JSON.stringify(data.id));
+        api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
         navigate('/feed', {replace:true});
         setAuthenticated(true);
         
