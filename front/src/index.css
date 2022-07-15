@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&family=Nunito&display=swap');
+
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+*:focus {
+  outline: none;
 }
 
 code {
@@ -9,10 +15,21 @@ code {
 }
 
 .main {
-  width: 80%;
-  height: 90%;
+  width: 85%;
+  height: 100%;
   margin: auto;
-  background-color: #d8d8d8;
+  font-family: 'Nunito', sans-serif;
+}
+
+h1{
+  color: #ff6900;
+  font-family: 'Mouse Memoirs', sans-serif;
+  font-size: 2.1rem;
+  margin: 1.5% 0 1%;
+}
+
+h5 {
+  margin: 5% 0;
 }
 
 button {

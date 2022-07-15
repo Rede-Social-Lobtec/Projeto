@@ -235,7 +235,6 @@ class UserService {
             var msg = "Você seguiu o usuário!";
 
             if (userToFollow[0] != undefined) {
-
                 if (seguindo.length > 0) {
                     seguindo.forEach(s => {
                         if (s._id == id_user) {

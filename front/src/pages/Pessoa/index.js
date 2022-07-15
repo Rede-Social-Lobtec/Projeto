@@ -8,6 +8,7 @@ function Pessoa() {
     const [pessoas, setPessoas] = useState([{}]);
     const [nomePessoa, setNomePessoa] = useState('');
     var token = JSON.parse(localStorage.getItem('token'));
+    var id = JSON.parse(localStorage.getItem('id'));
 
     useEffect(() => {
 
@@ -62,16 +63,18 @@ function Pessoa() {
             </div>          
             <ul>
                 {pessoas.map((p) => {
-                    return (
-                        <div>
-                        <li key={p.id}>
-                            <strong>{p.nome}</strong>
-                            <p>{p.departamento}</p>
-                            <Link to={`../perfil/${p._id}`}>Ver usuário</Link>   
-                        </li> 
-                        <button onClick={(e)=>seguirUser(p._id)}>seguir</button>   
-                        </div>
-                    )
+                    if (p._id != id) {
+                        return (
+                            <div>
+                            <li key={p.id}>
+                                <strong>{p.nome}</strong>
+                                <p>{p.departamento}</p>
+                                <Link to={`../perfil/${p._id}`}>Ver usuário</Link>   
+                            </li> 
+                            <button onClick={(e)=>seguirUser(p._id)}>seguir</button>   
+                            </div>
+                        )
+                    }
                 })}
             </ul>           
         </div>
