@@ -13,11 +13,11 @@ function Feed() {
     const { handleLogout } = useContext(Context);
     const [posts, setPosts] = useState([]);
     const [groups, setGroups] = useState([]);
-    const [creators, setCreators] = useState([]);
     var token = JSON.parse(localStorage.getItem('token'));
     var id = JSON.parse(localStorage.getItem('id'));
     const [loaded, setLoaded] = useState(false);
-
+    
+    // VER PQ TÁ RODANDO DUAS VEZES 
     useEffect(() => {
 
         const config = {
@@ -31,28 +31,12 @@ function Feed() {
             await api.get(`feed`, config)
                 .then((res) => {
                     setPosts(res.data.feed);
-                    console.log(posts);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         }
         loadPosts();
-
-        async function loadCreators() {
-            await api.get('users', config)
-                .then((res) => {
-                    res.data.forEach(u => {
-                        posts.forEach(p => {
-                            if (p.id_user == u._id) setCreators(...creators, u);
-                        })
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
-        loadCreators();
 
         setLoaded(true);
     }, []);
@@ -95,7 +79,11 @@ function Feed() {
                                             <div className='post-header'>
                                                 <img src={avatar} alt="avatar" className='post-img-user' />
                                                 <div>
-                                                    <strong>{p.curtidaDetalhe.length}</strong>
+                                                    {p.criador != undefined ?
+                                                        <strong>{p.criador.nome}</strong>
+                                                        :
+                                                        <strong>-- Nome usuário</strong>
+                                                    }
                                                     <p>{p.data} às {p.hora}</p>
                                                 </div>
                                             </div>

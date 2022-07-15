@@ -2,6 +2,7 @@ var post = require("../models/Post");
 var user = require("../models/User");
 var mongoose = require("mongoose");
 const Services = require("./Services");
+const { json } = require("body-parser");
 
 const Post = mongoose.model("Post", post);
 const User = mongoose.model("User", user);
@@ -133,11 +134,18 @@ class PostService {
                 if (post[0] != undefined) {
                     if (!criador[0].admin) {
                         if (post.length == 1) { 
-                            post[0][criador] = criador[0];
-                            postsSeguindo.push(post[0]); 
+                            // var newPost = new Post({
+                            //     ...post[0],
+                            //     criador: criador[0]
+                            // });
+                            var newPost = JSON.parse(JSON.stringify(post[0]));
+                            newPost["criador"] = criador[0];
+                            // console.log('post depois', teste);
+                            console.log(newPost);
+                            postsSeguindo.push(newPost); 
                         }
                         else { post.forEach(p => { 
-                            p[criador] = criador[0];
+                            p.criador = criador[0];
                             postsSeguindo.push(p)
                         })}
                         criadores.push(criador[0]);
