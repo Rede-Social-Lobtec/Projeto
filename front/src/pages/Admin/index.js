@@ -14,6 +14,7 @@ function Admin() {
     const [cargo, setCargo] = useState('');
     const [data_nascimento, setNascimento] = useState('');
     const [telefone, setTelfone] = useState('');
+    const [adminBool, setAdminBool] = useState(false);
     const [formOpen, setFormOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [updateOpen, setUpdateOpen] = useState(false);
@@ -73,6 +74,7 @@ function Admin() {
             data_nascimento: data_nascimento,
             telefone: telefone,
             senha: password,
+            admin: adminBool
         }
         await api.post(`user`, body)
             .then(() => {
@@ -148,6 +150,9 @@ function Admin() {
                                     <input type="text" placeholder="Cargo" value={cargo} onChange={(e) => setCargo(e.target.value)} />
                                     <input type="text" placeholder="Data de Nascimento" value={data_nascimento} onChange={(e) => setNascimento(e.target.value)} />
                                     <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelfone(e.target.value)} />
+                                    <label className='admin-bool'>Usuário é administrador?
+                                    <input type='checkbox' value={adminBool} onChange={(e)=> setAdminBool(true)}></input>
+                                    </label>
                                 </form>
                                 <button className='form-button' type="submit" onClick={handleCreate}>Salvar</button>
                             </div>
@@ -164,6 +169,9 @@ function Admin() {
                                     <input type="text" placeholder="Cargo" value={cargo} onChange={(e) => setCargo(e.target.value)} />
                                     <input type="text" placeholder="Data de Nascimento" value={data_nascimento} onChange={(e) => setNascimento(e.target.value)} />
                                     <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelfone(e.target.value)} />
+                                    <label className='update-bool'>Usuário é administrador?
+                                    <input type='checkbox' value={adminBool} onChange={(e)=> setAdminBool(true)}></input>
+                                    </label>
                                 </form>
                                 <button className='update-button' type="submit" onClick={handleUpdate}>Salvar</button>
                             </div>
