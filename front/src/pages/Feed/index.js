@@ -51,8 +51,6 @@ function Feed() {
         }
         loadSocialInfo();
 
-
-
         setLoaded(true);
     }, []);
 
@@ -123,7 +121,7 @@ function Feed() {
                                 </button>
                                 }
                             </div>
-                            <button onClick={() => { prompt("teste") }} className='link-create-post'>Criar post</button>
+                            <Link to="/cadastroPost" className='link-create-post'>Criar post</Link>
                         </div>
                         <div className='div-posts'>
                             <ul>
