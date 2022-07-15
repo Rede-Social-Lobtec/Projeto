@@ -6,9 +6,8 @@ import { useContext, useEffect, useState } from 'react';
 import {Context} from '../../components/contexts/AuthContext';
 import { useParams } from 'react-router-dom';
 
-import { FiHome, FiUsers, FiUser, FiSettings, FiLogOut} from "react-icons/fi";
 
-var logo = require('../../assets/logo.png')
+import { FiHome, FiUsers, FiUser, FiSettings, FiLogOut} from "react-icons/fi";
 
 export default function Header(){
     const {handleLogout} = useContext(Context);
@@ -31,6 +30,9 @@ export default function Header(){
 
     return(
         <div className='sidebar'>
+            <div>
+                <h4>{user.nome}</h4>
+            </div>
             <div className="Avatar-img">
                 <Link to={`../perfil-user/${id}`}>
                     {user.foto != '' ? 
@@ -40,7 +42,6 @@ export default function Header(){
                     }
                 </Link>
             </div>
-            <h4>{user.nome}</h4>
             <Link to="/feed">
                 <FiHome color='#FFF' size={24}/>
                 Feed
@@ -57,9 +58,6 @@ export default function Header(){
                 <FiLogOut color='#FFF' size={24}/>
                 Sair
             </button>
-            {/* <a href="http://www.lobtec.com.br" target="_blank"> */}
-            <img src={logo} alt="Logo Lobtec" className='logo-lobtec'/>
-            {/* </a> */}
         </div>
     )
 }

@@ -1,11 +1,11 @@
 import './feed.css';
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Context } from '../../components/contexts/AuthContext';
 import Header from '../../components/Header';
 import { CgSearch } from "react-icons/cg";
 import api from '../../services/api';
-import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiFillLike, AiOutlineComment } from 'react-icons/ai';
 
 const avatar = require('../../assets/no-photo.png');
 
@@ -13,144 +13,91 @@ function Feed() {
     const { handleLogout } = useContext(Context);
     const [posts, setPosts] = useState([]);
     const [groups, setGroups] = useState([]);
-    const [following, setFollowing] = useState([]);
-    const [temaPost, setTemaPost] = useState('');
-    const [curtidas, setCurtidas] = useState([]);
-
+    const [creators, setCreators] = useState([]);
     var token = JSON.parse(localStorage.getItem('token'));
     var id = JSON.parse(localStorage.getItem('id'));
     const [loaded, setLoaded] = useState(false);
-    
+
     useEffect(() => {
+
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         };
 
-        function loadPosts() {
-            api.get(`feed`, config)
+        async function loadPosts() {
+
+            await api.get(`feed`, config)
                 .then((res) => {
-                    setPosts(res.data)
+                    setPosts(res.data.feed);
+                    console.log(posts);
                 })
-                .catch((err) => {
-                    console.log(err);
-                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
         loadPosts();
 
-        function loadSocialInfo() {
-            api.get('user', config)
+        async function loadCreators() {
+            await api.get('users', config)
                 .then((res) => {
-                    setGroups(res.data.grupos)
-                    setFollowing(res.data.seguindo);
+                    res.data.forEach(u => {
+                        posts.forEach(p => {
+                            if (p.id_user == u._id) setCreators(...creators, u);
+                        })
+                    });
                 })
                 .catch(err => {
                     console.log(err);
                 })
         }
-        loadSocialInfo();
+        loadCreators();
 
         setLoaded(true);
     }, []);
 
-    async function postByTheme() {
-        if (temaPost == "") window.location.reload();
-        var response = await api.get(`posts/${temaPost}`);
-        console.log(typeof(temaPost));
-        setPosts(response.data);
-    }
-
     return (
         <div className='container'>
             <div className='main'>
-                {/* <h1>Feed Rede Social</h1> */}
+                <h1>Feed Rede Social</h1>
                 <div className='div-flex'>
                     <div className='div-social'>
                         <div className='div-column'>
-                            <h5>Pessoas que você segue</h5>
+                            <p>Pessoas que você segue</p>
                             <div className='people-followed'>
-                                <ul>
-                                {loaded && following.length > 0 && following.map((u) => {
-                                    return(
-                                        <li key={u._id}>
-                                            <div className='person-followed'>
-                                                <Link to={`../perfil/${u._id}`}>
-                                                    <img src={avatar} alt="Avatar" className='img-user' />
-                                                    <p>{u.nome}</p>
-                                                </Link>   
 
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                                </ul>
                             </div>
                         </div>
                         <div className='div-column'>
-                            <h5>Grupos que você faz parte</h5>
+                            <p>Grupos que você faz parte</p>
                             <div className='groups-user'>
-                                {loaded && groups.length > 0 && groups.map((g) => {
-                                    return(
-                                        <li key={g._id}>
-                                            <div className='group-user'>
-                                                <Link to={`../grupo/${g._id}`}>
-                                                    <p>{g.nome}</p>
-                                                </Link> 
 
-                                            </div>
-                                        </li>
-                                    )
-                                })}
                             </div>
                         </div>
                     </div>
                     <div className='div-feed'>
                         <div className='div-actions'>
-                            <div className='search-div'>
-                                <div className='input-div'>
-                                    <input className='input-theme' type="text" placeholder='Buscar post por tema' 
-                                        value={temaPost} onChange={(e) => setTemaPost(e.target.value)} />
-                                    <button onClick={postByTheme} className='search-btn'>
-                                        <CgSearch size={25} color='#888' />
-                                    </button>
-                                </div>
-                                {temaPost != '' && 
-                                <button onClick={() => { setTemaPost(''); window.location.reload(); }}>
-                                    <AiOutlineCloseCircle color="red" />
+                            <form className='search-form'>
+                                <input className='input-theme' />
+                                <button className='search-btn' type='submit'>
+                                    <CgSearch size={25} color='#727272' />
                                 </button>
-                                }
-                            </div>
-                            <Link to="/cadastroPost" className='link-create-post'>Criar post</Link>
+                            </form>
+                            <button>Criar post</button>
                         </div>
                         <div className='div-posts'>
                             <ul>
                                 {posts.length == 0 && <h3>Ainda não temos nenhuma publicação!</h3>}
                                 {loaded && posts.length > 0 && posts.map((p) => {
-                                    var arrayDataHora = p.data.split(" ");
-                                    var data = arrayDataHora[0];
-                                    var hora = arrayDataHora[1];
-                                    hora = hora.slice(0, hora.length - 3);
-
                                     return (
-                                        <li key={p._id} className="div-post">
+                                        <li key={p._id}>
                                             <div className='post-header'>
-                                                <Link to={`../perfil/${p.criador._id}`}>
-                                                    {p.criador.foto != undefined ?
-                                                        <img src={p.criador.foto} alt="foto" className='img-user' />
-                                                        :
-                                                        <img src={avatar} alt="foto" className='img-user' />
-                                                    }
-                                                    <div>
-                                                        {p.criador != undefined ?
-                                                            <strong>{p.criador.nome}</strong>
-                                                            :
-                                                            <strong>-- Nome usuário</strong>
-                                                        }
-                                                        <p>{data} às {hora}</p>
-                                                    </div>
-                                                </Link>
-                                                {p.criador.admin && <AiFillStar color="#670067" /> }
+                                                <img src={avatar} alt="avatar" className='post-img-user' />
+                                                <div>
+                                                    <strong>{p.curtidaDetalhe.length}</strong>
+                                                    <p>{p.data} às {p.hora}</p>
+                                                </div>
                                             </div>
                                             <div className='post-content'>
                                                 <p>{p.descricao}</p>
@@ -162,13 +109,10 @@ function Feed() {
                                                 </div>
                                                 <hr/>
                                                 <div className='div-interacoes-post'>
-                                                    
-                                                    {/* {p.curtidaDetalhe.includes(id) && */}
-                                                        <div className='div-user-like'>
-                                                            <AiFillLike color="#670067" className='user-like-icon' />
-                                                            <p>retirar curtida</p>
-                                                        </div>
-                                                        
+                                                    <div className='div-user-like'>
+                                                        <AiFillLike  color="#670067" className='user-like-icon' />
+                                                        <p>retirar curtida</p>
+                                                    </div>
                                                     <div className='div-post-comments'>
                                                         <p>ver comentários</p>
                                                         <AiOutlineComment color="#727272" className='post-comments-icon' />

@@ -1,0 +1,287 @@
+.admin-page{
+    width: 100%;
+    margin:0 auto;
+}
+
+.nav-bar{
+    position: absolute;
+    width: 100%;
+    height: 8%;
+    background-color: rgb(87, 87, 87);
+    box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+    font-size: 16px;
+}
+
+.nav-bar h1{
+    margin-left: 12px;
+    color: white;
+}
+
+.nav-bar img{
+    object-fit: contain;
+    position: absolute;
+    top: 4px;
+    right: 0px;
+    margin: 10px;
+    width: 250px;
+    height: 45px;
+}
+
+.card-create{
+    margin-bottom: 5px;
+}
+
+.toggle{
+    padding: 12px;
+    padding-inline: 29px;
+    background-color: rgb(28, 70, 236);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    box-shadow: 4px 0px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+}
+
+.admin-form{
+    display: block;
+}
+
+.admin-form input{
+    padding: 6px;
+    margin:4px;
+    margin-top: 10px;
+    margin-left: 24px;
+    width: 30.5%;
+}
+
+.form-button{
+    background-color: rgb(28, 70, 236);
+    margin-left:24px;
+    margin-top: 5px;
+    padding: 10px;
+    padding-inline: 16px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.content{
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0px 0px 8px 8px;
+    height: 0px;
+    overflow: hidden;
+    transition: height ease 0.3s
+}
+
+.content.show{
+    height: 182px
+}
+
+.toggle-delete{
+    padding: 12px;
+    padding-inline: 23px;
+    background-color: rgb(218, 11, 11);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    box-shadow: 4px 0px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+}
+
+.delete{
+    width: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0px 0px 8px 8px;
+    height: 0px;
+    overflow: hidden;
+    transition: height ease 0.3s
+}
+
+.delete.show{
+    height: 60px
+}
+
+.card-delete input{
+    padding: 6px;
+    margin:4px;
+    margin-top: 14px;
+    margin-left: 24px;
+    width: 60%;
+}
+
+.delete-button{
+    background-color: rgb(218, 11, 11);
+    margin-left:26px;
+    margin-top: 5px;
+    padding: 10px;
+    padding-inline: 26px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.toggle-update{
+    padding: 12px;
+    padding-inline: 18px;
+    background-color: rgb(231, 150, 0);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    box-shadow: 4px 0px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+}
+
+.update-form{
+    display: block;
+}
+
+.update-form input{
+    padding: 6px;
+    margin:4px;
+    margin-top: 10px;
+    margin-left: 24px;
+    width: 30.5%;
+}
+
+.update-button{
+    background-color: rgb(231, 150, 0);;
+    margin-left:24px;
+    margin-top: 5px;
+    padding: 10px;
+    padding-inline: 16px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.update{
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0px 0px 8px 8px;
+    height: 0px;
+    overflow: hidden;
+    transition: height ease 0.3s
+}
+
+.update.show{
+    height: 182px
+}
+
+.card-update{
+    margin-bottom: 5px;
+}
+
+.toggle-logs{
+    padding: 12px;
+    padding-inline: 23px;
+    background-color: rgb(141, 7, 141);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    box-shadow: 4px 0px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+}
+
+.logs{
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0px 0px 8px 8px;
+    height: 0px;
+    overflow: hidden;
+    transition: height ease 0.3s
+}
+
+.logs.show{
+    height: 120px
+}
+
+.logs input{
+    padding: 6px;
+    margin:4px;
+    margin-top: 14px;
+    margin-left: 24px;
+    width: 47%;
+}
+
+.logs-button{
+    background-color: rgb(141, 7, 141);
+    margin-left:26px;
+    margin-top: 5px;
+    padding: 10px;
+    padding-inline: 26px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.log-res{
+    margin-top: 5px;
+    display: flex;
+}
+
+.log-res p{
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.toggle-tema{
+    padding: 12px;
+    padding-inline: 23px;
+    background-color: rgb(141, 7, 141);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    box-shadow: 4px 0px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+}
+
+.tema{
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0px 0px 8px 8px;
+    height: 0px;
+    overflow: hidden;
+    transition: height ease 0.3s
+}
+
+.tema.show{
+    height: 120px
+}
+
+.tema-button{
+    background-color: rgb(141, 7, 141);
+    margin-left:26px;
+    margin-top: 5px;
+    padding: 10px;
+    padding-inline: 26px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.guide{
+    margin-left: 25px;
+}
+
+.tema-res{
+    margin-top: 5px;
+    display: flex;
+}
+
+.tema-res p{
+    font-weight: bold;
+    margin-left: 30px;
+}
+

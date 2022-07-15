@@ -46,7 +46,7 @@ class UserService {
             var token = jwt.sign({ id: newUser.id, email: newUser.email },
                 JWTSecret, { expiresIn: '5h' });
             createLog(newUser.id);
-            
+
             res.status(status).json({ msg, id: newUser._id, token });
         } catch (err) {
             res.status(500).json({ msg: "Algo deu errado ao cadastrar o usuário :(", erro: err })
@@ -73,36 +73,33 @@ class UserService {
             var loggedUser = await User.find({ _id: req.loggedUser.id });
 
             if (user[0] != undefined) {
-                if (loggedUser[0]._id != id) {
-                    res.status(401).json({ msg: "Só é possível excluir a sua própria conta." });
-                } else {
-                    var groups = await Group.find();
-                    groups.forEach(async g => {
-                        if (g.seguidores.findIndex(u => u._id == id) > -1) {
-                            g.seguidores.splice(g.seguidores.findIndex(u => u._id == id), 1);
-                        }
-                        await Group.updateOne({ _id: g._id }, { seguidores: g.seguidores });
-                    });
-                    var users = await User.find();
-                    users.forEach(async user => {
-                        if (user.seguindo.findIndex(u => u._id == id) > -1) {
-                            user.seguindo.splice(user.seguindo.findIndex(u => u._id == id), 1);
-                        }
-                        await User.updateOne({ _id: user._id }, { seguindo: user.seguindo });
-                    });
-                    users.forEach(async user => {
-                        if (user.seguidores.findIndex(u => u._id == id) > -1) {
-                            user.seguidores.splice(user.seguidores.findIndex(u => u._id == id), 1);
-                        }
-                        await User.updateOne({ _id: user._id }, { seguidores: user.seguidores });
-                    });
-                    var result = await User.deleteOne({ _id: id });
-                    if (result.deletedCount == 1) {
-                        res.status(200).json({ msg: `Remoção da conta concluída com sucesso!` });
-                    } else {
-                        res.status(400).json({ msg: `Não encontramos o usuário indicado...` })
+                var groups = await Group.find();
+                groups.forEach(async g => {
+                    if (g.seguidores.findIndex(u => u._id == id) > -1) {
+                        g.seguidores.splice(g.seguidores.findIndex(u => u._id == id), 1);
                     }
+                    await Group.updateOne({ _id: g._id }, { seguidores: g.seguidores });
+                });
+                var users = await User.find();
+                users.forEach(async user => {
+                    if (user.seguindo.findIndex(u => u._id == id) > -1) {
+                        user.seguindo.splice(user.seguindo.findIndex(u => u._id == id), 1);
+                    }
+                    await User.updateOne({ _id: user._id }, { seguindo: user.seguindo });
+                });
+                users.forEach(async user => {
+                    if (user.seguidores.findIndex(u => u._id == id) > -1) {
+                        user.seguidores.splice(user.seguidores.findIndex(u => u._id == id), 1);
+                    }
+                    await User.updateOne({ _id: user._id }, { seguidores: user.seguidores });
+                });
+                var result = await User.deleteOne({ _id: id });
+                if (result.deletedCount == 1) {
+                    res.status(200).json({ msg: `Remoção da conta concluída com sucesso!` });
+                } else {
+                    res.status(400).json({ msg: `Não encontramos o usuário indicado...` })
                 }
+
             } else {
                 res.status(400).json({ msg: `Não encontramos o usuário indicado...` })
             }
@@ -120,19 +117,16 @@ class UserService {
             var user = await User.find({ _id: id });
 
             if (user[0] != undefined) {
-                if (loggedUser[0]._id != id) {
-                    res.status(401).json({ msg: "Só é possível editar as informações da sua própria conta!" });
+                var result = await User.updateOne({ '_id': id }, {
+                    nome: nome, departamento: departamento, cargo: cargo,
+                    email: email, data_nascimento: data_nascimento, telefone: telefone, admin: admin, foto: foto, senha: senha
+                });
+                if (result.matchedCount == 1) {
+                    res.status(200).json({ msg: "Informações do usuário atualizadas!" });
                 } else {
-                    var result = await User.updateOne({ '_id': id }, {
-                        nome: nome, departamento: departamento, cargo: cargo,
-                        email: email, data_nascimento: data_nascimento, telefone: telefone, admin: admin, foto: foto, senha: senha
-                    });
-                    if (result.matchedCount == 1) {
-                        res.status(200).json({ msg: "Informações do usuário atualizadas!" });
-                    } else {
-                        res.status(400).json({ msg: "Não encontramos o usuário indicado..." })
-                    }
+                    res.status(400).json({ msg: "Não encontramos o usuário indicado..." })
                 }
+
             } else {
                 res.status(400).json({ msg: "Não encontramos o usuário indicado..." })
             }
@@ -241,6 +235,7 @@ class UserService {
             var msg = "Você seguiu o usuário!";
 
             if (userToFollow[0] != undefined) {
+
                 if (seguindo.length > 0) {
                     seguindo.forEach(s => {
                         if (s._id == id_user) {
@@ -279,7 +274,7 @@ class UserService {
                 var seguidores = [];
                 var seguindo = [];
                 var grupos = [];
-            
+
                 for (let i = 0; i < user[0].seguidores.length; i++) {
                     var s = user[0].seguidores[i];
                     var seguidor = await User.find({ _id: s })

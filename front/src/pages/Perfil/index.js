@@ -2,10 +2,8 @@ import './style.css';
 import { useEffect, useState} from 'react';
 import api from '../../services/api';
 import { useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 
 // import Header from '../../components/Header';
-
 
 function Perfil() {
 
@@ -50,36 +48,18 @@ function Perfil() {
         {JSON.stringify(user)}
         <h2>Posts</h2>
         {JSON.stringify(post)}
-
+        <h2>Posts Lista</h2>
+        <div>
+            {post.map((p)=>{
+                return(
+                    <div key={p.id}>
+                        <h3>{p.tema}</h3>
+                        <h5>{p.descricao}</h5>                      
+                    </div>
+                )
+            })}
         </div>
-        // <div className='container'>
-        //     <div className='content1'>
-        //         <img src={require('../../assets/user-logo.png')} />
-        //         <h2>{user}</h2>
-        //     </div>
-        //     <div className='content2'>
-        //         <span>Departamento: {user.departamento}</span>
-        //         <span>Cargo: {user.cargo}</span>
-        //     </div>
-        //     <div className='content3'>
-        //         <ul>
-        //             {user.seguindo.map((item) => {
-        //                 return (
-        //                     <li key={item._id}>
-        //                         <div className='card'>
-        //                             <div className='card-body'>
-        //                                 <img src={require('../../assets/user-logo.png')} />
-        //                                 <h2>seguindo1</h2>
-        //                             </div>
-        //                         </div>
-        //                     </li>
-        //                 )
-        //             })}
-        //         </ul>
-        //     </div>
-        //     <div className='content4'>content4</div>
-        //     <div className='content5'>content5</div>
-        // </div>
+        </div>
     )
 }
 
