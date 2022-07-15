@@ -11,6 +11,7 @@ import Grupo from '../pages/Grupo';
 import Erro from '../pages/Erro';
 import GrupoDetalhe from '../pages/GrupoDetalhe';
 import PerfilUser from '../pages/PerfilUser';
+import Admin from '../pages/Admin';
 
 function RoutesApp() {
 
@@ -28,6 +29,7 @@ function RoutesApp() {
                 <Route path="/grupo" element={<Grupo />} />
                 <Route path="/grupo/:id" element={<GrupoDetalhe />} />
                 <Route path='/perfil-user/:id' element={<PerfilUser/>}/>
+                <Route path='/admin' element={<Admin/>}/>
             </Route>
             <Route path="*" element={<Erro />} />
         </Routes>

@@ -45,7 +45,7 @@ class LogSessaoService {
             numEntrada = 0
         }
 
-        res.send(`Número de entradas: ${numEntrada}`);
+        res.json(numEntrada);
     }
 
 }

@@ -20,7 +20,7 @@ router.post('/authGoogle', userService.google);
 router.put('/user', auth, userService.manageFollowing);
 router.get('/user', auth, userService.getSocialInfo)
 
-router.get('/logs', logSessaoService.numSessao);
+router.post('/logs', logSessaoService.numSessao);
 
 router.post('/group', auth, groupService.create);
 router.get('/groups', groupService.getAll);
