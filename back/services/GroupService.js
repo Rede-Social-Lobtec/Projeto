@@ -57,9 +57,6 @@ class GroupService {
             var posts = await Post.find({ grupo: id });
             var retornar = false;
 
-            var teste = '_id (ObjectID("23897423sdf87462378")'.replace(/([^"]+)/)
-            console.log(teste);
-            
             for (let i = 0; i < user[0].grupos.length; i++) {
                 var g = user[0].grupos[i];
                 if (g._id != undefined && g._id == id) retornar = true;

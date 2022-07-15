@@ -44,6 +44,7 @@ function PerfilUser() {
             await api.get(`postsUser/${id}`, config)
                 .then((res) => {
                     setPost(res.data);
+                    console.log(res.data);
                 })
         }
         loadPost();

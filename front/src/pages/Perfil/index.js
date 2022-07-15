@@ -2,8 +2,10 @@ import './style.css';
 import { useEffect, useState} from 'react';
 import api from '../../services/api';
 import { useParams } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 // import Header from '../../components/Header';
+
 
 function Perfil() {
 
@@ -54,7 +56,7 @@ function Perfil() {
                 return(
                     <div key={p.id}>
                         <h3>{p.tema}</h3>
-                        <h5>{p.descricao}</h5>                      
+                        <h5>{p.descricao}</h5>
                     </div>
                 )
             })}

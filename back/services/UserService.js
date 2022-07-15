@@ -158,8 +158,6 @@ class UserService {
         */
 
         var { email, senha } = req.body;
-        console.log(email);
-        console.log(senha);
         var user = await User.find({ email: email });
         if (user[0] != undefined) {
             var id = user[0].id;
