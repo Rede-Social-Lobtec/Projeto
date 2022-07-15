@@ -2,7 +2,6 @@ var post = require("../models/Post");
 var user = require("../models/User");
 var mongoose = require("mongoose");
 const Services = require("./Services");
-const { json } = require("body-parser");
 
 const Post = mongoose.model("Post", post);
 const User = mongoose.model("User", user);
@@ -38,45 +37,17 @@ class PostService {
     }
 
     async findById(req, res) {
-        try {
-            var id = req.params.id;
-            var post = await Post.find({ '_id': id });
-
-            if (post[0] != undefined) {
-                var criador = await User.find({ _id: post[0].id_user });
-                var newPost = JSON.parse(JSON.stringify(post[0]));
-                newPost["criador"] = criador[0];
-                
-                res.status(200).json({ msg: "Post encontrado!", post: newPost });
-            } else {
-                res.status(404).json({ msg: `O post indicado não existe!` })
-            }
-        } catch (err) {
-            res.status(500).json({ msg: `Algo deu errado ao buscar pelo ${obj} :(`, erro: err })
-        }
+        Services.findById(req, res, Post, 'post');
     }
 
     async findByTheme(req, res) {
         try {
             var { tema } = req.params;
-            var allPosts = [];
             var posts = await Post.find({ tema: { $regex: tema, $options: 'i' } });
-            if (posts[0] != undefined) {
-                var criador = await User.find({ _id: posts[0].id_user });
-                if (posts.length == 1) { 
-                    var newPost = JSON.parse(JSON.stringify(posts[0]));
-                    newPost["criador"] = criador[0];
-                    allPosts.push(newPost);
-                }
-                else { posts.forEach(p => {
-                    var newPost = JSON.parse(JSON.stringify(p));
-                    newPost["criador"] = criador[0];
-                    allPosts.push(newPost);
-                })}
-
-                res.status(200).json(allPosts);
-            } else {
+            if (posts[0] == undefined) {
                 res.status(400).json({ msg: `Não encontramos nenhum post com o tema informado!` })
+            } else {
+                res.status(200).json(posts);
             }
         } catch (err) {
             res.status(500).json({ msg: `Algo deu errado ao buscar pelos posts :(`, erro: err });
@@ -134,6 +105,7 @@ class PostService {
         }
     }
 
+
     async returnFeed(req, res) {
         try {
             var user = await User.find({ _id: req.loggedUser.id });
@@ -141,23 +113,15 @@ class PostService {
 
             var postsSeguindo = [];
             var postsAdms = [];
+            var criadores = [];
 
             for (let i = 0; i < usersAdm.length; i++) {
                 var adm = usersAdm[i];
                 if (adm._id != user[0].id) {
                     var post = await Post.find({ id_user: adm._id });
                     if (post[0] != undefined) {
-                        var criador = await User.find({ _id: post[0].id_user });
-                        if (post.length == 1) { 
-                            var newPost = JSON.parse(JSON.stringify(post[0]));
-                            newPost["criador"] = criador[0];
-                            postsAdms.push(newPost); 
-                        }
-                        else { post.forEach(p => {
-                            var newPost = JSON.parse(JSON.stringify(p));
-                            newPost["criador"] = criador[0];
-                            postsAdms.push(newPost)
-                        })}
+                        if (post.length == 1) { postsAdms.push(post[0]); }
+                        else { post.forEach(p => postsAdms.push(p)); }
                     }
                 }
             }
@@ -165,19 +129,18 @@ class PostService {
             for (let i = 0; i < user[0].seguindo.length; i++) {
                 var u = user[0].seguindo[i];
                 var post = await Post.find({ id_user: u._id });
+                var criador = await User.find({ _id: post[0].id_user });
                 if (post[0] != undefined) {
-                    var criador = await User.find({ _id: post[0].id_user });
                     if (!criador[0].admin) {
                         if (post.length == 1) { 
-                            var newPost = JSON.parse(JSON.stringify(post[0]));
-                            newPost["criador"] = criador[0];
-                            postsSeguindo.push(newPost); 
+                            post[0][criador] = criador[0];
+                            postsSeguindo.push(post[0]); 
                         }
                         else { post.forEach(p => { 
-                            var newPost = JSON.parse(JSON.stringify(p));
-                            p["criador"] = criador[0];
-                            postsSeguindo.push(newPost);
+                            p[criador] = criador[0];
+                            postsSeguindo.push(p)
                         })}
+                        criadores.push(criador[0]);
                     }
                 }
             }
@@ -191,7 +154,7 @@ class PostService {
             //         console.log(`A < B : ${a.data < b.data}`);
             //     }) 
             // });
-            res.status(200).json(feed);
+            res.status(200).json({ feed });
         } catch (erro) {
             res.status(500).json({ msg: "Algo deu errado ao tentar retornar o feed :(", erro: erro });
         }
