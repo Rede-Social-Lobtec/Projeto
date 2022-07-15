@@ -1,15 +1,15 @@
-import './create-post.css';
+import './detalhe-post.css';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Context } from '../../components/contexts/AuthContext';
-import Header from '../../components/Header';
+import { Context } from '../contexts/AuthContext';
+import Header from '../Header';
 import { CgSearch } from "react-icons/cg";
 import api from '../../services/api';
 import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from 'react-icons/ai';
 
 const avatar = require('../../assets/no-photo.png');
 
-export default function CadastroPost() {
+export default function DetalhePost() {
     const { handleLogout } = useContext(Context);
     const [posts, setPosts] = useState([]);
     const [groups, setGroups] = useState([]);
@@ -115,11 +115,8 @@ export default function CadastroPost() {
                             </div>
                         </div>
                     </div>
-                    <div className='div-create-post'>
-                        <form className='form-post' action={createPost}>
-                            
-                            <button type='submit'>Publicar</button>
-                        </form>
+                    <div className='detalhe-post'>
+                        
                     </div>
                 </div>
             </div>

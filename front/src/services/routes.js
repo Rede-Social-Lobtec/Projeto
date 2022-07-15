@@ -9,6 +9,7 @@ import Perfil from '../pages/Perfil';
 import Pessoa from '../pages/Pessoa';
 import Grupo from '../pages/Grupo';
 import Erro from '../pages/Erro';
+import DetalhePost from '../components/DetalhePost';
 import GrupoDetalhe from '../pages/GrupoDetalhe';
 import PerfilUser from '../pages/PerfilUser';
 import CadastroPost from '../components/CadastroPost';
@@ -29,6 +30,7 @@ function RoutesApp() {
                 <Route path="/pessoa" element={<Pessoa />} />
                 <Route path="/grupo" element={<Grupo />} />
                 <Route path="/cadastroPost" element={<CadastroPost />} />
+                <Route path="/detalhePost/:id" element={<DetalhePost />} />
                 <Route path="/grupo/:id" element={<GrupoDetalhe />} />
                 <Route path='/perfil-user/:id' element={<PerfilUser/>}/>
                 <Route path='/admin' element={<Admin/>}/>
