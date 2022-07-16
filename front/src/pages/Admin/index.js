@@ -7,13 +7,13 @@ import './admin.css';
 
 function Admin() {
 
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [departamento, setDepartament] = useState('');
-    const [cargo, setCargo] = useState('');
-    const [data_nascimento, setNascimento] = useState('');
-    const [telefone, setTelfone] = useState('');
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [departamento, setDepartament] = useState("");
+    const [cargo, setCargo] = useState("");
+    const [data_nascimento, setNascimento] = useState("");
+    const [telefone, setTelfone] = useState("");
     const [adminBool, setAdminBool] = useState(false);
     const [formOpen, setFormOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -76,6 +76,7 @@ function Admin() {
             senha: password,
             admin: adminBool
         }
+
         await api.post(`user`, body)
             .then(() => {
                 alert('Usuário criado');
@@ -91,8 +92,32 @@ function Admin() {
             data_nascimento: data_nascimento,
             telefone: telefone,
             senha: password,
+            admin: adminBool
         }
-        await api.put(`user/${userId}`, body, config)
+        var bodyTeste = {}
+        if (body.nome !== "") {
+            bodyTeste.nome = body.nome
+        }
+        if (body.departamento !== "") {
+            bodyTeste.departamento = body.departamento
+        }
+        if (body.cargo !== "") {
+            bodyTeste.cargo = body.cargo
+        }
+        if (body.email !== "") {
+            bodyTeste.email = body.email
+        }
+        if (body.data_nascimento !== "") {
+            bodyTeste.data_nascimento = body.data_nascimento
+        }
+        if (body.telefone !== "") {
+            bodyTeste.telefone = body.telefone
+        }
+        if (body.senha !== "") {
+            bodyTeste.senha = body.senha
+        }
+        bodyTeste.admin = body.admin;
+        await api.put(`user/${userId}`, bodyTeste, config)
             .then(() => {
                 alert('Usuário atualizado');
             })
@@ -151,7 +176,7 @@ function Admin() {
                                     <input type="text" placeholder="Data de Nascimento" value={data_nascimento} onChange={(e) => setNascimento(e.target.value)} />
                                     <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelfone(e.target.value)} />
                                     <label className='admin-bool'>Usuário é administrador?
-                                    <input type='checkbox' value={adminBool} onChange={(e)=> setAdminBool(true)}></input>
+                                        <input type='checkbox' value={adminBool} onChange={(e) => setAdminBool(true)}></input>
                                     </label>
                                 </form>
                                 <button className='form-button' type="submit" onClick={handleCreate}>Salvar</button>
@@ -170,7 +195,7 @@ function Admin() {
                                     <input type="text" placeholder="Data de Nascimento" value={data_nascimento} onChange={(e) => setNascimento(e.target.value)} />
                                     <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelfone(e.target.value)} />
                                     <label className='update-bool'>Usuário é administrador?
-                                    <input type='checkbox' value={adminBool} onChange={(e)=> setAdminBool(true)}></input>
+                                        <input type='checkbox' value={adminBool} onChange={(e) => setAdminBool(true)}></input>
                                     </label>
                                 </form>
                                 <button className='update-button' type="submit" onClick={handleUpdate}>Salvar</button>

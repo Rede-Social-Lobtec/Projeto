@@ -1,29 +1,67 @@
 import React, {useState} from "react";
 import "./modal.css";
+import api from '../../services/api';
 
-function Modal({ setOpenModal, setUpUser}) {
+function Modal({ setOpenModal}) {
 
-    const [nome, setNome] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [departamento, setDepartament] = useState(null);
-    const [cargo, setCargo] = useState(null);
-    const [data_nascimento, setNascimento] = useState(null);
-    const [telefone, setTelfone] = useState(null);
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [departamento, setDepartament] = useState("");
+    const [cargo, setCargo] = useState("");
+    const [data_nascimento, setNascimento] = useState("");
+    const [telefone, setTelfone] = useState("");
+
+    var token = JSON.parse(localStorage.getItem('token'));
+    var idUser = JSON.parse(localStorage.getItem('id'));
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
     
     function handleSubmit(e) {
         e.preventDefault();
-        const data = {
+        setOpenModal(false);
+        updateUser();
+    }
+    async function updateUser(){
+        var body = {
             nome: nome,
             email: email,
             password: password,
-            departametno: departamento,
+            departamento: departamento,
             cargo: cargo,
             data_nascimento: data_nascimento,
-            tefelfone: telefone
+            telefone: telefone
         }
-        setOpenModal(false);
-        setUpUser(data);
+        var bodyTeste = {}
+        if (body.nome !== "") {
+            bodyTeste.nome = body.nome
+        }
+        if (body.departamento !== "") {
+            bodyTeste.departamento = body.departamento
+        }
+        if (body.cargo !== "") {
+            bodyTeste.cargo = body.cargo
+        }
+        if (body.email !== "") {
+            bodyTeste.email = body.email
+        }
+        if (body.data_nascimento !== "") {
+            bodyTeste.data_nascimento = body.data_nascimento
+        }
+        if (body.telefone !== "") {
+            bodyTeste.telefone = body.telefone
+        }
+        if (body.senha !== "") {
+            bodyTeste.senha = body.password
+        }
+        await api.put(`user/${idUser}`, bodyTeste, config)
+            .then(() => {
+                alert('Informações atualizadas');
+            })
     }
     return (
         <div className="modalBackground">
