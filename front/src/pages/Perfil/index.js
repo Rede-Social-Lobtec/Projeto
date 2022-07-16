@@ -20,6 +20,7 @@ function Perfil() {
             await api.get(`user/${id}`)
                 .then((res) => {
                     setUser(res.data);
+                    console.log(user);
                 })
                 .catch((err)=>{
                     console.log(err);

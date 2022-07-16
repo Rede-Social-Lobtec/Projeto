@@ -9,10 +9,10 @@ import Perfil from '../pages/Perfil';
 import Pessoa from '../pages/Pessoa';
 import Grupo from '../pages/Grupo';
 import Erro from '../pages/Erro';
-import DetalhePost from '../components/DetalhePost';
+import DetalhePost from '../pages/DetalhePost';
 import GrupoDetalhe from '../pages/GrupoDetalhe';
 import PerfilUser from '../pages/PerfilUser';
-import CadastroPost from '../components/CadastroPost';
+import CadastroPost from '../pages/CadastroPost';
 import Admin from '../pages/Admin';
 
 function RoutesApp() {

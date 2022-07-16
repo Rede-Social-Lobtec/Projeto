@@ -46,12 +46,12 @@ class PostService {
                 var newPost = JSON.parse(JSON.stringify(post[0]));
                 newPost["criador"] = criador[0];
                 
-                res.status(200).json({ msg: "Post encontrado!", post: newPost });
+                res.status(200).json(newPost);
             } else {
                 res.status(404).json({ msg: `O post indicado não existe!` })
             }
         } catch (err) {
-            res.status(500).json({ msg: `Algo deu errado ao buscar pelo ${obj} :(`, erro: err })
+            res.status(500).json({ msg: `Algo deu errado ao buscar pelo post :(`, erro: err })
         }
     }
 
@@ -294,24 +294,31 @@ class PostService {
         }
     }
 
-    // endpoint que retorna as informações dos usuários que curtiram o post
-    async getAllLikes(req, res) {
+    // endpoint que retorna as informações dos usuários que curtiram o post e os comentários
+    async getAllInteractions(req, res) {
         try {
             var { id } = req.params;
             var post = await Post.find({ _id: id });
             if (post[0] != undefined) {
-                var idsUsers = post[0].curtidaDetalhe;
-                var users = [];
+                var idsUsers = post[0].curtidaDetalhe, comments = post[0].comentarios;
+                var users = [], comentarios = [];
                 if (idsUsers.length > 0) {
                     for (let i = 0; i < idsUsers.length; i++) {
                         var iduser = idsUsers[i];
                         var user = await User.find({ _id: iduser });
                         users.push(user[0]);
                     }
-                    res.status(200).json(users);
-                } else {
-                    res.status(200).json({ msg: "O post ainda não possui nenhuma curtida!" });
-                }
+                } 
+                if (comments.length > 0) {
+                    for (let i = 0; i < comments.length; i++) {
+                        var c = comments[i];
+                        var user = await User.find({ _id: c.idUser });
+                        var newComment = c;
+                        newComment["usuario"] = user[0];
+                        comentarios.push(newComment);
+                    }
+                } 
+                res.status(200).json({likes: users, comments: comentarios});
             } else {
                 res.status(400).json({ msg: "Não encontramos o post indicado..." });
             }

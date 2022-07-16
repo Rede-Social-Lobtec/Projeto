@@ -1,8 +1,9 @@
 import './feed.css';
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Context } from '../../components/contexts/AuthContext';
 import Header from '../../components/Header';
+import Social from '../../components/Social';
 import { CgSearch } from "react-icons/cg";
 import api from '../../services/api';
 import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from 'react-icons/ai';
@@ -10,10 +11,7 @@ import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from '
 const avatar = require('../../assets/no-photo.png');
 
 function Feed() {
-    const { handleLogout } = useContext(Context);
     const [posts, setPosts] = useState([]);
-    const [groups, setGroups] = useState([]);
-    const [following, setFollowing] = useState([]);
     const [temaPost, setTemaPost] = useState('');
     const [curtidas, setCurtidas] = useState([]);
 
@@ -38,19 +36,6 @@ function Feed() {
                 })
         }
         loadPosts();
-
-        function loadSocialInfo() {
-            api.get('user', config)
-                .then((res) => {
-                    setGroups(res.data.grupos)
-                    setFollowing(res.data.seguindo);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-            
-        }
-        loadSocialInfo();
 
         setLoaded(true);
     }, []);
@@ -80,47 +65,8 @@ function Feed() {
     return (
         <div className='container'>
             <div className='main'>
-                {/* <h1>Feed Rede Social</h1> */}
                 <div className='div-flex'>
-                    <div className='div-social'>
-                        <div className='div-column'>
-                            <h5>Pessoas que você segue</h5>
-                            <div className='people-followed'>
-                                <ul>
-                                {loaded && following.length > 0 && following.map((u) => {
-                                    return(
-                                        <li key={u._id}>
-                                            <div className='person-followed'>
-                                                <Link to={`../perfil/${u._id}`}>
-                                                    <img src={avatar} alt="Avatar" className='img-user' />
-                                                    <p>{u.nome}</p>
-                                                </Link>   
-
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                                </ul>
-                            </div>
-                        </div>
-                        <div className='div-column'>
-                            <h5>Grupos que você faz parte</h5>
-                            <div className='groups-user'>
-                                {loaded && groups.length > 0 && groups.map((g) => {
-                                    return(
-                                        <li key={g._id}>
-                                            <div className='group-user'>
-                                                <Link to={`../grupo/${g._id}`}>
-                                                    <p>{g.nome}</p>
-                                                </Link> 
-
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </div>
+                    <Social /> 
                     <div className='div-feed'>
                         <div className='div-actions'>
                             <div className='search-div'>

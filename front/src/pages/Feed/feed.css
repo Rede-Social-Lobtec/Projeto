@@ -10,75 +10,6 @@
   margin: 2% auto;
 }
 
-.div-social {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 10px 0 0 10px;
-  width: 25%;
-  height: 97%;
-  border-right: #ddd solid 2px;
-}
-
-.div-column {
-  height: 50%;
-}
-
-.people-followed, .groups-user {
-  background-color: #fff;
-  height: 70%;
-  width: 90%;
-  margin: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  overflow-y: auto;
-}
-
-.people-followed ul, .groups-user ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 5% auto;
-  width: 90%;
-  padding: 0;
-}
-
-.people-followed ul li, .groups-user ul li {
-  width: 100%;
-}
-
-.people-followed ul img, .groups-user ul img {
-  width: 30px;
-  height: 30px;
-  margin: 0 5%;
-}
-
-.person-followed, .group-user {
-  display: flex;
-  width: 100%
-}
-
-.person-followed a, .group-user a {
-  width: 100%;
-  color: #727272;
-  font-weight: bold;
-  text-decoration: none;
-  align-items: center;
-  display: flex;
-  transition: ease-in-out .1s;
-  border-radius: 10px;
-}
-
-.person-followed a:hover, .group-user a:hover {
-  color: #670067;
-  background-color: #eee;
-}
-
-.person-followed a p, .group-user a p {
-  font-size: .8rem;
-}
-
 .div-feed {
   display: flex;
   flex-direction: column;
@@ -203,7 +134,7 @@
 .post-content {
   font-size: .8rem;
   max-width: 95%;
-  margin: auto;
+  margin: 1% auto 0;
   text-justify: auto;
 }
 
