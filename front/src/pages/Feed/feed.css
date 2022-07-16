@@ -210,6 +210,13 @@
 
 .post-footer {
   width: 100%;
+  border-top: #ddd solid 2px;
+}
+
+.div-interacoes-post {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .div-total-likes {
@@ -219,13 +226,8 @@
   align-items: center;
 }
 
-.div-interacoes-post {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
 
-.div-user-like, .div-post-comments {
+.div-total-likes, .div-post-comments {
   display: flex;
   margin: 0 2%;
   font-size: .7em;
@@ -237,9 +239,25 @@
   justify-content: flex-end;
 }
 
-.user-like-icon, .total-likes-icon {
-  margin-right: 1%;
-  font-size: 16px;
+.div-total-likes {
+  justify-content: flex-start;
+}
+
+.div-total-likes a, .div-post-comments a {
+  text-decoration: none;
+  color:#727272;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.div-post-comments a {
+  justify-content: flex-end;
+}
+
+.total-likes-icon {
+  margin-right: 2%;
+  font-size: 18px;
 }
 
 .post-comments-icon {

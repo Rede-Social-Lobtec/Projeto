@@ -47,7 +47,8 @@ function Feed() {
                 })
                 .catch(err => {
                     console.log(err);
-                })
+                });
+            
         }
         loadSocialInfo();
 
@@ -60,6 +61,21 @@ function Feed() {
         console.log(typeof(temaPost));
         setPosts(response.data);
     }
+
+    // function UserLike(id_post, curtiu) {
+    //     var curtidas = api.get(`posts/getLikes/${id_post}`);
+    //     for (let i = 0; i < curtidas.length; i++) {
+    //         const id_user = curtidas[i];
+    //         console.log(`${i} id user: ${id_user}`);
+    //         var user = api.get(`user/${id_user}`);
+    //         console.log(`${user[0]}`);
+    //         if(user[0] != undefined) { 
+    //             console.log("mudou pra true");
+    //             curtiu = true;
+    //         };
+    //     }
+    //     return curtiu;
+    // }
 
     return (
         <div className='container'>
@@ -131,6 +147,7 @@ function Feed() {
                                     var data = arrayDataHora[0];
                                     var hora = arrayDataHora[1];
                                     hora = hora.slice(0, hora.length - 3);
+                                    // var curtiu = false;
 
                                     return (
                                         <li key={p._id} className="div-post">
@@ -156,22 +173,25 @@ function Feed() {
                                                 <p>{p.descricao}</p>
                                             </div>
                                             <div className='post-footer'>
-                                                <div className='div-total-likes'>
-                                                    <AiFillLike color="#727272" className='total-likes-icon' />
-                                                    {p.curtidaDetalhe.length}
-                                                </div>
-                                                <hr/>
                                                 <div className='div-interacoes-post'>
-                                                    
-                                                    {/* {p.curtidaDetalhe.includes(id) && */}
+                                                    <div className='div-total-likes'>
+                                                        <Link to={`/detalhePost/${p._id}`}>
+                                                            <AiFillLike color="#727272" className='total-likes-icon' />
+                                                            {p.curtidaDetalhe.length}
+                                                        </Link>
+                                                    </div>
+                                                    {/* {curtiu = UserLike(p._id, curtiu)}
+                                                    {curtiu == true &&
                                                         <div className='div-user-like'>
                                                             <AiFillLike color="#670067" className='user-like-icon' />
                                                             <p>retirar curtida</p>
                                                         </div>
-                                                        
+                                                    } */}
                                                     <div className='div-post-comments'>
-                                                        <p>ver comentários</p>
-                                                        <AiOutlineComment color="#727272" className='post-comments-icon' />
+                                                        <Link to={`/detalhePost/${p._id}`}>
+                                                            <p>ver comentários</p>
+                                                            <AiOutlineComment color="#727272" className='post-comments-icon' />
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
