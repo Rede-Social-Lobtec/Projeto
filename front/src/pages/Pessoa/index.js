@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, renderMatches, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './style.css';
+import Card from '../../components/Card';
 
 function Pessoa() {
 
@@ -13,10 +14,10 @@ function Pessoa() {
     useEffect(() => {
 
         const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
 
         async function loadPessoas() {
 
@@ -39,44 +40,43 @@ function Pessoa() {
             })
     }
 
-    async function seguirUser(id_user){
-        var body = {"id_user": id_user}
+    async function seguirUser(id_user) {
+        var body = { "id_user": id_user }
         const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
 
         await api.put(`user`, body, config)
-        .then((res)=>{
-            alert('seguiu');
-        })
+            .then((res) => {
+                alert('seguiu');
+            })
     }
 
     return (
         <div>
             <h1>pagina pessoas</h1>
-            <div>
+            <div >
                 <input type="text" placeholder="Nome de uma pessoa" value={nomePessoa} onChange={(e) => setNomePessoa(e.target.value)} />
                 <button onClick={pessoaByName}>Pesquisar</button>
-                
-            </div>          
-            <ul>
+
+            </div>
+            <div className='pessoas-container'>
+            <div className='list-container'>
                 {pessoas.map((p) => {
                     if (p._id != id) {
                         return (
-                            <div>
-                            <li key={p.id}>
-                                <strong>{p.nome}</strong>
-                                <p>{p.departamento}</p>
-                                <Link to={`../perfil/${p._id}`}>Ver usuário</Link>   
-                            </li> 
-                            <button onClick={(e)=>seguirUser(p._id)}>seguir</button>   
+                            <div key={p._id}>
+                                <Card nome={p.nome} cargo={p.cargo} email={p.email}/>
+                                <Link to={`../perfil/${p._id}`}>Ver usuário</Link>
+                                <button onClick={(e) => seguirUser(p._id)}>seguir</button>
                             </div>
                         )
                     }
                 })}
-            </ul>           
+            </div>
+        </div>
         </div>
     )
 }

@@ -1,0 +1,12 @@
+.pessoas-container{
+    width: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8%;
+    margin-top: 3%;
+}
+
+.list-container{
+    display: grid;
+    grid-template-columns: 28% 28% 28%;
+}
