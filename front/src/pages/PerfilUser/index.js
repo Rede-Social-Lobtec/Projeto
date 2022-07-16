@@ -50,24 +50,9 @@ function PerfilUser() {
         loadPost();
     }, []);
 
-    async function editUser(){
-        var body = userUp
-        const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            };
-
-        await api.put(`user/${id}`, body, config)
-        .then((res)=>{
-            alert('Dados alterados');
-        })
-    }
-
     return (
         <div>
-            {modalOpen && <Modal setOpenModal={setModalOpen} setUpUser={setUserUp}/>}
-            <button onClick={editUser}>Salvar alteracoes</button>
+            {modalOpen && <Modal setOpenModal={setModalOpen}/>}
             <h1>pagina usuario private</h1>
             {JSON.stringify(user)}
             <button
