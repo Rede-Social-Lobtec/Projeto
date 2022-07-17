@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
-import './style.css';
+import './grupo.css';
+import CardGrupo from '../../components/CardGrupo';
+import { CgSearch } from "react-icons/cg";
+import Header from '../../components/Header';
 
 function Grupo() {
 
@@ -34,23 +37,31 @@ function Grupo() {
     }
 
     return (
-        <div>
-            <h1>pagina grupos</h1>
-            <div>
-                <input type="text" placeholder="nome do grupo" value={nomeGrupo} onChange={(e) => setNomeGrupo(e.target.value)} />
-                <button onClick={groupByName}>Pesquisar</button>
+        <div className='all-grupos'>
+            <div className='conteudo-grupos'>
+                <div className='grupos-header'>
+                    <h1>Página de grupos</h1>
+                    <div className='pesquisa'>
+                        <input type="text" placeholder='Buscar por nome'
+                            value={nomeGrupo} onChange={(e) => setNomeGrupo(e.target.value)} />
+                        <button onClick={groupByName}>
+                            <CgSearch size={25} color='#888' />
+                        </button>
+                    </div>
+                </div>
+                <div className='grupos-container'>
+                    <div className='list-grupos'>
+                        {grupos.map((g) => {
+                            return (
+                                <div key={g._id}>
+                                    <CardGrupo id={g._id} nome={g.nome} descricao={g.descricao} seguidores={g.seguidores} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
             </div>
-            <ul>
-                {grupos.map((g) => {
-                    return (
-                        <li key={g.id}>
-                            <strong>{g.nome}</strong>
-                            <p>{g.descricao}</p>
-                            <Link to={`/grupo/${g._id}`}>Ver grupo</Link>
-                        </li>
-                    )
-                })}
-            </ul>
+            <Header />
         </div>
 
     )
