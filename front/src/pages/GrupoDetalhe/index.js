@@ -11,6 +11,7 @@ function GrupoDetalhe() {
 
     const [grupo, setGrupo] = useState([{}]);
     const [post, setPost] = useState([{}]);
+    const [notMember, setNotMember] = useState(false);
     var token = JSON.parse(localStorage.getItem('token'));
     const { id } = useParams();
 
@@ -37,6 +38,9 @@ function GrupoDetalhe() {
             await api.get(`group/${id}/posts`, config)
                 .then((res) => {
                     setPost(res.data);
+                    if(res.data.msg == "Apenas usuários membros do grupo podem ver as publicações."){
+                        setNotMember(true);
+                    }
                 })
         }
         loadPost();
@@ -47,7 +51,8 @@ function GrupoDetalhe() {
             <h1>Página Grupo detalhe</h1>
             {JSON.stringify(grupo)}
             <h2>Posts</h2>
-            {JSON.stringify(post)}
+            {notMember ? JSON.stringify(post) 
+            : <h3>Somente membros podem visualizar os posts</h3>}
             {/* <ul>
                 {post.map((p) => {
                     return (
