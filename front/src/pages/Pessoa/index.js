@@ -3,11 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './style.css';
 import Card from '../../components/Card';
+import { CgSearch } from "react-icons/cg";
+import Header from '../../components/Header';
 
 function Pessoa() {
 
     const [pessoas, setPessoas] = useState([{}]);
     const [nomePessoa, setNomePessoa] = useState('');
+    const [seguindo, setSeguindo] = useState([]);
+    const navigate = useNavigate();
     var token = JSON.parse(localStorage.getItem('token'));
     var id = JSON.parse(localStorage.getItem('id'));
 
@@ -28,6 +32,18 @@ function Pessoa() {
         }
         loadPessoas();
 
+        async function loadSocialInfo() {
+            api.get('user', config)
+                .then((res) => {
+                    setSeguindo(res.data.seguindo);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        }
+        loadSocialInfo();
+
     }, []);
 
     async function pessoaByName() {
@@ -40,43 +56,36 @@ function Pessoa() {
             })
     }
 
-    async function seguirUser(id_user) {
-        var body = { "id_user": id_user }
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        };
-
-        await api.put(`user`, body, config)
-            .then((res) => {
-                alert('seguiu');
-            })
-    }
-
     return (
-        <div>
-            <h1>pagina pessoas</h1>
-            <div >
-                <input type="text" placeholder="Nome de uma pessoa" value={nomePessoa} onChange={(e) => setNomePessoa(e.target.value)} />
-                <button onClick={pessoaByName}>Pesquisar</button>
+        <div className='all'>
+            <div className='conteudo'>
+                <div className='pessoas-header'>
+                    <h1>pagina pessoas</h1>
+                    <div className='pesquisa'>
+                        <input type="text" placeholder='Buscar por nome'
+                            value={nomePessoa} onChange={(e) => setNomePessoa(e.target.value)} />
+                        <button onClick={pessoaByName} className='search-btn'>
+                            <CgSearch size={25} color='#888' />
+                        </button>
+                    </div>
+                </div>
+                <div className='pessoas-container'>
+                    <div className='list-container'>
+                        {pessoas.map((p) => {
+                            if (p._id != id) {
+                                return (
+                                    <div key={p._id}>
+                                        <Card id={p._id} nome={p.nome} cargo={p.cargo} email={p.email}/>
+                                    </div>
+                                )
+                            }
 
+
+                        })}
+                    </div>
+                </div>
             </div>
-            <div className='pessoas-container'>
-            <div className='list-container'>
-                {pessoas.map((p) => {
-                    if (p._id != id) {
-                        return (
-                            <div key={p._id}>
-                                <Card nome={p.nome} cargo={p.cargo} email={p.email}/>
-                                <Link to={`../perfil/${p._id}`}>Ver usuário</Link>
-                                <button onClick={(e) => seguirUser(p._id)}>seguir</button>
-                            </div>
-                        )
-                    }
-                })}
-            </div>
-        </div>
+            <Header />
         </div>
     )
 }

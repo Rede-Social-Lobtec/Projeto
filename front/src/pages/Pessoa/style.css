@@ -1,5 +1,40 @@
+.all{
+    display: flex;
+}
+
+.conteudo{
+    width: 100%;
+}
+
+.pessoas-header{
+    margin-top: 0.7%;
+    display: flex;
+    width: 78%;
+    margin-left: 2%;
+    justify-content: space-between;
+}
+
+.pesquisa {
+    display: flex;
+    width: auto;
+    align-items: center;
+    background-color: #fff;
+    padding-inline: 2%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+.pesquisa input {
+    font-size: 16px;
+    height: 80%;
+    border: none;
+    width: 97%;
+  }
+
 .pessoas-container{
-    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
     justify-content: center;
     align-items: center;
     margin-left: 8%;
@@ -8,5 +43,5 @@
 
 .list-container{
     display: grid;
-    grid-template-columns: 28% 28% 28%;
+    grid-template-columns: 50% 50% 50%;
 }
