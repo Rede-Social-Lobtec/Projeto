@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './style.css';
 import Card from '../../components/Card';
@@ -10,8 +9,6 @@ function Pessoa() {
 
     const [pessoas, setPessoas] = useState([{}]);
     const [nomePessoa, setNomePessoa] = useState('');
-    const [seguindo, setSeguindo] = useState([]);
-    const navigate = useNavigate();
     var token = JSON.parse(localStorage.getItem('token'));
     var id = JSON.parse(localStorage.getItem('id'));
 
@@ -31,18 +28,6 @@ function Pessoa() {
                 })
         }
         loadPessoas();
-
-        async function loadSocialInfo() {
-            api.get('user', config)
-                .then((res) => {
-                    setSeguindo(res.data.seguindo);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-
-        }
-        loadSocialInfo();
 
     }, []);
 
@@ -79,8 +64,6 @@ function Pessoa() {
                                     </div>
                                 )
                             }
-
-
                         })}
                     </div>
                 </div>
