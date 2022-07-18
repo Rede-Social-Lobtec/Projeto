@@ -1,98 +1,92 @@
-// import './style.css';
-// import { useEffect, useState} from 'react';
-// import api from '../../services/api';
-// import { useParams } from 'react-router-dom';
-// import jwt_decode from 'jwt-decode';
-
-// // import Header from '../../components/Header';
-
-
-// function Perfil() {
-
-//     const [post, setPost] = useState([{}]);
-//     const { id } = useParams();
-//     var token = JSON.parse(localStorage.getItem('token'));
-
-//     useEffect(() => {
-        
-//         async function loadUser() {
-//             await api.get(`user/${id}`)
-//                 .then((res) => {
-//                     setUser(res.data);
-//                 })
-//                 .catch((err)=>{
-//                     console.log(err);
-//                 })
-//         }
-//         loadUser();
-
-//         async function loadPost(){
-
-//             const config = {
-//                 headers: { 
-//                     Authorization: `Bearer ${token}` }
-//             };
-//             console.log(config);
-//             console.log(id);
-//             await api.get(`postsUser/${id}`, config)
-//             .then((res)=>{
-//                 setPost(res.data);
-//                 console.log(res.data);
-//             })
-//         }
-//         loadPost();
-//     }, []);
-
-//     return (
-//         <div>
-//         <h1>pagina usuario</h1>
-//         {JSON.stringify(user)}
-
-//         <h2>Posts</h2>
-//         {JSON.stringify(post)}
-        
-//         <h2>Posts Lista</h2>
-        
-//         <div>
-//             {post.map((p)=>{
-//                 return(
-//                     <div key={p.id}>
-//                         <h3>{p.tema}</h3>
-//                         <h5>{p.descricao}</h5>
-//                     </div>
-//                 )
-//             })}
-//         </div>
-//         </div>
-//     )
-// }
-
-
-
 import './stylePerfil.css';
-import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Context } from '../../components/contexts/AuthContext';
-import Header from '../../components/Header';
-import DadosPerfil from '../../components/DadosPerfil';
-import { CgSearch } from "react-icons/cg";
+import { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from 'react-icons/ai';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
+import { AiFillLike, AiOutlineComment, AiFillStar } from 'react-icons/ai';
 import jwt_decode from 'jwt-decode';
-const avatar = require('../../assets/no-photo.png');
+import {Context} from '../../components/contexts/AuthContext';
+import avatar from '../../assets/no-photo.png';
+import { FiHome, FiUsers, FiUser, FiSettings, FiLogOut} from "react-icons/fi";
+// const avatar = require('../../assets/no-photo.png');
+
+
 
 function Perfil() {
+
+    const [grupo, setGrupo] = useState([{}]);
+    const [post, setPost] = useState([{}]);
+    const [notMember, setNotMember] = useState(false);
+    const [members, setMembers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    var token = JSON.parse(localStorage.getItem('token'));
+    const { id } = useParams();
     const [posts, setPosts] = useState([]);
     const [temaPost, setTemaPost] = useState('');
     const [curtidas, setCurtidas] = useState([]);
     const [user, setUser] = useState([{}]);
-
-    const [post, setPost] = useState([{}]);
-    const { id } = useParams();
+    const [following, setFollowing] = useState([]);
+    const [Pseguidores, setPseguidores] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [loaded, setLoaded] = useState(false);
+    var token = JSON.parse(localStorage.getItem('token'));  
     var token = JSON.parse(localStorage.getItem('token'));
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
 
     useEffect(() => {
-        
+
+        const config = {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+        };
+    
+        function PerfilSeguindo() {
+          api.get(`user/${id}`)
+            .then((res) => {
+              setFollowing(res.data.seguindo);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+    
+        }
+        PerfilSeguindo();
+    
+        setLoaded(true);
+    
+      }, []);
+
+      useEffect(() => {
+
+        const config = {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+        };
+    
+        function PerfilSeguidores() {
+          api.get(`user/${id}`)
+            .then((res) => {
+              setPseguidores(res.data.seguidores);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+    
+        }
+        PerfilSeguidores();
+    
+        setLoaded(true);
+    
+      }, []);
+
+    useEffect(() => {
         async function loadUser() {
             await api.get(`user/${id}`)
                 .then((res) => {
@@ -104,154 +98,148 @@ function Perfil() {
         }
         loadUser();
 
-        async function loadPost(){
+        async function getMembers() {
+            await api.get(`group/${id}/members`, config)
+                .then((res) => {
+                    setMembers(res.data.membros);
+                })
+        }
+        getMembers();
+
+   
+
+        async function loadPost() {
 
             const config = {
-                headers: { 
-                    Authorization: `Bearer ${token}` }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             };
-            console.log(config);
-            console.log(id);
-            await api.get(`postsUser/${id}`, config)
-            .then((res)=>{
-                setPost(res.data);
-                console.log(res.data);
-            })
+            await api.get(`group/${id}/posts`, config)
+                .then((res) => {
+                    setPost(res.data);
+                    if (res.data.msg == "Apenas usuários membros do grupo podem ver as publicações.") {
+                        setNotMember(true);
+                    }
+                })
         }
         loadPost();
-    }, []);
-    var token = JSON.parse(localStorage.getItem('token'));
-    const [loaded, setLoaded] = useState(false);
-    
-    useEffect(() => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        };
-
-        function loadPosts() {
-            api.get(`perfil`, config)
-                .then((res) => {
-                    setPosts(res.data)
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        }
-        loadPosts();
-
-        setLoaded(true);
+        setLoading(false);
     }, []);
 
-    async function postByTheme() {
-        if (temaPost == "") window.location.reload();
-        var response = await api.get(`posts/${temaPost}`);
-        console.log(typeof(temaPost));
-        setPosts(response.data);
+    function verUser(id) {
+        navigate(`../perfil/${id}`);
     }
 
-    // function UserLike(id_post, curtiu) {
-    //     var curtidas = api.get(`posts/getLikes/${id_post}`);
-    //     for (let i = 0; i < curtidas.length; i++) {
-    //         const id_user = curtidas[i];
-    //         console.log(`${i} id user: ${id_user}`);
-    //         var user = api.get(`user/${id_user}`);
-    //         console.log(`${user[0]}`);
-    //         if(user[0] != undefined) { 
-    //             console.log("mudou pra true");
-    //             curtiu = true;
-    //         };
-    //     }
-    //     return curtiu;
-    // }
-
     return (
-        <div className='PFcontainer'>
-                        <DadosPerfil/> 
+        <div className='perfil-container'>
+            <h1>Perfil</h1>
+            <div className='perfil-first'>
+                <div className='perfil-info'>
+ 
+
+                <h1>Dados do Perfil</h1>
+                
 
 
-                <div className='PFdiv-flex'>
-                    <div className='PFdiv-perfil'>
-                        <div className='PFdiv-actions'>
-                            <div className='PFsearch-div'>
-                            
-                                {temaPost != '' && 
-                                <button onClick={() => { setTemaPost(''); window.location.reload(); }}>
-                                    <AiOutlineCloseCircle color="red" />
-                                </button>
-                                }
-                            </div>
-                            
-                        </div>
-                        <div className='PFdiv-posts'>
-                            <ul>
-                                {posts.length == 0 && <h3>O usuário ainda não possui publicação
-                                    </h3>}
-                                {loaded && posts.length > 0 && posts.map((p) => {
-                                    var arrayDataHora = p.data.split(" ");
-                                    var data = arrayDataHora[0];
-                                    var hora = arrayDataHora[1];
-                                    hora = hora.slice(0, hora.length - 3);
-                                    // var curtiu = false;
 
-                                    return (
-             
-                                        <li key={p._id} className="PFdiv-post">
-                                            <div className='PFpost-header'>
-                                                <Link to={`../perfil/${p.criador._id}`}>
-                                                    {p.criador.foto != undefined ?
-                                                        <img src={p.criador.foto} alt="foto" className='img-user' />
-                                                        :
-                                                        <img src={avatar} alt="foto" className='img-user' />
-                                                    }
-                                                    <div>
-                                                        {p.criador != undefined ?
-                                                            <strong>{p.criador.nome}</strong>
-                                                            :
-                                                            <strong>-- Nome usuário</strong>
-                                                        }
-                                                        <p>{data} às {hora}</p>
-                                                    </div>
-                                                </Link>
-                                                {p.criador.admin && <AiFillStar color="#670067" /> }
-                                            </div>
-                                            <div className='PFpost-content'>
-                                                <p>{p.descricao}</p>
-                                            </div>
-                                            <div className='PFpost-footer'>
-                                                <div className='PFdiv-interacoes-post'>
-                                                    <div className='PFdiv-total-likes'>
-                                                        <Link to={`/detalhePost/${p._id}`}>
-                                                            <AiFillLike color="#727272" className='total-likes-icon' />
-                                                            {p.curtidaDetalhe.length}
-                                                        </Link>
-                                                    </div>
-                                                    {/* {curtiu = UserLike(p._id, curtiu)}
-                                                    {curtiu == true &&
-                                                        <div className='div-user-like'>
-                                                            <AiFillLike color="#670067" className='user-like-icon' />
-                                                            <p>retirar curtida</p>
-                                                        </div>
-                                                    } */}
-                                                    <div className='PFdiv-post-comments'>
-                                                        <Link to={`/detalhePost/${p._id}`}>
-                                                            <p>ver comentários</p>
-                                                            <AiOutlineComment color="#727272" className='post-comments-icon' />
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                       
-                    </div>
+
+                <div className='perfil-info-avt'>
+
+       
+                    {user.foto != '' ? 
+                        <img src={user.foto} alt="Avatar" />   
+                    :
+                        <img src={avatar} alt="Avatar" />
+                    }
+
+
+</div>
+
+
+
+
+
+<div>
+Nome: {user.nome}
+</div>
+<div>
+Email: {user.email}
+</div>                    <div>
+Cargo: {user.cargo}
+</div>                    
+<div>
+Departamento: {user.departamento}
+</div>                        
+
+<div>     
+Telefone: {user.telefone}
+</div>                      <div>
+Data de Nascimento: {user.data_nascimento}
+
+                </div>                
                 </div>
+
+
+<br></br>
+              
+              
+
+    {/* <div className='div-social'> */}
+      <div className='perfil-list'>
+        <h1>Seguindo</h1>
+        <div className='perfilseguidores'>
+          <ul>
+            {loaded && following.length > 0 && following.map((u) => {
+              return (
+                <li key={u._id}>
+                  <div className='perfilperson-followed'>
+                    <Link to={`../perfil/${u._id}`}>
+                      <img src={avatar} alt="Avatar" className='perfilimg-user' />
+                      <p>{u.nome}</p>
+                    </Link>
+
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </div>
+      </div>
+    {/* <div className='div-social'> */}
+    <div className='perfil-list'>
+        <h1>Seguidores</h1>
+        <div className='perfilseguidores'>
+          <ul>
+            {loaded && Pseguidores.length > 0 && Pseguidores.map((u) => {
+              return (
+                <li key={u._id}>
+                  <div className='perfilperson-followed'>
+                    <Link to={`../perfil/${u._id}`}>
+                      <img src={avatar} alt="Avatar" className='perfilimg-user' />
+                      <p>{u.nome}</p>
+                    </Link>
+
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </div>
+
+
+
+            <div className='perfil-posts'>
+            <h3>Posts</h3>
+                        
             </div>
             <Header />
-        </div>
+            </div>
+
+ 
+ 
     )
 }
 
