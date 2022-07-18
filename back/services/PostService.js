@@ -335,7 +335,7 @@ class PostService {
                     for (let i = 0; i < comments.length; i++) {
                         var c = comments[i];
                         var user = await User.find({ _id: c.idUser });
-                        var newComment = c;
+                        var newComment = JSON.parse(JSON.stringify(c));
                         newComment["usuario"] = user[0];
                         comentarios.push(newComment);
                     }

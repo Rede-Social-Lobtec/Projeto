@@ -1,4 +1,5 @@
 var user = require("../models/User");
+var post = require("../models/Post");
 var group = require("../models/Group");
 var mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
@@ -8,6 +9,7 @@ const Services = require("./Services");
 const JWTSecret = "Starwars";
 
 const User = mongoose.model("User", user);
+const Post = mongoose.model("Post", post);
 const Group = mongoose.model("Group", group);
 
 class UserService {
@@ -92,6 +94,19 @@ class UserService {
                         user.seguidores.splice(user.seguidores.findIndex(u => u._id == id), 1);
                     }
                     await User.updateOne({ _id: user._id }, { seguidores: user.seguidores });
+                });
+                var posts = await Post.find();
+                posts.forEach(async post => {
+                    if (post.curtidaDetalhe.findIndex(u => u._id == id) > -1) {
+                        post.curtidaDetalhe.splice(post.curtidaDetalhe.findIndex(c => c._id == id), 1);
+                    }
+                    await Post.updateOne({ _id: post._id }, { curtidaDetalhe: post.curtidaDetalhe });
+                });
+                posts.forEach(async post => {
+                    if (post.comentarios.findIndex(c => c.idUser == id) > -1) {
+                        post.comentarios.splice(post.comentarios.findIndex(c => c.idUser == id), 1);
+                    }
+                    await Post.updateOne({ _id: post._id }, { comentarios: post.comentarios });
                 });
                 var result = await User.deleteOne({ _id: id });
                 if (result.deletedCount == 1) {
