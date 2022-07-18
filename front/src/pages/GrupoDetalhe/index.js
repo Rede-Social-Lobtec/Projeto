@@ -1,19 +1,28 @@
-import './style.css';
+import './grupo-detalhe.css';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
+import { AiFillLike, AiOutlineComment, AiFillStar } from 'react-icons/ai';
 
-// import Header from '../../components/Header';
-
+const avatar = require('../../assets/no-photo.png');
 
 function GrupoDetalhe() {
 
     const [grupo, setGrupo] = useState([{}]);
     const [post, setPost] = useState([{}]);
     const [notMember, setNotMember] = useState(false);
+    const [members, setMembers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     var token = JSON.parse(localStorage.getItem('token'));
     const { id } = useParams();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
 
 
     useEffect(() => {
@@ -28,6 +37,14 @@ function GrupoDetalhe() {
         }
         loadGrupo();
 
+        async function getMembers() {
+            await api.get(`group/${id}/members`, config)
+                .then((res) => {
+                    setMembers(res.data.membros);
+                })
+        }
+        getMembers();
+
         async function loadPost() {
 
             const config = {
@@ -38,31 +55,48 @@ function GrupoDetalhe() {
             await api.get(`group/${id}/posts`, config)
                 .then((res) => {
                     setPost(res.data);
-                    if(res.data.msg == "Apenas usuários membros do grupo podem ver as publicações."){
+                    if (res.data.msg == "Apenas usuários membros do grupo podem ver as publicações.") {
                         setNotMember(true);
                     }
                 })
         }
         loadPost();
+        setLoading(false);
     }, []);
 
+    function verUser(id) {
+        navigate(`../perfil/${id}`);
+    }
+
     return (
-        <div>
+        <div className='group-container'>
             <h1>Página Grupo detalhe</h1>
-            {JSON.stringify(grupo)}
-            <h2>Posts</h2>
-            {notMember ? JSON.stringify(post) 
-            : <h3>Somente membros podem visualizar os posts</h3>}
-            {/* <ul>
-                {post.map((p) => {
-                    return (
-                        <li key={p.id}>
-                            <strong>{p.tema}</strong>
-                            <p>{p.descricao}</p>
-                        </li>
-                    )
-                })}
-            </ul> */}
+            <div className='group-first'>
+                <div className='group-info'>
+                    <h3>{grupo.nome}</h3>
+                    <p>{grupo.descricao}</p>
+                </div>
+                <div className='group-list'>
+                    <p className='seguidores'>Seguidores...</p>
+                    <ul>
+                        {!loading && members.length > 0 && members.map((m) => {
+                            return (
+                                <li key={m._id}>
+                                    <button className='group-followed' onClick={()=> {verUser(m._id)}}>
+                                        <img src={avatar} alt="Avatar" />
+                                        <p>{m.nome}</p>
+                                    </button>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+            </div>
+            <div className='group-posts'>
+            <h3>Posts</h3>
+                        
+            </div>
+            <Header />
         </div>
     )
 }
