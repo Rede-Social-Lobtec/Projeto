@@ -4,19 +4,17 @@
   background-color: #fff;
   border-radius: 10px 0 0 10px;
   width: 25%;
-  height: 100%;
-  border-bottom: #ddd solid 2px;
   border-right: #ddd solid 2px;
 }
 
 .div-column {
-  height: 50%;
+  min-height: 50%;
   margin: auto 0;
 }
 
 .people-followed, .groups-user {
   background-color: #fff;
-  height: 70%;
+  min-height: 70%;
   width: 90%;
   margin: auto;
   border-radius: 10px;
@@ -38,7 +36,11 @@
   width: 100%;
 }
 
-.people-followed ul img, .groups-user ul img {
+.people-followed h4, .groups-user h4 {
+  align-self: center;
+}
+
+.people-followed ul img {
   width: 30px;
   height: 30px;
   margin: 0 5%;
@@ -60,6 +62,11 @@
   border-radius: 10px;
 }
 
+.person-followed a {
+  margin-top: 1%;
+  padding: 1% 0;
+}
+
 .person-followed a:hover, .group-user a:hover {
   color: #670067;
   background-color: #eee;
@@ -67,4 +74,8 @@
 
 .person-followed a p, .group-user a p {
   font-size: .8rem;
+}
+
+.group-user a p {
+  margin-left: 4%;
 }

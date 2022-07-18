@@ -13,7 +13,6 @@ const avatar = require('../../assets/no-photo.png');
 function Feed() {
     const [posts, setPosts] = useState([]);
     const [temaPost, setTemaPost] = useState('');
-    const [curtidas, setCurtidas] = useState([]);
 
     var token = JSON.parse(localStorage.getItem('token'));
     var id = JSON.parse(localStorage.getItem('id'));
@@ -46,21 +45,6 @@ function Feed() {
         console.log(typeof(temaPost));
         setPosts(response.data);
     }
-
-    // function UserLike(id_post, curtiu) {
-    //     var curtidas = api.get(`posts/getLikes/${id_post}`);
-    //     for (let i = 0; i < curtidas.length; i++) {
-    //         const id_user = curtidas[i];
-    //         console.log(`${i} id user: ${id_user}`);
-    //         var user = api.get(`user/${id_user}`);
-    //         console.log(`${user[0]}`);
-    //         if(user[0] != undefined) { 
-    //             console.log("mudou pra true");
-    //             curtiu = true;
-    //         };
-    //     }
-    //     return curtiu;
-    // }
 
     return (
         <div className='container'>

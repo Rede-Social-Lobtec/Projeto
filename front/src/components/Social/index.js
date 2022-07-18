@@ -45,7 +45,8 @@ export default function Social() {
         <h5>Pessoas que você segue</h5>
         <div className='people-followed'>
           <ul>
-            {loaded && following.length > 0 && following.map((u) => {
+            {following[0] == undefined && <h4>Você ainda não segue ninguém!</h4>}
+            {loaded && following[0] != undefined && following.map((u) => {
               return (
                 <li key={u._id}>
                   <div className='person-followed'>
@@ -64,18 +65,21 @@ export default function Social() {
       <div className='div-column'>
         <h5>Grupos que você faz parte</h5>
         <div className='groups-user'>
-          {loaded && groups.length > 0 && groups.map((g) => {
-            return (
-              <li key={g._id}>
-                <div className='group-user'>
-                  <Link to={`../grupo/${g._id}`}>
-                    <p>{g.nome}</p>
-                  </Link>
+          <ul>
+            {groups[0] == undefined && <h4>Você ainda não está em nenhum grupo!</h4>}
+            {loaded && groups.length > 0 && groups.map((g) => {
+              return (
+                <li key={g._id}>
+                  <div className='group-user'>
+                    <Link to={`../grupo/${g._id}`}>
+                      <p>{g.nome}</p>
+                    </Link>
 
-                </div>
-              </li>
-            )
-          })}
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </div>
     </div>
