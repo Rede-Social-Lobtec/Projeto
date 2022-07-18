@@ -6,6 +6,7 @@ import './social.css'
 import api from '../../services/api';
 
 const avatar = require('../../assets/no-photo.png');
+const loadingGIF = require('../../assets/loading.gif')
 
 export default function Social() {
   const [following, setFollowing] = useState([]);
@@ -27,6 +28,7 @@ export default function Social() {
         .then((res) => {
           setGroups(res.data.grupos);
           setFollowing(res.data.seguindo);
+          setLoaded(true);
         })
         .catch(err => {
           console.log(err);
@@ -34,8 +36,6 @@ export default function Social() {
 
     }
     loadSocialInfo();
-
-    setLoaded(true);
 
   }, []);
 
@@ -45,13 +45,18 @@ export default function Social() {
         <h5>Pessoas que você segue</h5>
         <div className='people-followed'>
           <ul>
-            {following[0] == undefined && <h4>Você ainda não segue ninguém!</h4>}
-            {loaded && following[0] != undefined && following.map((u) => {
+            {!loaded && <img src={loadingGIF} className="loading-gif" />}
+            {loaded && following[0] === undefined && <h4>Você ainda não segue ninguém!</h4>}
+            {loaded && following[0] !== undefined && following.map((u) => {
               return (
                 <li key={u._id}>
                   <div className='person-followed'>
                     <Link to={`../perfil/${u._id}`}>
-                      <img src={avatar} alt="Avatar" className='img-user' />
+                      {u.foto != "" ?
+                        <img src={u.foto} className="img-user" />
+                        :
+                        <img src={avatar} className="img-user" />
+                      }
                       <p>{u.nome}</p>
                     </Link>
 
@@ -66,8 +71,9 @@ export default function Social() {
         <h5>Grupos que você faz parte</h5>
         <div className='groups-user'>
           <ul>
-            {groups[0] == undefined && <h4>Você ainda não está em nenhum grupo!</h4>}
-            {loaded && groups.length > 0 && groups.map((g) => {
+            {!loaded && <img src={loadingGIF} className="loading-gif" />}
+            {loaded && groups[0] === undefined && <h4>Você ainda não está em nenhum grupo!</h4>}
+            {loaded && groups[0] !== undefined && groups.map((g) => {
               return (
                 <li key={g._id}>
                   <div className='group-user'>

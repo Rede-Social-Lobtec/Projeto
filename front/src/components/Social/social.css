@@ -7,6 +7,11 @@
   border-right: #ddd solid 2px;
 }
 
+.loading-gif {
+  margin: auto;
+  width: 70px;
+}
+
 .div-column {
   min-height: 50%;
   margin: auto 0;
@@ -14,7 +19,7 @@
 
 .people-followed, .groups-user {
   background-color: #fff;
-  min-height: 70%;
+  height: 80%;
   width: 90%;
   margin: auto;
   border-radius: 10px;
@@ -40,7 +45,7 @@
   align-self: center;
 }
 
-.people-followed ul img {
+.people-followed ul li img {
   width: 30px;
   height: 30px;
   margin: 0 5%;

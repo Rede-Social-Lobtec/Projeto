@@ -86,7 +86,7 @@ export default function CadastroPost() {
                                         :
                                         <img src={avatar} className="img-user" />
                                     }
-                                    <textarea placeholder={`Crie uma publicação, ${user.nome}!`}
+                                    <textarea placeholder={`Crie uma publicação, ${user.nome}!`} value={descricao}
                                         onChange={(e) => setDescricao(e.target.value)} required />
                                 </div>
                                 <div className='add-image-post'>
@@ -110,7 +110,7 @@ export default function CadastroPost() {
                                         })}
                                     </select>
                                     <div>
-                                        <input id='id-tema' type="text" onChange={(e) => { 
+                                        <input id='id-tema' type="text" value={tema} onChange={(e) => { 
                                             document.getElementById('id-select-theme').value = ""; 
                                             setTema(e.target.value)
                                         }} 
