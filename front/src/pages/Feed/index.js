@@ -14,6 +14,7 @@ const loadingGIF = require('../../assets/loading.gif')
 function Feed() {
     const [posts, setPosts] = useState([]);
     const [temaPost, setTemaPost] = useState('');
+    const [msg, setMsg] = useState("");
 
     var token = JSON.parse(localStorage.getItem('token'));
     var id = JSON.parse(localStorage.getItem('id'));
@@ -39,12 +40,22 @@ function Feed() {
         loadPosts();
 
     }, []);
-
+ 
     async function postByTheme() {
-        if (temaPost == "") window.location.reload();
-        var response = await api.get(`posts/${temaPost}`);
-        console.log(typeof(temaPost));
-        setPosts(response.data);
+        try {
+            if (temaPost == "") window.location.reload();
+            var response = await api.get(`posts/${temaPost}`);
+            if(response.data.msg != undefined) {
+                setMsg(response.data.msg);
+            } else {
+                setPosts(response.data);
+            }
+        } catch (err) {
+            console.log(err);
+            if (err.code == "ERR_BAD_REQUEST") {
+                setMsg("Não encontramos nenhum post com esse tema!")
+            }
+        }
     }
 
     return (
@@ -71,6 +82,11 @@ function Feed() {
                             <Link to="/cadastroPost" className='link-create-post'>Criar post</Link>
                         </div>
                         <div className='div-posts'>
+                            {msg != "" && 
+                                <div>
+                                    <h4>{msg}</h4>                              
+                                </div>
+                            }
                             <ul>
                                 {!loaded && 
                                     <div>
