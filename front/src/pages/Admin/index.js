@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './admin.css';
-
-// import Header from '../../components/Header';
-
 
 function Admin() {
 
@@ -26,7 +24,8 @@ function Admin() {
     const [userId, setUserId] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     var token = JSON.parse(localStorage.getItem('token'));
-
+    var id = JSON.parse(localStorage.getItem('id'));
+    const navigate = useNavigate();
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -35,6 +34,18 @@ function Admin() {
 
     useEffect(() => {
         setIsLoading(false);
+        async function getAdmin(){
+            await api.get(`user/${id}`)
+            .then((res)=>{
+                if(res.data.admin!= true){
+                    navigate(`../feed`);
+                }
+            })
+            
+        }
+        getAdmin();
+
+
     }, [])
 
     function handleCreate(e) {
@@ -150,7 +161,6 @@ function Admin() {
         await api.get(`tema`)
             .then((res) => {
                 setTemaRes(res.data);
-                console.log(res.data);
             })
     }
 
