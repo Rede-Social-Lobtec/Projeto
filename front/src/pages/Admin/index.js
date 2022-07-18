@@ -12,6 +12,7 @@ function Admin() {
     const [cargo, setCargo] = useState("");
     const [data_nascimento, setNascimento] = useState("");
     const [telefone, setTelfone] = useState("");
+    const [foto, setFoto] = useState("");
     const [adminBool, setAdminBool] = useState(false);
     const [formOpen, setFormOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -41,9 +42,9 @@ function Admin() {
 
     useEffect(() => {
         setIsLoading(false);
-        if(!admin){
-            Navigate('../perfil');
-        }
+        // if(!admin){
+        //     Navigate('../perfil');
+        // }
 
     }, [])
 
@@ -99,6 +100,7 @@ function Admin() {
             departamento: departamento,
             cargo: cargo,
             email: email,
+            foto: foto,
             data_nascimento: data_nascimento,
             telefone: telefone,
             senha: password,
@@ -117,6 +119,7 @@ function Admin() {
             departamento: departamento,
             cargo: cargo,
             email: email,
+            foto: foto,
             data_nascimento: data_nascimento,
             telefone: telefone,
             senha: password,
@@ -145,6 +148,7 @@ function Admin() {
             bodyTeste.senha = body.senha
         }
         bodyTeste.admin = body.admin;
+        bodyTeste.foto = body.foto;
         await api.put(`user/${userId}`, bodyTeste, config)
             .then(() => {
                 alert('Usuário atualizado');
