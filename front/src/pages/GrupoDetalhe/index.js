@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
-import { AiFillLike, AiOutlineComment, AiFillStar } from 'react-icons/ai';
+import { AiOutlineUserAdd, AiOutlineUserDelete } from 'react-icons/ai';
 
 const avatar = require('../../assets/no-photo.png');
 
@@ -13,17 +13,56 @@ function GrupoDetalhe() {
     const [post, setPost] = useState([{}]);
     const [notMember, setNotMember] = useState(false);
     const [members, setMembers] = useState([]);
+    const [member, setMember] = useState("");
     const [loading, setLoading] = useState(true);
+    const [addOpen, setAddOpen] = useState(false);
+    const [removeOpen, setRemoveOpen] = useState(false);
     const navigate = useNavigate();
     var token = JSON.parse(localStorage.getItem('token'));
     const { id } = useParams();
     var idUser = localStorage.getItem('id');
+    var idAdm = JSON.stringify(grupo.id_adm);
 
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     };
+
+    function handleAdd(e) {
+        e.preventDefault();
+        addUser();
+    }
+
+    function handleRemove(e) {
+        e.preventDefault();
+        removeUser();
+    }
+
+    async function addUser() {
+        var body = {
+            action: 'add'
+        }
+        await api.put(`group/${id}/member/${member}`, body)
+            .then((res) => {
+                alert('Usuário adicionado');
+                window.location.reload();
+            })
+        setAddOpen(false);
+    }
+
+    async function removeUser() {
+        var body = {
+            action: 'remove'
+        }
+        await api.put(`group/${id}/member/${member}`, body)
+            .then((res) => {
+                alert('Usuário removido');
+                window.location.reload();
+            })
+        setRemoveOpen(false);
+    }
+
 
 
     useEffect(() => {
@@ -90,11 +129,37 @@ function GrupoDetalhe() {
                                 </li>
                             )
                         })}
+
+                        {idUser == idAdm &&
+                            <div className='add-remove'>
+                                <div className='add-user'>
+                                    <button onClick={() => { setAddOpen(!addOpen) }}>
+                                        <AiOutlineUserAdd color='#FFF' size={35} />
+                                        <p>Adicionar usuário</p>
+                                    </button>
+                                    <div onSubmit={handleAdd} className={addOpen ? 'add-content show' : 'add-content'}>
+                                        <input type='text' placeholder='ID do membro' value={member} onChange={(e) => setMember(e.target.value)}></input>
+                                        <button type='submit' className='add-button' onClick={handleAdd}>Add+</button>
+                                    </div>
+                                </div>
+                                <div className='remove-user'>
+                                    <button onClick={() => { setRemoveOpen(!removeOpen) }}>
+                                        <AiOutlineUserDelete color='#FFF' size={35} />
+                                        <p>Remover usuário</p>
+                                    </button>
+                                    <div onSubmit={handleRemove} className={removeOpen ? 'add-content show' : 'add-content'}>
+                                        <input type='text' placeholder='ID do membro' value={member} onChange={(e) => setMember(e.target.value)}></input>
+                                        <button type='submit' className='add-button' onClick={handleRemove}>Remove-</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </ul>
                 </div>
             </div>
             <div className='group-posts'>
                 <h3>Posts</h3>
+
             </div>
             <Header />
         </div>

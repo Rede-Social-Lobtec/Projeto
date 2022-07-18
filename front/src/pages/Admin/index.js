@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './admin.css';
 
@@ -31,7 +31,7 @@ function Admin() {
     const [groupId, setGroupId] = useState("");
 
     var token = JSON.parse(localStorage.getItem('token'));
-    const admin = localStorage.getItem('admin');
+    var admin = localStorage.getItem('admin');
     const navigate = useNavigate();
     const config = {
         headers: {
@@ -40,10 +40,10 @@ function Admin() {
     };
 
     useEffect(() => {
-        if(admin != true){
-            navigate(`../feed`);
-        }
         setIsLoading(false);
+        if(!admin){
+            Navigate('../perfil');
+        }
 
     }, [])
 

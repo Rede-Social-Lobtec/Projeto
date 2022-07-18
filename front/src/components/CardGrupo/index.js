@@ -24,11 +24,7 @@ function CardGrupo(props) {
     }, [])
 
     function verGrupo() {
-        if(idUser == JSON.stringify(props.id_adm)){
-            navigate(`../grupo/${props.id}/admin`);
-        }else{
-            navigate(`../grupo/${props.id}`);
-        }    
+            navigate(`../grupo/${props.id}`); 
     }
     return (
         <div className="card-grupo">

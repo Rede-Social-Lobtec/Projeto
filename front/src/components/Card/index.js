@@ -70,7 +70,11 @@ function Card(props) {
         <div className="card">
             <button onClick={verUser}>
                 <div className='card-container'>
+                    {props.foto != ''?
+                    <img src={props.foto}></img>
+                    :
                     <img src={require('../../assets/no-photo.png')}></img>
+                    }
                     <h4><b>{props.nome}</b></h4>
                     <p>{cargo}</p>
                 </div>

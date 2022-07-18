@@ -60,7 +60,7 @@ function Pessoa() {
                             if (p._id != id) {
                                 return (
                                     <div key={p._id}>
-                                        <Card id={p._id} nome={p.nome} cargo={p.cargo} email={p.email}/>
+                                        <Card id={p._id} nome={p.nome} foto={p.foto} cargo={p.cargo} email={p.email}/>
                                     </div>
                                 )
                             }
