@@ -51,6 +51,68 @@
     margin-right: 20px;
 }
 
+.add-user{
+    display: flex;
+    align-items: center;
+}
+
+.remove-user{
+    display: flex;
+    margin-top: -6px;
+    align-items: center;
+}
+
+.add-user button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-inline: 7.5px;
+    background-color: rgb(187, 186, 186);
+    border-radius: 20px;
+    margin-bottom: 5px;
+}
+
+.remove-user button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-inline: 10px;
+    background-color: rgb(187, 186, 186);
+    border-radius: 20px;
+}
+
+.add-content{
+    display: flex;
+    height: 55px;
+    margin-left: 5px;
+    flex-direction: column;
+    justify-content: center;
+    width: 0;
+    overflow: hidden;
+    transition: width ease 0.3s;
+}
+
+.add-content.show{ 
+    width: 180px
+}
+
+.add-content button{
+    background-color: #ff6900;
+    border-radius: 0px 0px 6px 6px;
+    color: #fff;
+}
+
+.add-content input{
+    border-radius: 6px 6px 0 0;
+    border: 2px solid #ff6900;
+}
+
+
+.add-user p, .remove-user p{
+    font-weight: bold;
+    color: #fff;
+}
+
 .group-followed {
     align-items: center;
     cursor: pointer;
@@ -71,4 +133,3 @@
     flex-direction: column;
     overflow-y: scroll;
 }
-
