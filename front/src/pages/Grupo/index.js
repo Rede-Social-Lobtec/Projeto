@@ -54,7 +54,7 @@ function Grupo() {
                         {grupos.map((g) => {
                             return (
                                 <div key={g._id}>
-                                    <CardGrupo id={g._id} nome={g.nome} descricao={g.descricao} seguidores={g.seguidores} />
+                                    <CardGrupo id_adm={g.id_adm} id={g._id} nome={g.nome} descricao={g.descricao} seguidores={g.seguidores} />
                                 </div>
                             )
                         })}

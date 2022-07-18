@@ -31,7 +31,7 @@ function Admin() {
     const [groupId, setGroupId] = useState("");
 
     var token = JSON.parse(localStorage.getItem('token'));
-    var id = JSON.parse(localStorage.getItem('id'));
+    const admin = localStorage.getItem('admin');
     const navigate = useNavigate();
     const config = {
         headers: {
@@ -40,18 +40,10 @@ function Admin() {
     };
 
     useEffect(() => {
-        setIsLoading(false);
-        async function getAdmin() {
-            await api.get(`user/${id}`)
-                .then((res) => {
-                    if (res.data.admin != true) {
-                        navigate(`../feed`);
-                    }
-                })
-
+        if(admin != true){
+            navigate(`../feed`);
         }
-        getAdmin();
-
+        setIsLoading(false);
 
     }, [])
 

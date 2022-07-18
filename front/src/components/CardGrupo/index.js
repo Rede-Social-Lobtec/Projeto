@@ -6,7 +6,7 @@ function CardGrupo(props) {
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-
+    var idUser = localStorage.getItem('id');
 
     useEffect(() => {
         setLoading(false);
@@ -24,7 +24,11 @@ function CardGrupo(props) {
     }, [])
 
     function verGrupo() {
-        navigate(`../grupo/${props.id}`)
+        if(idUser == JSON.stringify(props.id_adm)){
+            navigate(`../grupo/${props.id}/admin`);
+        }else{
+            navigate(`../grupo/${props.id}`);
+        }    
     }
     return (
         <div className="card-grupo">
