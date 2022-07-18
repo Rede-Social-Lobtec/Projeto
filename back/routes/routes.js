@@ -37,6 +37,7 @@ router.get('/posts', postService.getAll);
 router.get('/post/:id', postService.findById);
 router.get('/posts/:tema', postService.findByTheme);
 router.get('/post/:id/interacoes', auth, postService.getAllInteractions)
+router.get('/postsThemes', auth, postService.findAllThemes)
 router.delete('/post/:id', auth, postService.delete);
 router.put('/post/:id', auth, postService.update);
 router.get('/feed', auth, postService.returnFeed);

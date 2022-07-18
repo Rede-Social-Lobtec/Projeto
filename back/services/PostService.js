@@ -9,23 +9,23 @@ const User = mongoose.model("User", user);
 class PostService {
 
     async create(req, res) {
-        var { tema, descricao, fotoPublicacao } = req.body;
+        var { tema, descricao, fotoPublicacao, grupo } = req.body;
 
         var newPost = new Post({
             id_user: req.loggedUser.id,
             tema,
             descricao,
             fotoPublicacao,
-            grupo: req.body.grupo,
+            grupo,
             curtidaDetalhe: [],
             comentarios: [],
             data: new Date().toLocaleString(),
             interacoesDoTema: "0"
         });
+        
         try {
             await newPost.save();
             res.status(200).json({ msg: "Cadastro de post realizado!" });
-            return true;
         } catch (err) {
             res.status(500).json({ msg: "Algo deu errado ao criar o post :(", erro: err });
         }
@@ -193,6 +193,28 @@ class PostService {
             res.status(200).json(feed);
         } catch (erro) {
             res.status(500).json({ msg: "Algo deu errado ao tentar retornar o feed :(", erro: erro });
+        }
+    }
+
+    async findAllThemes(req, res) {
+        try {
+            var temas = [];
+            var posts = await Post.find();
+
+            for (let i = 0; i < posts.length; i++) {
+                const tema = posts[i].tema;
+                if (temas.length == 0) {
+                    temas.push(tema);
+                } else {
+                    if (!temas.includes(tema)) {
+                        temas.push(tema);
+                    }
+                }
+            }
+
+            res.status(200).json(temas);
+        } catch (error) {
+            res.status(500).json({ msg: "Algo deu errado ao tentar retornar os temas :(", erro: error });
         }
     }
 

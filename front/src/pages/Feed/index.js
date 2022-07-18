@@ -1,12 +1,12 @@
 import './feed.css';
-import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Context } from '../../components/contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Social from '../../components/Social';
 import { CgSearch } from "react-icons/cg";
 import api from '../../services/api';
-import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiFillLike, AiOutlineComment, AiFillStar, 
+    AiOutlineCloseCircle } from 'react-icons/ai';
 
 const avatar = require('../../assets/no-photo.png');
 
@@ -28,7 +28,8 @@ function Feed() {
         function loadPosts() {
             api.get(`feed`, config)
                 .then((res) => {
-                    setPosts(res.data)
+                    setPosts(res.data);
+                    setLoaded(true);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -36,7 +37,6 @@ function Feed() {
         }
         loadPosts();
 
-        setLoaded(true);
     }, []);
 
     async function postByTheme() {
@@ -71,13 +71,13 @@ function Feed() {
                         </div>
                         <div className='div-posts'>
                             <ul>
-                                {posts.length == 0 && <h3>Ainda não temos nenhuma publicação!</h3>}
+                                {!loaded && <h3>Carregando feed...</h3>}
+                                {loaded && posts.length == 0 && <h3>Ainda não temos nenhuma publicação!</h3>}
                                 {loaded && posts.length > 0 && posts.map((p) => {
                                     var arrayDataHora = p.data.split(" ");
                                     var data = arrayDataHora[0];
                                     var hora = arrayDataHora[1];
                                     hora = hora.slice(0, hora.length - 3);
-                                    // var curtiu = false;
 
                                     return (
                                         <li key={p._id} className="div-post">
@@ -110,13 +110,7 @@ function Feed() {
                                                             {p.curtidaDetalhe.length}
                                                         </Link>
                                                     </div>
-                                                    {/* {curtiu = UserLike(p._id, curtiu)}
-                                                    {curtiu == true &&
-                                                        <div className='div-user-like'>
-                                                            <AiFillLike color="#670067" className='user-like-icon' />
-                                                            <p>retirar curtida</p>
-                                                        </div>
-                                                    } */}
+                                                    
                                                     <div className='div-post-comments'>
                                                         <Link to={`/detalhePost/${p._id}`}>
                                                             <p>ver comentários</p>
