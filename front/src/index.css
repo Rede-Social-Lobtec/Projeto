@@ -36,3 +36,7 @@ button {
   background: none;
   border: none;
 }
+
+.loading-gif {
+  width: 100px;
+}

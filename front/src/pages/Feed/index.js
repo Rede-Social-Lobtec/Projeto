@@ -9,6 +9,7 @@ import { AiFillLike, AiOutlineComment, AiFillStar,
     AiOutlineCloseCircle } from 'react-icons/ai';
 
 const avatar = require('../../assets/no-photo.png');
+const loadingGIF = require('../../assets/loading.gif')
 
 function Feed() {
     const [posts, setPosts] = useState([]);
@@ -71,7 +72,11 @@ function Feed() {
                         </div>
                         <div className='div-posts'>
                             <ul>
-                                {!loaded && <h3>Carregando feed...</h3>}
+                                {!loaded && 
+                                    <div>
+                                        <h3>Carregando feed... <img src={loadingGIF} className="loading-gif" /></h3>
+                                    </div>
+                                }
                                 {loaded && posts.length == 0 && <h3>Ainda não temos nenhuma publicação!</h3>}
                                 {loaded && posts.length > 0 && posts.map((p) => {
                                     var arrayDataHora = p.data.split(" ");

@@ -6,6 +6,7 @@ import './social.css'
 import api from '../../services/api';
 
 const avatar = require('../../assets/no-photo.png');
+const loadingGIF = require('../../assets/loading.gif')
 
 export default function Social() {
   const [following, setFollowing] = useState([]);
@@ -44,7 +45,7 @@ export default function Social() {
         <h5>Pessoas que você segue</h5>
         <div className='people-followed'>
           <ul>
-            {!loaded && <h3>Carregando...</h3>}
+            {!loaded && <img src={loadingGIF} className="loading-gif" />}
             {loaded && following[0] === undefined && <h4>Você ainda não segue ninguém!</h4>}
             {loaded && following[0] !== undefined && following.map((u) => {
               return (
@@ -70,7 +71,7 @@ export default function Social() {
         <h5>Grupos que você faz parte</h5>
         <div className='groups-user'>
           <ul>
-            {!loaded && <h3>Carregando...</h3>}
+            {!loaded && <img src={loadingGIF} className="loading-gif" />}
             {loaded && groups[0] === undefined && <h4>Você ainda não está em nenhum grupo!</h4>}
             {loaded && groups[0] !== undefined && groups.map((g) => {
               return (

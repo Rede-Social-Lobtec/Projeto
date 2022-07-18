@@ -10,6 +10,7 @@ import { AiFillLike, AiOutlineComment, AiFillStar, AiOutlineCloseCircle } from '
 import Social from '../../components/Social';
 
 const avatar = require('../../assets/no-photo.png');
+const loadingGIF = require('../../assets/loading.gif')
 
 export default function DetalhePost() {
     const { id } = useParams();
@@ -95,7 +96,7 @@ export default function DetalhePost() {
                 <div className='div-flex'>
                     <Social />
                     <div className='div-detalhes-post'>
-                        {!loaded && <h4>Carregando post...</h4>}
+                        {!loaded && <h4>Carregando post... <img src={loadingGIF} className="loading-gif" /></h4>}
                         {loaded &&
                             <div className='detalhe-post'>                         
                                 <div className='post-header'>
