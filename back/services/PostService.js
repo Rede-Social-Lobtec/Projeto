@@ -182,13 +182,8 @@ class PostService {
             }
 
             var feed = postsAdms.concat(postsSeguindo);
-
-            // res.status(200).json({ feed: { admin: postsAdms, seguindo: postsSeguindo } });
-            // res.status(200).json({ feed: feed.sort((a,b) =>  {
-            //         new Date(b.data) - new Date(a.data) 
-            //         console.log(`A: ${a.data} ---- B: ${b.data}`);
-            //         console.log(`A < B : ${a.data < b.data}`);
-            //     }) 
+            // feed = feed.sort(function(a,b) {
+            //     return new Date(dataFormat(b.data)[2], dataFormat(b.data)[1], dataFormat(b.data)[0]) - new Date(dataFormat(a.data)[2], dataFormat(a.data)[1], dataFormat(a.data)[0]) 
             // });
             res.status(200).json(feed);
         } catch (erro) {
@@ -211,7 +206,6 @@ class PostService {
                     }
                 }
             }
-
             res.status(200).json(temas);
         } catch (error) {
             res.status(500).json({ msg: "Algo deu errado ao tentar retornar os temas :(", erro: error });
