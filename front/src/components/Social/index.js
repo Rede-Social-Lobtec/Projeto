@@ -13,7 +13,8 @@ export default function Social() {
   const [groups, setGroups] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  var token = JSON.parse(localStorage.getItem('token'));  
+  var token = JSON.parse(localStorage.getItem('token'));
+  var id = JSON.parse(localStorage.getItem('id'));
 
   useEffect(() => {
 
@@ -24,7 +25,7 @@ export default function Social() {
     };
 
     function loadSocialInfo() {
-      api.get('user', config)
+      api.get(`perfil/${id}`, config)
         .then((res) => {
           setGroups(res.data.grupos);
           setFollowing(res.data.seguindo);

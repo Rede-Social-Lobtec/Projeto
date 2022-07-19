@@ -182,6 +182,26 @@ class PostService {
             }
 
             var feed = postsAdms.concat(postsSeguindo);
+
+            function formatDate(data) {
+                let date = data.split(" ");
+                let newDate = date[0].split("/");
+                let year = newDate[2];
+                let month = newDate[1];
+                let day = newDate[0];
+                
+                return [year, month, day, date[1]].join(" ");
+                
+            }
+            
+            function newFormatDate(array) {
+            var resultado = array.sort(function (a, b) {
+                return new Date(formatDate(b.data)) - new Date(formatDate(a.data));
+            });
+            return resultado
+            }
+
+            newFormatDate(feed);
             // feed = feed.sort(function(a,b) {
             //     return new Date(dataFormat(b.data)[2], dataFormat(b.data)[1], dataFormat(b.data)[0]) - new Date(dataFormat(a.data)[2], dataFormat(a.data)[1], dataFormat(a.data)[0]) 
             // });
