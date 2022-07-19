@@ -19,11 +19,11 @@ function AuthProvider({children}){
         const admin = localStorage.getItem("admin");
         if(token){
             api.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(token)}`;
-            setAuthenticated(true);
-            if(admin == 'true'){
-                setIsAdmin(true);
-            }        
+            setAuthenticated(true);       
         }
+        if(admin == 'true'){
+            setIsAdmin(true);
+        } 
         setLoading(false);
 
     }, []);
@@ -38,8 +38,7 @@ function AuthProvider({children}){
         localStorage.setItem('id', JSON.stringify(data.id));
         api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
         navigate('/feed', {replace:true});
-        // setAuthenticated(true);
-        // setIsAdmin(true);
+        setAuthenticated(true);
         
 
         async function getAdmin() {
@@ -54,7 +53,6 @@ function AuthProvider({children}){
                 })
         }
         getAdmin();
-        console.log(isAdmin);
     }
 
     async function loginToken(token){
