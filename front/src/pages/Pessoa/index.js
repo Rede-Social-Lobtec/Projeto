@@ -45,7 +45,7 @@ function Pessoa() {
         <div className='all'>
             <div className='conteudo'>
                 <div className='pessoas-header'>
-                    <h1>pagina pessoas</h1>
+                    <h1>Página pessoas</h1>
                     <div className='pesquisa'>
                         <input type="text" placeholder='Buscar por nome'
                             value={nomePessoa} onChange={(e) => setNomePessoa(e.target.value)} />
