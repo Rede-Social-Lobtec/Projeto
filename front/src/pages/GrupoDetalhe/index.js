@@ -158,7 +158,7 @@ function GrupoDetalhe() {
                 </div>
             </div>
             <div className='group-posts'>
-                <h3>Posts</h3>
+                {/* <h3>Posts</h3> */}
 
             </div>
             <Header />
