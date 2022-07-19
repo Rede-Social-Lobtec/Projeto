@@ -18,6 +18,7 @@ export default function DetalhePost() {
     const [post, setPost] = useState({});
     const [curtidas, setCurtidas] = useState([]);
     const [comentarios, setComentarios] = useState([]);
+    const [renderLikes, setRenderLikes] = useState(false);
     const [userLike, setUserLike] = useState(false);
     const [texto, setTexto] = useState("");
     const [user, setUser] = useState({});
@@ -57,7 +58,7 @@ export default function DetalhePost() {
                     setPost(res.data);
                     setLoaded(true);
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     console.log(err);
                 })
         }
@@ -98,93 +99,114 @@ export default function DetalhePost() {
                     <div className='div-detalhes-post'>
                         {!loaded && <h4>Carregando post... <img src={loadingGIF} className="loading-gif" /></h4>}
                         {loaded &&
-                            <div className='detalhe-post'>                         
-                                <div className='post-header'>
-                                    <Link to={`../perfil/${post.criador._id}`}>
-                                        {post.criador.foto != "" ?
-                                            <img src={post.criador.foto} alt="foto" className='img-user' />
-                                            :
-                                            <img src={avatar} alt="foto" className='img-user' />
+                            <>
+                                <div className='detalhe-post'>
+                                    <div className='post-header'>
+                                        <Link to={`../perfil/${post.criador._id}`} title='ver perfil'>
+                                            {post.criador.foto != "" ?
+                                                <img src={post.criador.foto} alt="foto" className='img-user' />
+                                                :
+                                                <img src={avatar} alt="foto" className='img-user' />
+                                            }
+                                            <div>
+                                                {post.criador != undefined ?
+                                                    <strong>{post.criador.nome}</strong>
+                                                    :
+                                                    <strong>-- Nome usuário</strong>
+                                                }
+                                                <p>{post.data.toString().split(" ")[0]} às {post.data.toString().split(" ")[1].slice(0, post.data.toString().split(" ")[1].length - 3)}</p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className='post-content'>
+                                        <p>{post.descricao}</p>
+                                        {post.fotoPublicacao != "" &&
+                                            <img src={post.fotoPublicacao} alt="foto publicação" className='img-post' />
                                         }
-                                        <div>
-                                            {post.criador != undefined ?
-                                                <strong>{post.criador.nome}</strong>
-                                                :
-                                                <strong>-- Nome usuário</strong>
-                                            }
-                                            <p>{post.data.toString().split(" ")[0]} às {post.data.toString().split(" ")[1].slice(0, post.data.toString().split(" ")[1].length - 3)}</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                                <div className='post-content'>
-                                    <p>{post.descricao}</p>
-                                    {post.fotoPublicacao != "" &&
-                                        <img src={post.fotoPublicacao} alt="foto publicação" className='img-post' />
-                                    }
-                                </div>
-                                <div className='post-footer'>
-                                    <div className='div-interacoes-post'>
-                                        <div className='div-total-likes total-likes-post'>
-                                            <Link to={`/detalhePost/${post._id}`}>
-                                                <AiFillLike color="#727272" className='total-likes-icon' />
-                                                {curtidas.length}
-                                            </Link>
-                                        </div>
-                                        <div className='div-user-like'>
-                                            {userLike ?
-                                                <button onClick={manageLike}>
-                                                    <AiFillLike color="#670067" className='user-like-icon' />
-                                                    <p>retirar curtida</p>
+                                    </div>
+                                    <div className='post-footer'>
+                                        <div className='div-interacoes-post'>
+                                            <div className='div-total-likes total-likes-post' title='ver curtidas'>
+                                                <button className='all-likes' onClick={() => setRenderLikes(!renderLikes)}>
+                                                    <AiFillLike color="#727272" className='total-likes-icon' />
+                                                    <p>{curtidas.length}</p>
                                                 </button>
-                                                :
-                                                <button onClick={manageLike}>
-                                                    <AiFillLike color="#727272" className='user-like-icon' />
-                                                    <p>curtir</p>
-                                                </button>
-                                            }
+                                            </div>
+                                            <div className='div-user-like' title='adicionar ou remover sua curtida'>
+                                                {userLike ?
+                                                    <button onClick={manageLike}>
+                                                        <AiFillLike color="#670067" className='user-like-icon' />
+                                                        <p>retirar curtida</p>
+                                                    </button>
+                                                    :
+                                                    <button onClick={manageLike}>
+                                                        <AiFillLike color="#727272" className='user-like-icon' />
+                                                        <p>curtir</p>
+                                                    </button>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
-                        }
-                        <div className='div-comentarios'>
-                            <div className='div-novo-comentario'>
-                                <div className='div-textarea-post'>
-                                    {user.foto != "" ?
-                                        <img src={user.foto} className="img-user" />
-                                        :
-                                        <img src={avatar} className="img-user" />
-                                    }
-                                    <textarea placeholder={`Comente algo, ${user.nome}!`} value={texto}
-                                        onChange={(e) => setTexto(e.target.value)} required />
-                                </div>
-                                <button onClick={createComment} className='create-post-btn'>Comentar</button>
-                            </div>
 
-                            <div className='comentarios-post'>
-                                <h3>Comentários da publicação</h3>
-                                {loaded && comentarios[0] != undefined && comentarios.map((c) => {
-                                    var arrayDataHora = c.data.split(" "), data = arrayDataHora[0],
-                                    hora = arrayDataHora[1], hora = hora.slice(0, hora.length - 3);
-                                    return(
-                                        <div key={c._id} className="div-comentario">
-                                            <div className='comment-header'>
-                                                {c.usuario.foto != '' ?
-                                                    <img src={c.usuario.foto} alt="Avatar" className='img-user' />
-                                                    :
-                                                    <img src={avatar} alt="Avatar" className='img-user' />
-                                                }
-                                                <div>
-                                                    <h4>{c.usuario.nome}</h4>
-                                                    <h5>{data} às {hora}</h5>
+                                {renderLikes && 
+                                    <div className='div-interacoes'>
+                                        {curtidas.map(c => {
+                                            return(
+                                                <div className='person-followed div-user-like'>
+                                                    <h3>Quem curtiu?</h3>
+                                                    <Link to={`/perfil/${c._id}`} title='ver perfil'>
+                                                        <img src={c.foto} className="img-user" alt='foto' />
+                                                        <p>{c.nome} - {c.cargo}</p>
+                                                    </Link>
                                                 </div>
-                                            </div>
-                                            <p>{c.texto}</p>
+                                            )
+                                        })}
+                                    </div>
+                                }
+
+
+                                <div className='div-interacoes'>
+                                    <div className='div-novo-comentario'>
+                                        <div className='div-textarea-post'>
+                                            {user.foto != "" ?
+                                                <img src={user.foto} className="img-user" />
+                                                :
+                                                <img src={avatar} className="img-user" />
+                                            }
+                                            <textarea placeholder={`Comente algo, ${user.nome}!`} value={texto}
+                                                onChange={(e) => setTexto(e.target.value)} required />
                                         </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
+                                        <button onClick={createComment} className='comment-post-btn'>Comentar</button>
+                                    </div>
+
+                                    <div className='comentarios-post'>
+                                        <h3>Comentários da publicação</h3>
+                                        {loaded && comentarios[0] == undefined && <h4>Ainda não foi feito nenhum comentário</h4>}
+                                        {loaded && comentarios[0] != undefined && comentarios.map((c) => {
+                                            var arrayDataHora = c.data.split(" "), data = arrayDataHora[0],
+                                                hora = arrayDataHora[1], hora = hora.slice(0, hora.length - 3);
+                                            return (
+                                                <div key={c._id} className="div-comentario">
+                                                    <div className='comment-header'>
+                                                        {c.usuario.foto != '' ?
+                                                            <img src={c.usuario.foto} alt="Avatar" className='img-user' />
+                                                            :
+                                                            <img src={avatar} alt="Avatar" className='img-user' />
+                                                        }
+                                                        <div>
+                                                            <h4>{c.usuario.nome}</h4>
+                                                            <h5>{data} às {hora}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <p>{c.texto}</p>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </>
+                        }
                     </div>
                 </div>
             </div>

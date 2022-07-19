@@ -44,8 +44,25 @@
 }
 
 
+.div-textarea-post {
+  width: 100%;
+}
 
-.div-comentarios, .div-comentario {
+.div-textarea-post textarea {
+  width: 80%;
+  border: none;
+  resize: none;
+  font-family: 'Nunito', sans-serif;
+}
+
+.comment-post-btn {
+  padding: 2% 6%;
+  color: #fff;
+  border-radius: 5px;
+  background-color: #670067;
+}
+
+.div-interacoes, .div-comentario {
   width: 65%;
   border-radius: 10px;
   padding: 3%;
@@ -54,9 +71,33 @@
   flex-direction: column;
 }
 
-.div-comentarios {
+.div-interacoes {
   margin-bottom: 4%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.div-user-like{
+  display: flex;
+  flex-direction: column;
+}
+
+.total-likes-post button{
+  cursor: pointer;
+}
+
+.div-user-like a img {
+  margin: 1% 2%;
+}
+
+.div-user-like h3 {
+  width: 20%;
+  color: #ff6900;
+}
+
+.all-likes {
+  display: flex;
+  align-items: center;
+  width: 50%;
 }
 
 .div-comentario {
@@ -68,4 +109,13 @@
   flex-direction: column;
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
+}
+
+.div-novo-comentario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border: solid 1px #727272;
+  padding: 3%;
+  border-radius: 10px;
 }

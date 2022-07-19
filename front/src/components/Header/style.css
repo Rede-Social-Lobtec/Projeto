@@ -38,6 +38,7 @@
 .sidebar > a:hover, .sidebar button:hover {
     background-color: #d85600;
     color: #FFF;
+    cursor: pointer;
 }
 
 /*.Avatar-img{
