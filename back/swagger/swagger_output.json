@@ -668,7 +668,7 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "timoteo@lob.com"
+                  "example": "giovannadml19@gmail.com"
                 }
               },
               "required": [
