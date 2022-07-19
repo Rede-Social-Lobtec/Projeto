@@ -113,7 +113,8 @@ export default function CadastroPost() {
                 <div className='div-flex'>
                     <Social />
                     <div className='div-create-post'>
-                        <div className='new-post'>
+                        <form className='new-post'
+                            enctype="multipart/form-data" >
                             <div className='div-desc-post'>
                                 <div className='div-textarea-post'>
                                     {user.foto != "" ?
@@ -126,7 +127,7 @@ export default function CadastroPost() {
                                 </div>
                                 <div className='add-image-post'>
                                     <input id="id-foto-post" type="file" accept='image/*' 
-                                        onChange={handleFile} />
+                                        name="file" onChange={handleFile} />
                                     <label htmlFor='id-foto-post'>
                                         <BsCardImage color='#727272' size={20} />
                                         <p>Adicionar imagem</p>
@@ -172,7 +173,7 @@ export default function CadastroPost() {
                                 </div>
                             </div>
                             <button onClick={createPost} className='create-post-btn'>Publicar</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
