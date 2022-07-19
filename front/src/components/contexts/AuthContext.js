@@ -2,7 +2,7 @@ import React, {createContext, useState, useEffect} from 'react';
 import api from '../../services/api';
 import { useNavigate, Navigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
-
+import { toast } from 'react-toastify';
 
 const Context = createContext();
 
@@ -33,7 +33,10 @@ function AuthProvider({children}){
         var body = {email:'', senha:''};
         body.email = email;
         body.senha = password;
-        const {data: data} = await api.post('/auth', body);
+        const {data: data} = await api.post('/auth', body)
+        .catch((err)=>{
+            toast.error("Usuário ou senha incorretos!");
+        })
         localStorage.setItem('token', JSON.stringify(data.token));
         localStorage.setItem('id', JSON.stringify(data.id));
         api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;

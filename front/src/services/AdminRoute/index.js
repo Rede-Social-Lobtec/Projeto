@@ -6,10 +6,9 @@ function AdminRoute(){
 
     const { isAdmin } = useContext(Context)
 
-    var admin = localStorage.getItem('admin');
     console.log(isAdmin);
 
-    return isAdmin ? <Outlet/> : <Navigate to='/'/>;
+    return isAdmin ? <Outlet/> : <Navigate to='/feed'/>;
 }
 
 export default AdminRoute;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import './styleHome.css';
 import nome from '../../assets/Animação_logo.gif';
-import Header from '../../components/Header';
+import { toast } from 'react-toastify';
 
 
 function Home() {

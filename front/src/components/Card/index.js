@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { renderMatches, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import api from '../../services/api';
 import './card.css';
 
@@ -56,9 +57,11 @@ function Card(props) {
                 console.log(res.data.msg);
                 if(res.data.msg == 'Você seguiu o usuário!'){
                     setFollow(true);
+                    toast.success(`Você está seguindo ${props.nome}`);
                 }
                 if(res.data.msg == 'Você não está mais seguindo este usuário!'){
                     setFollow(false);
+                    toast.success(`Você não está mais seguindo ${props.nome}`);
                 }
             })
     }

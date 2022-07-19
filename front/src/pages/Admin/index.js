@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './admin.css';
+import { toast } from 'react-toastify';
 
 function Admin() {
 
@@ -32,7 +33,6 @@ function Admin() {
     const [groupId, setGroupId] = useState("");
 
     var token = JSON.parse(localStorage.getItem('token'));
-    var admin = localStorage.getItem('admin');
     const navigate = useNavigate();
     const config = {
         headers: {
@@ -42,9 +42,6 @@ function Admin() {
 
     useEffect(() => {
         setIsLoading(false);
-        // if(!admin){
-        //     Navigate('../perfil');
-        // }
 
     }, [])
 
@@ -109,7 +106,7 @@ function Admin() {
 
         await api.post(`user`, body)
             .then(() => {
-                alert('Usuário criado');
+                toast.success('Usuário criado com sucesso');
             })
     }
 
@@ -151,14 +148,14 @@ function Admin() {
         bodyTeste.foto = body.foto;
         await api.put(`user/${userId}`, bodyTeste, config)
             .then(() => {
-                alert('Usuário atualizado');
+                toast.success('Usuário atualizado');
             })
     }
 
     async function deleteUser() {
         await api.delete(`user/${userId}`, config)
             .then(() => {
-                alert('Usuário deletado');
+                toast.success('Usuário deletado');
             })
     }
 
@@ -170,7 +167,7 @@ function Admin() {
 
         await api.post(`group`, body)
             .then(() => {
-                alert('Grupo criado');
+                toast.success('Grupo criado');
             })
     }
 
@@ -188,14 +185,14 @@ function Admin() {
         }
         await api.put(`group/${groupId}`, bodyTeste, config)
             .then(() => {
-                alert('Grupo atualizado');
+                toast.success('Grupo atualizado');
             })
     }
 
     async function deleteGroup() {
         await api.delete(`group/${groupId}`, config)
             .then(() => {
-                alert('Grupo deletado');
+                toast.success('Grupo deletado');
             })
     }
 
