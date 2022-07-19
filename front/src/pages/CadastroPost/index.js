@@ -42,7 +42,6 @@ export default function CadastroPost() {
             api.get('user/'+id)
                 .then((res) => {
                     setUser(res.data);
-                    setLoaded(true);
                 })
                 .catch(err => console.log(err));
             api.get('user', config)
@@ -50,9 +49,10 @@ export default function CadastroPost() {
                   setGroups(res.data.grupos);
                 })
                 .catch(err => {
-                  console.log(err);
+                    console.log(err);
                 });
-        }
+            }
+            setLoaded(true);
         loadForm();
 
     }, []);
@@ -113,8 +113,7 @@ export default function CadastroPost() {
                 <div className='div-flex'>
                     <Social />
                     <div className='div-create-post'>
-                        <form className='new-post'
-                            enctype="multipart/form-data" >
+                        <form className='new-post'>
                             <div className='div-desc-post'>
                                 <div className='div-textarea-post'>
                                     {user.foto != "" ?
