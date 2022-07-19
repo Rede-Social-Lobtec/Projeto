@@ -89,9 +89,26 @@
   margin: 1% 2%;
 }
 
-.div-user-like h3 {
-  width: 20%;
+.div-interacoes h3 {
   color: #ff6900;
+}
+
+.comment-header {
+  display: flex;
+  align-items: flex-start;
+}
+
+.comment-header h4 {
+  margin: 0;
+}
+
+.comment-header p {
+  margin: 2%0;
+  font-size: .8rem;
+}
+
+.comment-header > div {
+  margin-left: 3%;
 }
 
 .all-likes {

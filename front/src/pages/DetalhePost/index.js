@@ -151,10 +151,11 @@ export default function DetalhePost() {
 
                                 {renderLikes && 
                                     <div className='div-interacoes'>
+                                        <h3>Quem curtiu?</h3>
+                                        {curtidas.length == 0 && <p>O post ainda não tem nenhuma curtida!</p>}
                                         {curtidas.map(c => {
                                             return(
                                                 <div className='person-followed div-user-like'>
-                                                    <h3>Quem curtiu?</h3>
                                                     <Link to={`/perfil/${c._id}`} title='ver perfil'>
                                                         <img src={c.foto} className="img-user" alt='foto' />
                                                         <p>{c.nome} - {c.cargo}</p>
@@ -177,7 +178,7 @@ export default function DetalhePost() {
                                             <textarea placeholder={`Comente algo, ${user.nome}!`} value={texto}
                                                 onChange={(e) => setTexto(e.target.value)} required />
                                         </div>
-                                        <button onClick={createComment} className='comment-post-btn'>Comentar</button>
+                                        <button onClick={() => {createComment(); window.location.reload()}} className='comment-post-btn'>Comentar</button>
                                     </div>
 
                                     <div className='comentarios-post'>
@@ -196,7 +197,7 @@ export default function DetalhePost() {
                                                         }
                                                         <div>
                                                             <h4>{c.usuario.nome}</h4>
-                                                            <h5>{data} às {hora}</h5>
+                                                            <p>{data} às {hora}</p>
                                                         </div>
                                                     </div>
                                                     <p>{c.texto}</p>
