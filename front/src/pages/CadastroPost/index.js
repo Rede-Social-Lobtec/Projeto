@@ -17,6 +17,7 @@ export default function CadastroPost() {
     const [tema, setTema] = useState("");
     const [grupo, setGrupo] = useState("");
     const [fotoPublicacao, setFotoPublicacao] = useState("");
+    const [imgPost, setImgPost] = useState("");
     const [themes, setThemes] = useState([]);
     const [groups, setGroups] = useState([]);
 
@@ -56,7 +57,41 @@ export default function CadastroPost() {
 
     }, []);
 
+    function handleFile(e) {
+        if(e.target.files[0]) {
+            const image = e.target.files[0];
+            
+            if(image.type === "image/jpeg" || image.type === "image/png") {
+                setFotoPublicacao(image);
+                setImgPost(URL.createObjectURL(e.target.files[0]));
+            } else {
+                alert("Envie uma imagem do tipo PNG ou JPEG.");
+                setFotoPublicacao("");
+                return null;
+            }
+        }
+    }
+
     async function createPost() {
+        // var body = {
+        //     lastModified: fotoPublicacao.lastModified,
+        //     lastModifiedDate: fotoPublicacao.lastModifiedDate,
+        //     name: fotoPublicacao.name,
+        //     size: fotoPublicacao.size,
+        //     type: fotoPublicacao.type,
+        //     webkitRelativePath: fotoPublicacao.webkitRelativePath
+        // }
+        
+        // await api.post(`images`, body)
+        //     .then(async () => {
+        //         console.log("Foto enviada com sucesso!");
+
+        //         await api.get(`images/${body.name}`);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+
         var body = {
             descricao: descricao,
             tema: tema,
@@ -78,54 +113,59 @@ export default function CadastroPost() {
                 <div className='div-flex'>
                     <Social />
                     <div className='div-create-post'>
-                        <div className='div-create-post'>
+                        <div className='new-post'>
                             <div className='div-desc-post'>
                                 <div className='div-textarea-post'>
                                     {user.foto != "" ?
-                                        <img src={user.foto} className="img-user" />
+                                        <img src={user.foto} className="img-user-post" />
                                         :
-                                        <img src={avatar} className="img-user" />
+                                        <img src={avatar} className="img-user-post" />
                                     }
                                     <textarea placeholder={`Crie uma publicação, ${user.nome}!`} value={descricao}
-                                        onChange={(e) => setDescricao(e.target.value)} required />
+                                        onChange={(e) => setDescricao(e.target.value)} required rows={5} />
                                 </div>
                                 <div className='add-image-post'>
-                                    <input id="id-foto-post" type="file" />
+                                    <input id="id-foto-post" type="file" accept='image/*' 
+                                        onChange={handleFile} />
                                     <label htmlFor='id-foto-post'>
-                                        <BsCardImage color='727272' size={20} />
+                                        <BsCardImage color='#727272' size={20} />
                                         <p>Adicionar imagem</p>
                                     </label>
-                                    {/* <span id='file-name'></span> */}
+                                    {imgPost !== "" && 
+                                        <img src={imgPost} width={150} />
+                                    }
                                 </div>
                             </div>
                             <div className='div-details-post'>
                                 <div className='div-insert-theme'>
                                     <h4>Selecione um tema ou crie um novo</h4>
-                                    <select id="id-select-theme" onChange={(e) => setTema(e.target.value)}>
-                                        <option value={""}>-- Selecione --</option>
-                                        {loaded && themes[0] != undefined && themes.map(t => {
-                                            return(
-                                                <option key={themes.indexOf(t)} value={t}>{t}</option>
-                                            )
-                                        })}
-                                    </select>
-                                    <div>
+                                    <div className='select-or-insert'>
+                                        <select id="id-select-theme" onChange={(e) => setTema(e.target.value)}>
+                                            <option value={""}>-- Selecione --</option>
+                                            {loaded && themes[0] != undefined && themes.map(t => {
+                                                return(
+                                                    <option key={themes.indexOf(t)} value={t}>{t}</option>
+                                                )
+                                            })}
+                                        </select>
+                                    
                                         <input id='id-tema' type="text" value={tema} onChange={(e) => { 
                                             document.getElementById('id-select-theme').value = ""; 
                                             setTema(e.target.value)
                                         }} 
                                             placeholder='Insira um novo tema'/>
                                     </div>
-                                    <p>{tema}</p>
                                 </div>
                                 <div className='div-insert-group'>
-                                    <h4>Selecione um grupo</h4>
-                                    <p>Se você não selecionar um post público será criado!</p>
+                                    <div className='div-insert-group-texts'>
+                                        <h4>Selecione um grupo</h4>
+                                        <p>Se você não selecionar um grupo o post será público</p>
+                                    </div>
                                     <select onChange={(e) => setGrupo(e.target.value)}>
                                         <option value={""}>-- Selecione --</option>
                                         {loaded && groups[0] != undefined && groups.map(g => {
                                             return (
-                                                <option key={g._id} value={g.nome}>{g.nome}</option>
+                                                <option key={g._id} value={g._id}>{g.nome}</option>
                                             )
                                         })}
                                     </select>

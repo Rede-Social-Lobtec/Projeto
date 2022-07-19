@@ -158,11 +158,12 @@ export default function DetalhePost() {
                                     <textarea placeholder={`Comente algo, ${user.nome}!`} value={texto}
                                         onChange={(e) => setTexto(e.target.value)} required />
                                 </div>
-                                <button onClick={createComment} className='create-post-btn'>Comentar</button>
+                                <button onClick={createComment} className='comment-post-btn'>Comentar</button>
                             </div>
 
                             <div className='comentarios-post'>
                                 <h3>Comentários da publicação</h3>
+                                {loaded && comentarios[0] == undefined && <h4>Ainda não foi feito nenhum comentário</h4>}
                                 {loaded && comentarios[0] != undefined && comentarios.map((c) => {
                                     var arrayDataHora = c.data.split(" "), data = arrayDataHora[0],
                                     hora = arrayDataHora[1], hora = hora.slice(0, hora.length - 3);

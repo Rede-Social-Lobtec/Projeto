@@ -44,6 +44,23 @@
 }
 
 
+.div-textarea-post {
+  width: 100%;
+}
+
+.div-textarea-post textarea {
+  width: 80%;
+  border: none;
+  resize: none;
+  font-family: 'Nunito', sans-serif;
+}
+
+.comment-post-btn {
+  padding: 2% 6%;
+  color: #fff;
+  border-radius: 5px;
+  background-color: #670067;
+}
 
 .div-comentarios, .div-comentario {
   width: 65%;
@@ -68,4 +85,10 @@
   flex-direction: column;
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
+}
+
+.div-novo-comentario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
