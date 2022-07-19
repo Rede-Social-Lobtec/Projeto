@@ -151,32 +151,34 @@ class PostService {
                             var newPost = JSON.parse(JSON.stringify(post[0]));
                             newPost["criador"] = criador[0];
                             postsAdms.push(newPost); 
+                        } else { 
+                            post.forEach(p => {
+                                var newPost = JSON.parse(JSON.stringify(p));
+                                newPost["criador"] = criador[0];
+                                postsAdms.push(newPost)
+                            })
                         }
-                        else { post.forEach(p => {
-                            var newPost = JSON.parse(JSON.stringify(p));
-                            newPost["criador"] = criador[0];
-                            postsAdms.push(newPost)
-                        })}
                     }
                 }
             }
 
             for (let i = 0; i < user[0].seguindo.length; i++) {
-                var u = user[0].seguindo[i];
-                var post = await Post.find({ id_user: u._id });
+                var seguindo = user[0].seguindo[i];
+                var post = await Post.find({ id_user: seguindo._id });
                 if (post[0] != undefined) {
-                    var criador = await User.find({ _id: post[0].id_user });
+                    var criador = await User.find({ _id: post[0].id_user }); 
                     if (!criador[0].admin) {
-                        if (post.length == 1) { 
+                        if (post.length == 1) {
                             var newPost = JSON.parse(JSON.stringify(post[0]));
                             newPost["criador"] = criador[0];
-                            postsSeguindo.push(newPost); 
-                        }
-                        else { post.forEach(p => { 
-                            var newPost = JSON.parse(JSON.stringify(p));
-                            p["criador"] = criador[0];
                             postsSeguindo.push(newPost);
-                        })}
+                        } else {
+                            post.forEach(p => {
+                                var newPost = JSON.parse(JSON.stringify(p));
+                                newPost["criador"] = criador[0];
+                                postsSeguindo.push(newPost);
+                            })
+                        }
                     }
                 }
             }
@@ -191,7 +193,6 @@ class PostService {
                 let day = newDate[0];
                 
                 return [year, month, day, date[1]].join(" ");
-                
             }
             
             function newFormatDate(array) {
