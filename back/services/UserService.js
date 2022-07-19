@@ -281,8 +281,9 @@ class UserService {
     }
 
     async getSocialInfo(req, res) {
+        var id = req.params.id
         try {
-            var user = await User.find({ _id: req.loggedUser.id });
+            var user = await User.find({ _id: id});
             if (user[0] != undefined) {
                 var seguidores = [];
                 var seguindo = [];

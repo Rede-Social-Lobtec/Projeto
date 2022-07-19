@@ -10,14 +10,19 @@ function AuthProvider({children}){
 
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
     
     const navigate = useNavigate();
 
     useEffect(()=>{
         const token = localStorage.getItem("token");
+        const admin = localStorage.getItem("admin");
         if(token){
             api.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(token)}`;
             setAuthenticated(true);
+            if(admin == 'true'){
+                setIsAdmin(true);
+            }        
         }
         setLoading(false);
 
@@ -33,7 +38,9 @@ function AuthProvider({children}){
         localStorage.setItem('id', JSON.stringify(data.id));
         api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
         navigate('/feed', {replace:true});
-        setAuthenticated(true);
+        // setAuthenticated(true);
+        // setIsAdmin(true);
+        
 
         async function getAdmin() {
             await api.get(`user/${data.id}`)
@@ -47,6 +54,7 @@ function AuthProvider({children}){
                 })
         }
         getAdmin();
+        console.log(isAdmin);
     }
 
     async function loginToken(token){
@@ -92,7 +100,7 @@ function AuthProvider({children}){
 
 
     return(
-        <Context.Provider value={{authenticated, handleLogin, loginToken, handleLogout, loading}}>
+        <Context.Provider value={{authenticated, isAdmin, handleLogin, loginToken, handleLogout, loading}}>
             {children}
         </Context.Provider>
     );

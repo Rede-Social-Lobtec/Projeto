@@ -240,7 +240,7 @@ function Admin() {
                                 <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
                                 <input type="text" placeholder="email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                                 <input type="text" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                <input type="text" placeholder="Departametno" value={departamento} onChange={(e) => setDepartament(e.target.value)} />
+                                <input type="text" placeholder="Departamento" value={departamento} onChange={(e) => setDepartament(e.target.value)} />
                                 <input type="text" placeholder="Cargo" value={cargo} onChange={(e) => setCargo(e.target.value)} />
                                 <input type="text" placeholder="Data de Nascimento" value={data_nascimento} onChange={(e) => setNascimento(e.target.value)} />
                                 <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelfone(e.target.value)} />
@@ -259,7 +259,7 @@ function Admin() {
                                 <input type="text" placeholder="Nome do usuário" value={nome} onChange={(e) => setNome(e.target.value)} />
                                 <input type="text" placeholder="email@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                                 <input type="text" placeholder="*******" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                <input type="text" placeholder="Departametno" value={departamento} onChange={(e) => setDepartament(e.target.value)} />
+                                <input type="text" placeholder="Departamento" value={departamento} onChange={(e) => setDepartament(e.target.value)} />
                                 <input type="text" placeholder="Cargo" value={cargo} onChange={(e) => setCargo(e.target.value)} />
                                 <input type="text" placeholder="Data de Nascimento" value={data_nascimento} onChange={(e) => setNascimento(e.target.value)} />
                                 <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelfone(e.target.value)} />

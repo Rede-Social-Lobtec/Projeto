@@ -18,7 +18,7 @@ router.put('/user/:id', auth, userService.update);
 router.post('/auth', userService.token);
 router.post('/authGoogle', userService.google);
 router.put('/user', auth, userService.manageFollowing);
-router.get('/user', auth, userService.getSocialInfo)
+router.get('/perfil/:id', auth, userService.getSocialInfo);
 
 router.post('/logs', logSessaoService.numSessao);
 
