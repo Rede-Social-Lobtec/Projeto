@@ -30,7 +30,7 @@ function CardGrupo(props) {
         <div className="card-grupo">
             <button onClick={verGrupo}>
                 <div className='card-grupo-container'>
-                    <img src={require('../../assets/no-photo.png')}></img>
+                    <img src={require('../../assets/no-cape.png')}></img>
                     <div className='grupo-text'>
                         <h4>{props.nome}</h4>
                         <p>{props.descricao}</p>

@@ -32,7 +32,7 @@ export default function Header(){
     return(
         <div className='sidebar'>
             <div className="Avatar-img">
-                <Link to={`../perfil-user/${id}`}>
+                <Link to={`../perfil/${id}`}>
                     {user.foto != '' ? 
                         <img src={user.foto} alt="Avatar" />   
                     :
