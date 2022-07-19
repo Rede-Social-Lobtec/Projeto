@@ -5,6 +5,7 @@
   border-radius: 10px 0 0 10px;
   width: 25%;
   border-right: #ddd solid 2px;
+  height: 100vh;
 }
 
 .loading-gif {
